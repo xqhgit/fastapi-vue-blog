@@ -1,0 +1,9 @@
+click==7.1.2
+fastapi==0.60.1
+h11==0.9.0
+pydantic==1.6.1
+python-multipart==0.0.5
+six==1.15.0
+starlette==0.13.6
+uvicorn==0.11.8
+websockets==8.1
