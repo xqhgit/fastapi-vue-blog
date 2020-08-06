@@ -6,6 +6,27 @@ fastapi-vue-blog
 * 后端框架：FastAPI
 * 前端框架：Vue (BootstrapVue)
 
+#### 启动 
+
+*后端*
+
+* python版本 3.7.x
+
+>1. 在fastapi-vue-blog/backend目录下
+>2. pip install -r requirements.txt
+>3. python main.py
+>4. 数据库迁移https://www.cnblogs.com/turingbrain/p/6372086.html
+
+*前端*
+
+* node版本: 12.13.x
+* 安装好node和vue-cli
+
+>1.  在fastapi-vue-blog/frontend目录下
+>2.  安装依赖: npm install
+>3.  启动开发: npm run dev
+>4.  打包命令: npm run build 
+
 
 #### 功能
 
@@ -57,24 +78,4 @@ fastapi-vue-blog
 *登录*
 
 * /api/v1/login/access-token 登录获取token
-
-
-#### 后端 
-
-* python版本 3.7.x
-
-1. 在fastapi-vue-blog/backend目录下
-2. pip install -r requirements.txt
-3. python main.py
-4. 数据库迁移https://www.cnblogs.com/turingbrain/p/6372086.html
-
-#### 前端
-
-* node版本: 12.13.x
-* 安装好node和vue-cli
-
-1.  在fastapi-vue-blog/frontend目录下
-2.  安装依赖: npm install
-3.  启动开发: npm run dev
-4.  打包命令: npm run build 
 
