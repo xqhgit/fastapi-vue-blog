@@ -1,13 +1,17 @@
+from typing import Optional
 from sqlalchemy.orm import Session
 from fastapi.encoders import jsonable_encoder
 
 from backend.models import User
 from backend.crud.base import CRUDBase
 from backend.schemas.user import UserCreate, UserUpdate
-from backend.core.security import get_password_hash
+from backend.core.security import get_password_hash, verify_password
 
 
 class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
+
+    def get_by_username(self, db: Session, *, username: str) -> Optional[User]:
+        return db.query(User).filter(User.username == username).first()
 
     def create(self, db: Session, *, obj_in: UserCreate) -> User:
         db_obj = User(
@@ -44,5 +48,15 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
         db.refresh(db_obj)
         return db_obj
 
+    def authenticate(self, db: Session, *, username: str, password: str) -> Optional[User]:
+        user = self.get_by_username(db, username=username)
+        if not user:
+            return None
+        if not verify_password(password, user.hashed_password):
+            return None
+        return user
+
 
 user = CRUDUser(User)
+
+

@@ -1,3 +1,4 @@
+# -*-coding:utf-8-*-
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
@@ -24,29 +25,29 @@ if settings.BACKEND_CORS_ORIGINS:
     )
 
 # 挂载前端静态文件
-app.mount("/static", StaticFiles(directory="static"), name="static")
+# app.mount("/static", StaticFiles(directory="static"), name="static")
 app.include_router(api_router, prefix=settings.API_V1_STR)
 
 
 # 设置前端静态文件入口
-@app.get('/')
-async def read_index():
-    return FileResponse('static/index.html')
-
-
-# 前端页面刷新重新返回index页面
-@app.exception_handler(404)
-async def not_found(request: Request, exc):
-    accept = request.headers.get('accept')
-    if exc.status_code == 404 and 'text/html' in accept:
-        return FileResponse('static/index.html')
-    else:
-        return JSONResponse(content={'error': "Not found"}, status_code=exc.status_code)
+# @app.get('/')
+# async def read_index():
+#     return FileResponse('static/index.html')
+#
+#
+# # 前端页面刷新重新返回index页面
+# @app.exception_handler(404)
+# async def not_found(request: Request, exc):
+#     accept = request.headers.get('accept')
+#     if exc.status_code == 404 and 'text/html' in accept:
+#         return FileResponse('static/index.html')
+#     else:
+#         return JSONResponse(content={'error': "Not found"}, status_code=exc.status_code)
 
 
 if __name__ == '__main__':
     import uvicorn
     # 开发
-    uvicorn.run(f'{__name__}:app', port=6000, host='0.0.0.0', reload=True)
+    uvicorn.run(f'{__name__}:app', port=5000, host='127.0.0.1', reload=True)
     # 生产
     # uvicorn.run(app, port=80, host='0.0.0.0', log_config=settings.LOGGING)
