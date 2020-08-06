@@ -1,8 +1,17 @@
+bcrypt==3.1.7
+cffi==1.14.1
 click==7.1.2
+cryptography==3.0
+ecdsa==0.14.1
 fastapi==0.60.1
 h11==0.9.0
+passlib==1.7.2
+pyasn1==0.4.8
+pycparser==2.20
 pydantic==1.6.1
+python-jose==3.2.0
 python-multipart==0.0.5
+rsa==4.6
 six==1.15.0
 starlette==0.13.6
 uvicorn==0.11.8

@@ -8,3 +8,4 @@
 out
 gen
 frontend/node_modules
+venv
