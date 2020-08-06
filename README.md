@@ -58,3 +58,22 @@ fastapi-vue-blog
 
 * /api/v1/login/access-token 登录获取token
 
+
+#### 后端 
+
+* python版本 3.7.x
+
+1. 在fastapi-vue-blog/backend目录下
+2. pip install -r requirements.txt
+3. python main.py
+
+#### 前端
+
+* node版本: 12.13.x
+* 安装好node和vue-cli
+
+1.  在fastapi-vue-blog/frontend目录下
+2.  安装依赖: npm install
+3.  启动开发: npm run dev
+4.  打包命令: npm run build 
+
