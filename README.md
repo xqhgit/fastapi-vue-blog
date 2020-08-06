@@ -66,6 +66,7 @@ fastapi-vue-blog
 1. 在fastapi-vue-blog/backend目录下
 2. pip install -r requirements.txt
 3. python main.py
+4. 数据库迁移https://www.cnblogs.com/turingbrain/p/6372086.html
 
 #### 前端
 
