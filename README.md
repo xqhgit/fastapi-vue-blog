@@ -1,5 +1,7 @@
 # fastapi-vue-blog
 
+## 项目在开发阶段
+
 #### 介绍
 fastapi-vue-blog
 前后端分离开源博客
