@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -*-coding:utf-8-*-
 from typing import Any
 from datetime import timedelta
 from sqlalchemy.orm import Session
