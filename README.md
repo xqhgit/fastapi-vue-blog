@@ -3,39 +3,58 @@
 #### 介绍
 fastapi-vue-blog
 前后端分离开源博客
-后端框架：FastAPI
-前端框架：Vue
+* 后端框架：FastAPI
+* 前端框架：Vue (BootstrapVue)
 
 
-#### 软件架构
-软件架构说明
+#### 功能
 
+*游客*
 
-#### 安装教程
+>1. 可以看到所有文章
+>2. 可以看到所有分类
+>3. 可以根据分类筛选文章列表
+>4. 在文章中可以看到评论
+>5. *可以根据关键词搜索文章
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+*管理员*
 
-#### 使用说明
+>1. 文章管理
+>2. 分类管理
+>3. 评论管理
+>4. 使用MarkDown编写文章
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+#### 前端URL
 
-#### 参与贡献
+*首页*
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+* /posts?page=1&limit=10 显示所有文章›
+* /post?category=python 分类文章显示
+* /posts/<post_id: int> 文章详细
 
+*分类*
 
-#### 码云特技
+* /categories 显示所有分类
 
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  码云官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解码云上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是码云最有价值开源项目，是码云综合评定出的优秀开源项目
-5.  码云官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  码云封面人物是一档用来展示码云会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+#### 后端API
+
+*文章*
+
+* /api/v1/posts/?category=python&page=1&limit=10 显示所有文章 分类文章显示
+* /api/v1/posts/<post_id: int> 获取单个文章
+
+*评论*
+
+* /api/v1/comments/ 所有评论
+* /api/v1/comments/<comment_id: int> 单个评论
+* /api/v1/comments/post/<post_id: int>?page=1&limit=10 文章下的所有评论
+
+*分类*
+
+* /api/v1/categories/ 所有分类
+* /api/v1/categories/<category_id: int> 单个分类
+
+*登录*
+
+* /api/v1/login/access-token 登录获取token
+
