@@ -7,12 +7,13 @@ Vue.use(Router)
 export const Routes = [
   {
     path: '/',
-    component: Layout
-    // redirect: '/posts',
-    // children: [{
-    //   path: 'posts',
-    //   name: 'posts',
-    //   component: () => import('@/views/posts/index')
+    component: Layout,
+    redirect: '/posts',
+    children: [{
+      path: 'posts',
+      name: 'posts',
+      component: () => import('@/views/posts/index')
+    }]
     // }, {
     //   path: 'about',
     //   name: 'about',
