@@ -6,8 +6,11 @@ import router from './router'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import ElementUI from 'element-ui'
+import locale from 'element-ui/lib/locale/lang/zh-CN'
 
 Vue.use(BootstrapVue)
+Vue.user(ElementUI, { locale })
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
