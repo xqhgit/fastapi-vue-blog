@@ -17,10 +17,13 @@ def read_posts(
         '1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg'
     ]
     items = []
+    x = 1
     for image in images:
         items.append({
-            'image': utils.img_base64(image)
+            'image': utils.img_base64(image),
+            'id': x
         })
+        x += 1
     total = len(items)
     items = items[offset:offset + limit]
     result = {

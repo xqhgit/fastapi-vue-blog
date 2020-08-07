@@ -10,9 +10,21 @@ export const Routes = [
     component: Layout,
     redirect: '/posts',
     children: [{
+      path: '/login',
+      name: 'login',
+      component: () => import('@/views/login')
+    }, {
       path: 'posts',
       name: 'posts',
       component: () => import('@/views/posts/index')
+    }, {
+      path: 'categories',
+      name: 'categories',
+      component: () => import('@/views/categories/index')
+    }, {
+      path: 'about',
+      name: 'about',
+      component: () => import('@/views/about/index')
     }]
     // }, {
     //   path: 'about',

@@ -4,6 +4,8 @@ import { getToken } from '@/utils/auth'
 import { MessageBox, Message } from 'element-ui'
 
 // 创建一个axios实例
+console.log(process.env)
+console.log(process.env.API_URL)
 const service = axios.create({
   baseURL: process.env.API_URL,
   timeout: 5000 // 请求超时时间
