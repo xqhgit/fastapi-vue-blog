@@ -26,15 +26,6 @@ export const Routes = [
       name: 'about',
       component: () => import('@/views/about/index')
     }]
-    // }, {
-    //   path: 'about',
-    //   name: 'about',
-    //   component: () => import('@/views/about/index')
-    // }, {
-    //   path: 'categories',
-    //   name: 'categories',
-    //   component: () => import('@/views/categories/index')
-    // }]
   }
 ]
 
