@@ -56,8 +56,8 @@ const actions = {
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
       try {
-        commit('RESET_STATE')
         removeToken()
+        commit('RESET_STATE')
       } catch (error) {
         reject(error)
       }
