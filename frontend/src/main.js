@@ -10,7 +10,7 @@ import ElementUI from 'element-ui'
 import locale from 'element-ui/lib/locale/lang/zh-CN'
 
 Vue.use(BootstrapVue)
-Vue.user(ElementUI, { locale })
+Vue.use(ElementUI, { locale })
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
