@@ -8,6 +8,10 @@ fastapi-vue-blog
 * 后端框架：FastAPI
 * 前端框架：Vue (BootstrapVue)
 
+![avatar](./introduce/frontend_photo.png)
+
+![avatar](./introduce/backend_api_photo.png)
+
 #### 启动 
 
 *后端*
