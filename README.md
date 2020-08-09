@@ -6,7 +6,8 @@
 fastapi-vue-blog
 前后端分离开源博客
 * 后端框架：FastAPI
-* 前端框架：Vue (BootstrapVue)
+* 前端框架：Vue (游客界面：BootstrapVue)(管理界面：ElementUI)
+
 
 ![avatar](./introduce/frontend_photo.png)
 
