@@ -53,6 +53,8 @@ fastapi-vue-blog
 
 #### 前端URL
 
+##### 游客
+
 *首页*
 
 * /posts?page=1&limit=10 显示所有文章›
@@ -62,6 +64,15 @@ fastapi-vue-blog
 *分类*
 
 * /categories 显示所有分类
+
+##### 管理员
+
+* /manage/posts       文章管理
+* /manage/post?       文章编辑/创建
+* /manage/categories  分类管理
+* /manage/category?   分类编辑/创建
+* /manage/comments    评论管理
+* /manage/comment     评论编辑
 
 #### 后端API
 
