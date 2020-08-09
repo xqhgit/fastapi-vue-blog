@@ -25,6 +25,10 @@ export const Routes = [
       path: 'about',
       name: 'about',
       component: () => import('@/views/about/index')
+    }, {
+      path: 'manage-posts',
+      name: 'manage-posts',
+      component: () => import('@/views/manage_posts/index')
     }]
   }
 ]
