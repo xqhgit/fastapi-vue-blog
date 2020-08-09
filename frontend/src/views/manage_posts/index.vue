@@ -1,6 +1,6 @@
 <template>
   <div class="manage-posts">
-    <h2>文章管理</h2>
+    <h4>文章管理</h4>
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
@@ -8,7 +8,7 @@
           type="primary"
           icon="el-icon-plus"
           size="mini"
-          @click="handleOpen"
+          @click="handleOpen('create')"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -50,36 +50,81 @@
       </el-col>
     </el-row>
     <el-table
-      v-loding="loading"
+      v-loading="loading"
       ref="table"
       :data="dataList"
-    />
+      row-key="id"
+      highlight-current-row
+      @row-click="handleRowClick"
+      @selection-change="handleSelectionChange"
+    >
+      <el-table-column type="selection" align="center"/>
+      <el-table-column label="标题" prop="title" />
+      <el-table-column label="创建时间" prop="timestamp">
+        <template slot-scope="scope">
+          <span>{{ scope.row.timestamp | getLocalTime }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="评论数" prop="comments_count" />
+    </el-table>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Index',
+  name: 'ManagePosts',
+  filters: {
+    getLocalTime(nS) {
+      const n = nS - (new Date().getTimezoneOffset() * 60)
+      const date = new Date(n * 1000)
+      return date.toLocaleDateString()
+    }
+  },
   data() {
     return {
-      single: false,
-      multiple: false,
+      row: undefined,
+      single: true,
+      multiple: true,
       loading: false,
       queryParams: {
         title: undefined
       },
-      dataList: []
+      dataList: [{
+        'id': 1,
+        'title': 'test title',
+        'timestamp': '1267987324',
+        'comments_count': 30
+      }, {
+        'id': 2,
+        'title': 'test title2',
+        'timestamp': '1267987324',
+        'comments_count': 30
+      }]
     }
   },
   methods: {
     handleOpen(name) {
-      console.log(name)
+      switch (name) {
+        case 'create':
+          this.$router.push({ name: 'manage-post' })
+          break
+      }
     },
     handleQuery() {
 
     },
     resetQuery() {
 
+    },
+    handleRowClick(row, column, event) {
+      this.$refs['table'].clearSelection()
+      this.$refs['table'].toggleRowSelection(row)
+      this.row = row
+    },
+    handleSelectionChange(selection) {
+      this.single = selection.length !== 1
+      this.multiple = !selection.length
+      this.row = undefined
     }
   }
 }
