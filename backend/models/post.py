@@ -7,7 +7,7 @@ from backend.db.base import Base
 
 class Post(Base):
     id = Column(Integer, primary_key=True)
-    timestamp = Column(DateTime, default=datetime.utcnow, index=True)
+    timestamp = Column(DateTime, default=lambda: int(datetime.timestamp(datetime.utcnow())), index=True)
     title = Column(String(60))
     body = Column(Text)
     can_comment = Column(Boolean, default=True)
