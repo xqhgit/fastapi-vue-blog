@@ -59,7 +59,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         query = db.query(self.model)
         if filters:
             query = query.filter(*filters)
-        if order_by:
+        if order_by is not None:
             query = query.order_by(order_by)
         query = query.offset(offset).limit(limit)
         return query.all()
