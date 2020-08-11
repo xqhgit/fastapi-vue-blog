@@ -33,7 +33,7 @@
               <em>管理</em>
             </template>
             <b-dropdown-item :to="{name: 'manage-posts'}" active-class="active">文章</b-dropdown-item>
-            <b-dropdown-item href="#">分类</b-dropdown-item>
+            <b-dropdown-item :to="{name: 'manage-categories'}" active-class="active">分类</b-dropdown-item>
             <b-dropdown-item href="#">评论</b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown v-if="token" right>

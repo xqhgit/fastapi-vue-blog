@@ -57,6 +57,8 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
         return user
 
 
+
+
 user = CRUDUser(User)
 
 

@@ -33,6 +33,10 @@ export const Routes = [
       path: 'manage-post',
       name: 'manage-post',
       component: () => import('@/views/manage_post/index')
+    }, {
+      path: 'manage-categories',
+      name: 'manage-categories',
+      component: () => import('@/views/manage_categories/index')
     }]
   }
 ]
