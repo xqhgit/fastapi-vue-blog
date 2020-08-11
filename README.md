@@ -84,12 +84,16 @@ fastapi-vue-blog
 
 *文章*
 
-* /api/v1/posts/?category=python&page=1&limit=10 显示所有文章 分类文章显示
-* /api/v1/posts/<post_id: int> 获取单个文章
+* GET /api/v1/posts/?category=python&page=1&limit=10 显示所有文章 分类文章显示
+* POST /api/v1/posts/                 创建文章
+* GET /api/v1/posts/<post_id: int>    获取单个文章
+* PUT /api/v1/posts/<post_id: int>    修改文章
+* DELETE /api/v1/posts/<post_id: int> 删除文章
 
 *评论*
 
-* /api/v1/comments/ 所有评论
+* GET /api/v1/comments/? 所有评论
+* POST /api/v1/comments/
 * /api/v1/comments/<comment_id: int> 单个评论
 * /api/v1/comments/post/<post_id: int>?page=1&limit=10 文章下的所有评论
 

@@ -1,8 +1,11 @@
+from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 
+from backend import crud, schemas
 from backend.utils import utils
+from backend.api import deps
 
 router = APIRouter()
 
@@ -31,3 +34,12 @@ def read_posts(
         "items": items
     }
     return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
+
+
+@router.post('/', dependencies=[Depends(deps.get_current_active_admin)])
+def create_post(
+        db: Session = Depends(deps.get_db),
+        *, post_in: schemas.PostCreate
+):
+    post = crud.post.create()
+    pass
