@@ -36,10 +36,15 @@ def read_posts(
     return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
 
 
-@router.post('/', dependencies=[Depends(deps.get_current_active_admin)])
+@router.post('/', dependencies=[Depends(deps.get_current_active_admin)], status_code=status.HTTP_201_CREATED)
 def create_post(
         db: Session = Depends(deps.get_db),
         *, post_in: schemas.PostCreate
 ):
-    post = crud.post.create()
-    pass
+    try:
+        post = crud.post.create(db, obj_in=post_in)
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Parameter error"
+        )
+    return
