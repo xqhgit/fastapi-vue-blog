@@ -13,11 +13,6 @@ fastapi-vue-blog
 >1. 游客界面：BootstrapVue
 >2. 管理界面：ElementUI
 
-
-![avatar](./introduce/frontend_photo.png)
-
-![avatar](./introduce/backend_api_photo.png)
-
 #### 启动 
 
 *后端*
@@ -106,3 +101,8 @@ fastapi-vue-blog
 
 * /api/v1/login/access-token 登录获取token
 
+#### 插图
+
+![avatar](./introduce/frontend_photo.png)
+
+![avatar](./introduce/backend_api_photo.png)
