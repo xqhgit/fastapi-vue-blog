@@ -5,8 +5,13 @@
 #### 介绍
 fastapi-vue-blog
 前后端分离开源博客
-* 后端框架：FastAPI
-* 前端框架：Vue (游客界面：BootstrapVue)(管理界面：ElementUI)
+* 后端框架：
+>1. Python Web 框架：FastAPI
+>2. ORM：SQLAlchemy
+
+* 前端框架：Vue
+>1. 游客界面：BootstrapVue
+>2. 管理界面：ElementUI
 
 
 ![avatar](./introduce/frontend_photo.png)
