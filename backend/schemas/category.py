@@ -21,7 +21,7 @@ class CategoryOut(CategoryBase):
         orm_mode = True
 
 
-class CategoryItems(CategoryBase):
+class CategoryItems(BaseModel):
     total: Optional[int]
     items: List[CategoryOut]
 

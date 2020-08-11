@@ -14,7 +14,7 @@ app = FastAPI(
     openapi_url=f'{settings.API_V1_STR}/openapi.json'
 )
 
-# 设置跨域源
+# CORS
 if settings.BACKEND_CORS_ORIGINS:
     app.add_middleware(
         CORSMiddleware,
@@ -24,18 +24,16 @@ if settings.BACKEND_CORS_ORIGINS:
         allow_headers=["*"],
     )
 
-# 挂载前端静态文件
+# mount frontend static files
 # app.mount("/static", StaticFiles(directory="static"), name="static")
 app.include_router(api_router, prefix=settings.API_V1_STR)
 
 
-# 设置前端静态文件入口
 # @app.get('/')
 # async def read_index():
 #     return FileResponse('static/index.html')
 #
 #
-# # 前端页面刷新重新返回index页面
 # @app.exception_handler(404)
 # async def not_found(request: Request, exc):
 #     accept = request.headers.get('accept')
@@ -47,7 +45,7 @@ app.include_router(api_router, prefix=settings.API_V1_STR)
 
 if __name__ == '__main__':
     import uvicorn
-    # 开发
+    # dev
     uvicorn.run(f'{__name__}:app', port=5000, host='127.0.0.1', reload=True)
-    # 生产
+    # prod
     # uvicorn.run(app, port=80, host='0.0.0.0', log_config=settings.LOGGING)

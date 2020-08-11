@@ -45,7 +45,6 @@ def get_current_user(
         )
     return user
 
-# 获取普通用户
 # def get_current_active_user(
 #         current_user: models.User = Depends(get_current_user)
 # ) -> models.User:
@@ -54,7 +53,6 @@ def get_current_user(
 #     return current_user
 
 
-# 获取管理员用户
 def get_current_active_admin(
         current_user: models.User = Depends(get_current_user)
 ) -> models.User:

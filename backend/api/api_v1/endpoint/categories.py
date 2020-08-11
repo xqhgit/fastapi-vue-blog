@@ -39,26 +39,26 @@ def create_category(
                status_code=status.HTTP_200_OK)
 def delete_category(
         db: Session = Depends(deps.get_db),
-        *, category_id: int, ids: Union[int, List[int]] = Body(...)
+        *, ids: Union[int, List[int]] = Body(...)
 ):
     crud.category.delete(db, ids=ids)
     return
 
 
-# @router.put('/{category_id}', dependencies=[Depends(deps.get_current_active_admin)],
-#             response_model=schemas.CategoryOut, status_code=status.HTTP_200_OK)
-# def update_category(
-#         db: Session = Depends(deps.get_db),
-#         *, category_id: int, category_in=schemas.CategoryUpdate
-# ):
-#     category = crud.category.get(db, id=category_id)
-#     if not category:
-#         raise HTTPException(
-#             status_code=404,
-#             detail="Not Found.",
-#         )
-#     category = crud.category.update(db, db_obj=category, obj_in=category_in)
-#     return category
+@router.put('/{category_id}', dependencies=[Depends(deps.get_current_active_admin)], response_model=schemas.CategoryOut,
+            status_code=status.HTTP_200_OK)
+def update_category(
+        db: Session = Depends(deps.get_db),
+        *, category_id: int, category_in: schemas.CategoryUpdate
+):
+    category = crud.category.get(db, id=category_id)
+    if not category:
+        raise HTTPException(
+            status_code=404,
+            detail="Not Found.",
+        )
+    category = crud.category.update(db, db_obj=category, obj_in=category_in)
+    return category
 
 
 @router.get('/{category_id}', response_model=schemas.CategoryOut, status_code=status.HTTP_200_OK)
@@ -73,4 +73,3 @@ def read_category(
             detail="Not Found.",
         )
     return category
-
