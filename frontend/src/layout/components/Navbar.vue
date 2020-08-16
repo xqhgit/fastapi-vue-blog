@@ -39,7 +39,7 @@
           <b-nav-item-dropdown v-if="token" right>
             <!-- Using 'button-content' slot -->
             <template v-slot:button-content>
-              <em>用户</em>
+              <em>{{ username }}</em>
             </template>
             <b-dropdown-item href="#">配置</b-dropdown-item>
             <b-dropdown-item href="#" @click="handleLogout">退出</b-dropdown-item>
@@ -52,13 +52,22 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { getInfo } from '@/api/user'
 
 export default {
   name: 'Navbar',
+  data() {
+    return {
+      username: undefined
+    }
+  },
   computed: {
     ...mapGetters([
       'token'
     ])
+  },
+  created() {
+    this.getUserInfo()
   },
   methods: {
     handleLogout() {
@@ -66,6 +75,11 @@ export default {
         this.$router.push({ name: 'posts' })
       }).catch(() => {
 
+      })
+    },
+    getUserInfo() {
+      getInfo().then(res => {
+        this.username = res.data.username
       })
     }
   }

@@ -13,9 +13,9 @@ export function login(data) {
   })
 }
 
-export function getInfo(token) {
+export function getInfo() {
   return request({
-    url: '/login/getinfo',
+    url: '/login/info',
     method: 'get'
   })
 }

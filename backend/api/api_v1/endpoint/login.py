@@ -4,8 +4,9 @@ from sqlalchemy.orm import Session
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
+from fastapi.responses import JSONResponse
 
-from backend import schemas, crud
+from backend import schemas, crud, models
 from backend.api import deps
 from backend.core.config import settings
 from backend.core import security
@@ -39,3 +40,14 @@ def login_access_token(
         ),
         "token_type": "bearer"
     }
+
+
+@router.get('/login/info')
+def login_info(
+        current_user: models.User = Depends(deps.get_current_active_admin),
+):
+    data = {
+        "username": current_user.username
+    }
+    return JSONResponse(content=data, status_code=status.HTTP_200_OK)
+
