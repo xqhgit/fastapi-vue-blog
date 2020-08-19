@@ -4,16 +4,49 @@ import Layout from '@/layout'
 
 Vue.use(Router)
 
-export const Routes = [
+// export const Routes = [
+//   {
+//     path: '/',
+//     component: Layout,
+//     redirect: '/posts',
+//     children: [{
+//       path: '/login',
+//       name: 'login',
+//       component: () => import('@/views/login')
+//     }, {
+//       path: 'posts',
+//       name: 'posts',
+//       component: () => import('@/views/posts/index')
+//     }, {
+//       path: 'categories',
+//       name: 'categories',
+//       component: () => import('@/views/categories/index')
+//     }, {
+//       path: 'about',
+//       name: 'about',
+//       component: () => import('@/views/about/index')
+//     }, {
+//       path: 'manage-posts',
+//       name: 'manage-posts',
+//       component: () => import('@/views/manage_posts/index')
+//     }, {
+//       path: 'manage-post',
+//       name: 'manage-post',
+//       component: () => import('@/views/manage_post/index')
+//     }, {
+//       path: 'manage-categories',
+//       name: 'manage-categories',
+//       component: () => import('@/views/manage_categories/index')
+//     }]
+//   }
+// ]
+
+export const constantRoutes = [
   {
     path: '/',
     component: Layout,
     redirect: '/posts',
     children: [{
-      path: '/login',
-      name: 'login',
-      component: () => import('@/views/login')
-    }, {
       path: 'posts',
       name: 'posts',
       component: () => import('@/views/posts/index')
@@ -26,6 +59,17 @@ export const Routes = [
       name: 'about',
       component: () => import('@/views/about/index')
     }, {
+      path: '/login',
+      name: 'login',
+      component: () => import('@/views/login')
+    }]
+  }
+]
+
+export const asyncRoutes = [
+  {
+    component: Layout,
+    children: [{
       path: 'manage-posts',
       name: 'manage-posts',
       component: () => import('@/views/manage_posts/index')
@@ -43,7 +87,7 @@ export const Routes = [
 
 const createRouter = () => new Router({
   mode: 'history',
-  routes: Routes
+  routes: constantRoutes
 })
 
 const router = createRouter()

@@ -9,7 +9,8 @@ def init_db(db: Session) -> None:
         user_in = schemas.UserCreate(
             username=settings.FIRST_ADMIN,
             password=settings.FIRST_ADMIN_PASSWORD,
-            is_admin=True
+            is_admin=True,
+            email='test@qq.com'
         )
         crud.user.create(db, obj_in=user_in)
 

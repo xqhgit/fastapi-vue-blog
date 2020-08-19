@@ -4,7 +4,8 @@ import { getToken, setToken, removeToken } from '@/utils/auth'
 const getDefaultState = () => {
   return {
     token: getToken(),
-    name: ''
+    name: '',
+    roles: []
   }
 }
 
@@ -19,6 +20,9 @@ const mutations = {
   },
   SET_NAME: (state, name) => {
     state.name = name
+  },
+  SET_ROLES: (state, roles) => {
+    state.roles = roles
   }
 }
 
@@ -44,7 +48,11 @@ const actions = {
         if (!data) {
           reject('验证失败，请重新登录。')
         }
-        const { name } = data
+        const { name, roles } = data
+        if (!roles || roles.le <= 0) {
+          reject('getInfo: roles must be a non-null array!')
+        }
+        commit('SET_ROLES', roles)
         commit('SET_NAME', name)
         response(data)
       }).catch(error => {

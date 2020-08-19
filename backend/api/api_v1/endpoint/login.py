@@ -3,6 +3,7 @@ from datetime import timedelta
 from sqlalchemy.orm import Session
 
 from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.encoders import jsonable_encoder
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.responses import JSONResponse
 
@@ -47,7 +48,8 @@ def login_info(
         current_user: models.User = Depends(deps.get_current_active_admin),
 ):
     data = {
-        "username": current_user.username
+        "name": current_user.username,
+        "roles": ['admin'] if current_user.is_admin else []
     }
-    return JSONResponse(content=data, status_code=status.HTTP_200_OK)
+    return JSONResponse(content=jsonable_encoder(data), status_code=status.HTTP_200_OK)
 

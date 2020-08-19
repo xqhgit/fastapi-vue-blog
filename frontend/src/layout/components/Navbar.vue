@@ -24,10 +24,10 @@
             <b-form-input size="sm" class="mr-sm-2" placeholder="标题关键字"/>
             <b-button size="sm" class="my-2 my-sm-0" type="submit">搜索文章</b-button>
           </b-nav-form>
-          <b-nav-item v-if="!token" :to="{name: 'login'}" active-class="active">
+          <b-nav-item v-if="!name" :to="{name: 'login'}" active-class="active">
             登录
           </b-nav-item>
-          <b-nav-item-dropdown v-if="token" right>
+          <b-nav-item-dropdown v-if="name" right>
             <!-- Using 'button-content' slot -->
             <template v-slot:button-content>
               <em>管理</em>
@@ -36,7 +36,7 @@
             <b-dropdown-item :to="{name: 'manage-categories'}" active-class="active">分类</b-dropdown-item>
             <b-dropdown-item href="#">评论</b-dropdown-item>
           </b-nav-item-dropdown>
-          <b-nav-item-dropdown v-if="token" right>
+          <b-nav-item-dropdown v-if="name" right>
             <!-- Using 'button-content' slot -->
             <template v-slot:button-content>
               <em>{{ username }}</em>
@@ -52,7 +52,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { getInfo } from '@/api/user'
 
 export default {
   name: 'Navbar',
@@ -63,11 +62,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'token'
+      'name'
     ])
-  },
-  created() {
-    this.getUserInfo()
   },
   methods: {
     handleLogout() {
@@ -75,11 +71,6 @@ export default {
         this.$router.push({ name: 'posts' })
       }).catch(() => {
 
-      })
-    },
-    getUserInfo() {
-      getInfo().then(res => {
-        this.username = res.data.username
       })
     }
   }
