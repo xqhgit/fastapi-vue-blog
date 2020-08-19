@@ -75,7 +75,6 @@ export default {
   },
   created() {
     this.getData()
-    // this.$store.getters
   },
   methods: {
     getData() {

@@ -10,7 +10,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import locale from 'element-ui/lib/locale/lang/zh-CN'
-// import '@/permission' // permission control
+import '@/permission' // permission control
 
 Vue.use(BootstrapVue)
 Vue.use(ElementUI, { locale })

@@ -68,6 +68,7 @@ export const constantRoutes = [
 
 export const asyncRoutes = [
   {
+    path: '/',
     component: Layout,
     children: [{
       path: 'manage-posts',

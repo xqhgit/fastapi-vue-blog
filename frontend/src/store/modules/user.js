@@ -49,12 +49,13 @@ const actions = {
           reject('验证失败，请重新登录。')
         }
         const { name, roles } = data
+        console.log(name)
         if (!roles || roles.le <= 0) {
           reject('getInfo: roles must be a non-null array!')
         }
         commit('SET_ROLES', roles)
         commit('SET_NAME', name)
-        response(data)
+        resolve(data)
       }).catch(error => {
         reject(error)
       })

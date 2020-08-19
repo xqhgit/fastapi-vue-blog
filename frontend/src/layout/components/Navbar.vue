@@ -39,7 +39,7 @@
           <b-nav-item-dropdown v-if="name" right>
             <!-- Using 'button-content' slot -->
             <template v-slot:button-content>
-              <em>{{ username }}</em>
+              <em>{{ name }}</em>
             </template>
             <b-dropdown-item href="#">配置</b-dropdown-item>
             <b-dropdown-item href="#" @click="handleLogout">退出</b-dropdown-item>

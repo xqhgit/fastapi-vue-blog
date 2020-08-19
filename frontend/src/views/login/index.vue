@@ -40,6 +40,9 @@ export default {
         if (valid) {
           this.$store.dispatch('user/login', this.form).then(() => {
             this.$router.push({ name: 'posts' })
+            // this.$router.push({ path: this.redirect || '/' })
+            // console.log(this.$store.getters.token)
+            // console.log(this.$store.getters.roles)
           }).catch(() => {
 
           })
