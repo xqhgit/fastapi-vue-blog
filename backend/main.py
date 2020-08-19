@@ -25,22 +25,22 @@ if settings.BACKEND_CORS_ORIGINS:
     )
 
 # mount frontend static files
-# app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory="static"), name="static")
 app.include_router(api_router, prefix=settings.API_V1_STR)
 
 
-# @app.get('/')
-# async def read_index():
-#     return FileResponse('static/index.html')
-#
-#
-# @app.exception_handler(404)
-# async def not_found(request: Request, exc):
-#     accept = request.headers.get('accept')
-#     if exc.status_code == 404 and 'text/html' in accept:
-#         return FileResponse('static/index.html')
-#     else:
-#         return JSONResponse(content={'error': "Not found"}, status_code=exc.status_code)
+@app.get('/')
+async def read_index():
+    return FileResponse('static/index.html')
+
+
+@app.exception_handler(404)
+async def not_found(request: Request, exc):
+    accept = request.headers.get('accept')
+    if exc.status_code == 404 and 'text/html' in accept:
+        return FileResponse('static/index.html')
+    else:
+        return JSONResponse(content={'error': "Not found"}, status_code=exc.status_code)
 
 
 if __name__ == '__main__':

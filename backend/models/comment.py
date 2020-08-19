@@ -8,8 +8,8 @@ from backend.db.base import Base
 class Comment(Base):
     id = Column(Integer, primary_key=True)
     timestamp = Column(Boolean, default=lambda: int(datetime.timestamp(datetime.utcnow())), index=True)
-    from_admin = Column(Boolean, default=False)  # 用于判断是否为管理员的评论
-    reviewed = Column(DateTime, default=datetime.utcnow, index=True)  # 用于判断评论是否通过审核员的评论
+    from_admin = Column(Boolean, default=False)  # from admin's comment
+    reviewed = Column(DateTime, default=datetime.utcnow, index=True)  # admin review
 
     author = Column(String(30))
     email = Column(String(254))
