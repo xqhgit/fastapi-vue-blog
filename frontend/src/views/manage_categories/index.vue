@@ -46,6 +46,11 @@
     >
       <el-table-column type="selection" align="center" />
       <el-table-column label="分类名称" prop="name" sortable="custom" />
+      <el-table-column label="封面图片" prop="img" >
+        <template slot-scope="scope">
+          <img :src="'data:image/jpeg;base64,' + scope.row.image" class="card-img" alt="...">
+        </template>
+      </el-table-column>
       <el-table-column label="创建时间" prop="timestamp" sortable="custom" >
         <template slot-scope="scope">
           <span>{{ scope.row.timestamp | getLocalTime }}</span>
@@ -53,12 +58,13 @@
       </el-table-column>
       <el-table-column label="文章数量" prop="post_count" />
     </el-table>
-    <create-dialog ref="createDialog" :visible.sync="openCreate" />
+    <create-dialog ref="createDialog" :visible.sync="openCreate" @callback="getData" />
   </div>
 </template>
 
 <script>
 import CreateDialog from './components/CreateDialog'
+import { getCategories } from '@/api/categories'
 
 export default {
   name: 'ManageCategories',
@@ -81,6 +87,9 @@ export default {
       dataList: []
     }
   },
+  created() {
+    this.getData()
+  },
   methods: {
     handleOpen(name) {
       switch (name) {
@@ -91,7 +100,10 @@ export default {
     },
     getData() {
       this.loading = true
-      this.loading = false
+      getCategories(this.queryParams).then(res => {
+        this.dataList = res.data.items
+        this.loading = false
+      })
     },
     handleRowClick(row, column, event) {
       this.$refs['table'].clearSelection()

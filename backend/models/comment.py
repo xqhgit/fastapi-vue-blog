@@ -7,7 +7,7 @@ from backend.db.base import Base
 
 class Comment(Base):
     id = Column(Integer, primary_key=True)
-    timestamp = Column(Boolean, default=lambda: int(datetime.timestamp(datetime.utcnow())), index=True)
+    timestamp = Column(Integer, default=lambda: int(datetime.timestamp(datetime.utcnow())), index=True)
     from_admin = Column(Boolean, default=False)  # from admin's comment
     reviewed = Column(DateTime, default=datetime.utcnow, index=True)  # admin review
 

@@ -1,6 +1,7 @@
+import base64
 from typing import Union, List
 from sqlalchemy.orm import Session
-from fastapi import APIRouter, Depends, HTTPException, status, Body
+from fastapi import APIRouter, Depends, HTTPException, status, Body, UploadFile, File, Form
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 
@@ -25,14 +26,18 @@ def read_categories(
     return result
 
 
-@router.post('/', dependencies=[Depends(deps.get_current_active_admin)],
+@router.post('/',
+             dependencies=[Depends(deps.get_current_active_admin)],
              response_model=schemas.CategoryOut, status_code=status.HTTP_201_CREATED)
 def create_category(
-        db: Session = Depends(deps.get_db),
-        *, category_in: schemas.CategoryCreate
+        db: Session = Depends(deps.get_db), img: UploadFile = File(...), name: str = Form(...)
+        # *, category_in: schemas.CategoryCreate
 ):
+    category_in = schemas.CategoryCreate(
+        name=name, image=base64.b64encode(img.file.read())
+    )
     category = crud.category.create(db, obj_in=category_in)
-    return category
+    return JSONResponse(content={}, status_code=status.HTTP_201_CREATED)
 
 
 @router.delete('/', dependencies=[Depends(deps.get_current_active_admin)],

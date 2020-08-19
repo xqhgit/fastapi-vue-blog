@@ -20,7 +20,6 @@
                 :on-change="handleFileChange"
                 :on-remove="handleRemoveFile"
                 :auto-upload="false"
-                :file-list="form.file_list"
                 :limit="1"
                 list-type="picture"
                 action="#"
@@ -41,6 +40,8 @@
 </template>
 
 <script>
+import { createCategory } from '@/api/categories'
+
 export default {
   name: 'CreateDialog',
   props: {
@@ -98,6 +99,16 @@ export default {
       this.$refs['form'].validate(valid => {
         if (valid) {
           console.log(this.form)
+          const data = new FormData()
+          data.append('name', this.form.name)
+          data.append('img', this.form.img)
+          createCategory(data).then(res => {
+            this.currentVisible = false
+            this.reset()
+            this.$emit('callback')
+          }).catch(() => {
+
+          })
         }
       })
     }
