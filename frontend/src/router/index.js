@@ -72,15 +72,18 @@ export const asyncRoutes = [
     children: [{
       path: 'manage-posts',
       name: 'manage-posts',
-      component: () => import('@/views/manage_posts/index')
+      component: () => import('@/views/manage_posts/index'),
+      meta: { roles: ['admin'] }
     }, {
       path: 'manage-post',
       name: 'manage-post',
-      component: () => import('@/views/manage_post/index')
+      component: () => import('@/views/manage_post/index'),
+      meta: { roles: ['admin'] }
     }, {
       path: 'manage-categories',
       name: 'manage-categories',
-      component: () => import('@/views/manage_categories/index')
+      component: () => import('@/views/manage_categories/index'),
+      meta: { roles: ['admin'] }
     }]
   }
 ]
