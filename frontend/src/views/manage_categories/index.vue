@@ -36,7 +36,6 @@
       ref="table"
       :v-loading="loading"
       :data="dataList"
-      max-height="700"
       row-key="id"
       highlight-current-row
       @row-click="handleRowClick"
@@ -58,17 +57,19 @@
       </el-table-column>
       <el-table-column label="文章数量" prop="post_count" />
     </el-table>
+    <pagination :total="total" :page.sync="queryParams.page" :limit.sync="queryParams.limit" auto-scroll @pagination="getData" />
     <create-dialog ref="createDialog" :visible.sync="openCreate" @callback="getData" />
   </div>
 </template>
 
 <script>
+import Pagination from '@/components/Pagination'
 import CreateDialog from './components/CreateDialog'
 import { getCategories } from '@/api/categories'
 
 export default {
   name: 'ManageCategories',
-  components: { CreateDialog },
+  components: { CreateDialog, Pagination },
   filters: {
     getLocalTime(nS) {
       const n = nS - (new Date().getTimezoneOffset() * 60)
@@ -84,7 +85,12 @@ export default {
       single: true,
       multiple: true,
       openCreate: false,
-      dataList: []
+      dataList: [],
+      total: 0,
+      queryParams: {
+        page: 1,
+        limit: 5
+      }
     }
   },
   created() {
@@ -102,6 +108,7 @@ export default {
       this.loading = true
       getCategories(this.queryParams).then(res => {
         this.dataList = res.data.items
+        this.total = res.data.total
         this.loading = false
       })
     },

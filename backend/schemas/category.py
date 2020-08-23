@@ -19,6 +19,7 @@ class CategoryOut(CategoryBase):
     id: int
     name: str
     image: bytes
+    timestamp: int
 
     class Config:
         orm_mode = True

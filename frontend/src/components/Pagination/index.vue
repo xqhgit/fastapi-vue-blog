@@ -1,18 +1,21 @@
 <template>
-  <div>
-    <b-pagination
-      v-model="currentPage"
-      :total-rows="total"
-      :per-page="perPage"
-      prev-text="Prev"
-      next-text="Next"
-      aria-controls="categories-card"
-      @change="pageChange"
+  <div :class="{'hidden':hidden}" class="pagination-container">
+    <el-pagination
+      :background="background"
+      :current-page.sync="currentPage"
+      :page-size.sync="pageSize"
+      :layout="layout"
+      :page-sizes="pageSizes"
+      :total="total"
+      v-bind="$attrs"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
     />
   </div>
 </template>
 
 <script>
+// import { scrollTo } from '@/utils/scroll-to'
 export default {
   name: 'Pagination',
   props: {
@@ -26,7 +29,29 @@ export default {
     },
     limit: {
       type: Number,
-      default: 6
+      default: 30
+    },
+    pageSizes: {
+      type: Array,
+      default() {
+        return [5, 10, 50, 100]
+      }
+    },
+    layout: {
+      type: String,
+      default: 'total, sizes, prev, pager, next, jumper'
+    },
+    background: {
+      type: Boolean,
+      default: true
+    },
+    autoScroll: {
+      type: Boolean,
+      default: false
+    },
+    hidden: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -38,7 +63,7 @@ export default {
         this.$emit('update:page', val)
       }
     },
-    perPage: {
+    pageSize: {
       get() {
         return this.limit
       },
@@ -48,13 +73,30 @@ export default {
     }
   },
   methods: {
-    pageChange(page) {
-      this.$emit('pageChange')
+    handleSizeChange(val) {
+      this.$router.replace({ path: this.$route.path, query: { page: this.currentPage, limit: val }})
+      this.$emit('pagination', { page: this.currentPage, limit: val })
+      // if (this.autoScroll) {
+      //   scrollTo(0, 800)
+      // }
+    },
+    handleCurrentChange(val) {
+      this.$router.replace({ path: this.$route.path, query: { page: val, limit: this.pageSize }})
+      this.$emit('pagination', { page: val, limit: this.pageSize })
+      // if (this.autoScroll) {
+      //   scrollTo(0, 800)
+      // }
     }
   }
 }
 </script>
 
 <style scoped>
-
+  .pagination-container {
+    background: #fff;
+    padding: 32px 16px;
+  }
+  .pagination-container.hidden {
+    display: none;
+  }
 </style>
