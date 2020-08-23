@@ -104,6 +104,9 @@ fastapi-vue-blog
 
 #### 插图
 
-![avatar](./introduce/frontend_photo.png)
+![avatar](./introduce/frontend_posts.jpg)
+![avatar](./introduce/frontend_categories.jpg)
+![avatar](./introduce/frontend_about.jpg)
+![avatar](./introduce/frontend_manage_categories.jpg)
 
 ![avatar](./introduce/backend_api_photo.png)
