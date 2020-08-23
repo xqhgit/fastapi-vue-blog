@@ -1,22 +1,25 @@
 <template>
   <div>
     <b-jumbotron>
-      <template v-slot:header>BootstrapVue</template>
+      <template v-slot:header>开源博客</template>
 
       <template v-slot:lead>
-        This is a simple hero unit, a simple jumbotron-style component for calling extra attention to
-        featured content or information.
+        fastapi-vue-blog 前后端分离开源博客
       </template>
 
       <hr class="my-4">
 
       <p>
-        It uses utility classes for typography and spacing to space content out within the larger
-        container.
+        后端框架：<br>
+        Python Web 框架：FastAPI <br>
+        ORM：SQLAlchemy <br>
+        前端框架：Vue <br>
+        游客界面：BootstrapVue <br>
+        管理界面：ElementUI <br>
       </p>
 
-      <b-button variant="primary" href="#">Do Something</b-button>
-      <b-button variant="success" href="#">Do Something Else</b-button>
+      <b-button variant="primary" href="https://gitee.com/xuqihui/fastapi-vue-blog.git" target="_blank">码云仓库</b-button>
+      <!--<b-button variant="success" href="#">Do Something Else</b-button>-->
     </b-jumbotron>
   </div>
 </template>
