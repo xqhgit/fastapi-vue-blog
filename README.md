@@ -108,5 +108,4 @@ fastapi-vue-blog
 ![avatar](./introduce/frontend_categories.jpg)
 ![avatar](./introduce/frontend_about.jpg)
 ![avatar](./introduce/frontend_manage_categories.jpg)
-
 ![avatar](./introduce/backend_api_photo.png)
