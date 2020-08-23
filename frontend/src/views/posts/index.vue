@@ -46,7 +46,7 @@
     </div>
     <div class="row">
       <div class="col-md-12">
-        <pagination :total="total" :page.sync="query.page" :limit.sync="query.limit" @pageChange="getData"/>
+        <pagination :total="total" :page.sync="query.page" :limit.sync="query.limit" auto-scroll @pagination="getData"/>
       </div>
     </div>
   </div>
