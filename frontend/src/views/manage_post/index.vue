@@ -1,9 +1,52 @@
 <template>
   <div class="manage-post">
     <el-page-header content="创建文章" @back="goBack"/>
-    <el-form ref="form" :model="form" label-width="80px">
-      <el-form-item label="标题">
-        <el-input v-model="form.name"/>
+    <el-form ref="form" :model="form" label-width="80px" style="margin-top: 20px">
+      <el-row>
+        <el-col :span="24">
+          <el-form-item label="标题">
+            <el-input v-model="form.name" clearable />
+          </el-form-item>
+        </el-col>
+        <el-col :span="24">
+          <el-form-item label="简介">
+            <el-input v-model="form.summary" clearable />
+          </el-form-item>
+        </el-col>
+        <el-col :span="6">
+          <el-form-item label="分类">
+            <el-select v-model="form.category_id" placeholder="请选择" clearable >
+              <el-option
+                v-for="item in categoryOptions"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              />
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="6">
+          <el-form-item label="发布">
+            <el-radio-group v-model="form.is_publish" style="margin-top: 6px">
+              <el-radio v-for="dict in boolOptions" :key="dict.value" :label="dict.value">{{ dict.label }}</el-radio>
+            </el-radio-group>
+          </el-form-item>
+        </el-col>
+        <el-col :span="6">
+          <el-form-item label="评论">
+            <el-radio-group v-model="form.can_comment" style="margin-top: 6px">
+              <el-radio v-for="dict in boolOptions" :key="dict.value" :label="dict.value">{{ dict.label }}</el-radio>
+            </el-radio-group>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-form-item>
+        <mavon-editor v-model="form.content"/>
+      </el-form-item>
+      <el-form-item>
+        <el-button style="margin-top:5px;" type="primary" icon="el-icon-document">
+          提交
+        </el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -15,8 +58,17 @@ export default {
   data() {
     return {
       form: {
-        title: undefined
-      }
+        title: undefined,
+        is_publish: true,
+        can_comment: true,
+        content: '',
+        summary: ''
+      },
+      categoryOptions: [],
+      boolOptions: [
+        { label: '是', value: true },
+        { label: '否', value: false }
+      ]
     }
   },
   methods: {
