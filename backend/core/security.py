@@ -10,17 +10,17 @@ pwd_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
 ALGORITHM = 'HS256'
 
 
-# 生成加密密码
+# generate hash password
 def get_password_hash(password: str) -> str:
     return pwd_context.hash(password)
 
 
-# 验证登录密码
+# verify login password
 def verify_password(password: str, hashed_password: str) -> bool:
     return pwd_context.verify(password, hashed_password)
 
 
-# 生成访问token
+# generate access token
 def create_access_token(
     subject: Union[str, Any], expires_delta: timedelta = None
 ) -> str:
