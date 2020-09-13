@@ -15,3 +15,11 @@ export function createCategory(data) {
     data
   })
 }
+
+export function deleteCategories(data) {
+  return request({
+    url: '/categories/',
+    method: 'delete',
+    data
+  })
+}

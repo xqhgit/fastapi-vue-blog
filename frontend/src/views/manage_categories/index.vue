@@ -18,7 +18,7 @@
           type="success"
           icon="el-icon-edit"
           size="mini"
-          @click="handleOpen"
+          @click="handleDelete"
         >编辑</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -28,7 +28,7 @@
           type="danger"
           icon="el-icon-delete"
           size="mini"
-          @click="handleOpen"
+          @click="handleDelete"
         >删除</el-button>
       </el-col>
     </el-row>
@@ -104,6 +104,26 @@ export default {
           break
       }
     },
+    handleDelete() {
+      console.log(this.row)
+      this.$confirm('是否确认删除分类为"' + this.row.name + '"的数据项', '警告', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '删除成功'
+        })
+      }).catch(() => {
+        this.$message({
+          message: '删除失败',
+          type: 'error'
+        })
+      })
+    },
     getData() {
       this.loading = true
       getCategories(this.queryParams).then(res => {
@@ -122,6 +142,9 @@ export default {
       this.single = selection.length !== 1
       this.multiple = !selection.length
       this.row = undefined
+      if (!this.single) {
+        this.row = selection[0]
+      }
     },
     handleSortChange(column) {
       this.queryParams.order = column['prop'] + ':' + column['order']
