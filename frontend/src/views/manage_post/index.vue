@@ -8,11 +8,6 @@
             <el-input v-model="form.name" clearable />
           </el-form-item>
         </el-col>
-        <el-col :span="24">
-          <el-form-item label="简介">
-            <el-input v-model="form.summary" clearable />
-          </el-form-item>
-        </el-col>
         <el-col :span="6">
           <el-form-item label="分类">
             <el-select v-model="form.category_id" placeholder="请选择" clearable >
@@ -33,7 +28,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="6">
-          <el-form-item label="评论">
+          <el-form-item label="可以评论">
             <el-radio-group v-model="form.can_comment" style="margin-top: 6px">
               <el-radio v-for="dict in boolOptions" :key="dict.value" :label="dict.value">{{ dict.label }}</el-radio>
             </el-radio-group>
@@ -41,7 +36,13 @@
         </el-col>
       </el-row>
       <el-form-item>
-        <mavon-editor v-model="form.content"/>
+        <mavon-editor
+          v-model="form.content"
+          @change="handleMarkdownChange"
+          @save="handleEditorSave"
+          @imgAdd="imgAdd"
+          @imgDel="imgDel"
+        />
       </el-form-item>
       <el-form-item>
         <el-button style="margin-top:5px;" type="primary" icon="el-icon-document">
@@ -61,6 +62,7 @@ export default {
         title: undefined,
         is_publish: true,
         can_comment: true,
+        category_id: undefined,
         content: '',
         summary: ''
       },
@@ -74,6 +76,19 @@ export default {
   methods: {
     goBack() {
       this.$router.go(-1)
+    },
+    handleEditorSave(value, render) {
+      console.log(value)
+      console.log(render)
+    },
+    handleMarkdownChange(value, render) {
+    },
+    imgAdd(filename, imgfile) {
+      console.log(filename)
+      console.log(imgfile)
+    },
+    imgDel(filename) {
+
     }
   }
 }
