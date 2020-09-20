@@ -47,11 +47,11 @@
     >
       <el-table-column type="selection" align="center"/>
       <el-table-column label="分类名称" prop="name" sortable="custom"/>
-      <!--<el-table-column label="封面图片" prop="img" >-->
-      <!--<template slot-scope="scope">-->
-      <!--<img :src="'data:image/jpeg;base64,' + scope.row.image" class="card-img" alt="...">-->
-      <!--</template>-->
-      <!--</el-table-column>-->
+      <el-table-column label="封面图片" prop="img" >
+        <template slot-scope="scope">
+          <img :src="'data:image/jpeg;base64,' + scope.row.image" class="card-img" alt="...">
+        </template>
+      </el-table-column>
       <el-table-column label="创建时间" prop="timestamp" sortable="custom">
         <template slot-scope="scope">
           <span>{{ scope.row.timestamp | getLocalTime }}</span>

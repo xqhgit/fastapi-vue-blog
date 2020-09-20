@@ -1,15 +1,15 @@
 <template>
   <div class="manage-post">
     <el-page-header content="创建文章" @back="goBack"/>
-    <el-form ref="form" :model="form" label-width="80px" style="margin-top: 20px">
+    <el-form ref="form" :model="form" :rules="rules" label-width="80px" style="margin-top: 20px">
       <el-row>
         <el-col :span="24">
-          <el-form-item label="标题">
-            <el-input v-model="form.name" clearable />
+          <el-form-item label="标题" prop="title">
+            <el-input v-model="form.title" clearable />
           </el-form-item>
         </el-col>
         <el-col :span="6">
-          <el-form-item label="分类">
+          <el-form-item label="分类" prop="category_id">
             <el-select v-model="form.category_id" placeholder="请选择" clearable >
               <el-option
                 v-for="item in categoryOptions"
@@ -21,22 +21,28 @@
           </el-form-item>
         </el-col>
         <el-col :span="6">
-          <el-form-item label="发布">
+          <el-form-item label="发布" prop="is_publish">
             <el-radio-group v-model="form.is_publish" style="margin-top: 6px">
               <el-radio v-for="dict in boolOptions" :key="dict.value" :label="dict.value">{{ dict.label }}</el-radio>
             </el-radio-group>
           </el-form-item>
         </el-col>
         <el-col :span="6">
-          <el-form-item label="可以评论">
+          <el-form-item label="可以评论" prop="can_comment">
             <el-radio-group v-model="form.can_comment" style="margin-top: 6px">
               <el-radio v-for="dict in boolOptions" :key="dict.value" :label="dict.value">{{ dict.label }}</el-radio>
             </el-radio-group>
           </el-form-item>
         </el-col>
+        <el-col :span="24">
+          <el-form-item label="封面" prop="title">
+            <el-input v-model="form.title" clearable />
+          </el-form-item>
+        </el-col>
       </el-row>
       <el-form-item>
         <mavon-editor
+          ref="md"
           v-model="form.content"
           @change="handleMarkdownChange"
           @save="handleEditorSave"
@@ -46,7 +52,7 @@
       </el-form-item>
       <el-form-item>
         <el-button style="margin-top:5px;" type="primary" icon="el-icon-document">
-          提交
+          保存
         </el-button>
       </el-form-item>
     </el-form>
@@ -54,17 +60,32 @@
 </template>
 
 <script>
+import { getCategoriesOptions } from '@/api/posts'
+
 export default {
   name: 'ManagePost',
   data() {
     return {
       form: {
         title: undefined,
-        is_publish: true,
+        is_publish: false,
         can_comment: true,
         category_id: undefined,
-        content: '',
-        summary: ''
+        content: ''
+      },
+      rules: {
+        title: [
+          { required: true, message: '不能为空', trigger: 'blur' }
+        ],
+        is_publish: [
+          { required: true, message: '不能为空', trigger: 'blur' }
+        ],
+        can_comment: [
+          { required: true, message: '不能为空', trigger: 'blur' }
+        ],
+        category_id: [
+          { required: true, message: '不能为空', trigger: 'blur' }
+        ]
       },
       categoryOptions: [],
       boolOptions: [
@@ -72,6 +93,11 @@ export default {
         { label: '否', value: false }
       ]
     }
+  },
+  created() {
+    getCategoriesOptions().then(res => {
+      this.categoryOptions = res.data
+    })
   },
   methods: {
     goBack() {
@@ -86,6 +112,7 @@ export default {
     imgAdd(filename, imgfile) {
       console.log(filename)
       console.log(imgfile)
+      console.log(this.$refs.md)
     },
     imgDel(filename) {
 

@@ -40,6 +40,15 @@ def create_category(
     return JSONResponse(content={}, status_code=status.HTTP_201_CREATED)
 
 
+@router.get('/options', dependencies=[Depends(deps.get_current_active_admin)],
+            status_code=status.HTTP_200_OK)
+def read_categories_options(
+        db: Session = Depends(deps.get_db)
+):
+    data = crud.category.get_options(db)
+    return JSONResponse(content=data, status_code=status.HTTP_200_OK)
+
+
 @router.delete('/{category_id}', dependencies=[Depends(deps.get_current_active_admin)],
                status_code=status.HTTP_200_OK)
 def delete_category(

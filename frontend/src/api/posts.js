@@ -7,3 +7,10 @@ export function getPosts(query) {
     params: query
   })
 }
+
+export function getCategoriesOptions() {
+  return request({
+    url: '/categories/options',
+    method: 'get'
+  })
+}

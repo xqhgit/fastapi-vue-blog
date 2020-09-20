@@ -16,5 +16,13 @@ class CRUDCategory(CRUDBase[Category, CategoryCreate, CategoryUpdate]):
         db.refresh(db_obj)
         return db_obj
 
+    def get_options(self, db: Session, *, filters=None):
+        query = db.query(
+            self.model.id, self.model.name
+        )
+        if filters is not None:
+            query = query.filter(*filters)
+        return [r._asdict() for r in query.all()]
+
 
 category = CRUDCategory(Category)
