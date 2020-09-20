@@ -2,12 +2,13 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
+from fastapi.exceptions import RequestValidationError
+from fastapi.exception_handlers import request_validation_exception_handler
 from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import FileResponse
 
 from backend.core.config import settings
 from backend.api.api_v1.api import api_router
-
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -43,8 +44,16 @@ async def not_found(request: Request, exc):
         return JSONResponse(content={'error': "Not found"}, status_code=exc.status_code)
 
 
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request, exc):
+    print(request)
+    print('Validation Exception', exc)
+    return await request_validation_exception_handler(request, exc)
+
+
 if __name__ == '__main__':
     import uvicorn
+
     # dev
     uvicorn.run(f'{__name__}:app', port=5000, host='127.0.0.1', reload=True)
     # prod

@@ -16,10 +16,9 @@ export function createCategory(data) {
   })
 }
 
-export function deleteCategories(data) {
+export function deleteCategory(category_id) {
   return request({
-    url: '/categories/',
-    method: 'delete',
-    data
+    url: `/categories/${category_id}`,
+    method: 'delete'
   })
 }

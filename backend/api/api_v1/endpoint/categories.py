@@ -40,14 +40,14 @@ def create_category(
     return JSONResponse(content={}, status_code=status.HTTP_201_CREATED)
 
 
-@router.delete('/', dependencies=[Depends(deps.get_current_active_admin)],
+@router.delete('/{category_id}', dependencies=[Depends(deps.get_current_active_admin)],
                status_code=status.HTTP_200_OK)
 def delete_category(
         db: Session = Depends(deps.get_db),
-        *, ids: Union[int, List[int]] = Body(...)
+        *, category_id: int
 ):
-    crud.category.delete(db, ids=ids)
-    return
+    crud.category.delete(db, ids=[category_id, ])
+    return JSONResponse(content='ok', status_code=status.HTTP_201_CREATED)
 
 
 @router.put('/{category_id}', dependencies=[Depends(deps.get_current_active_admin)], response_model=schemas.CategoryOut,

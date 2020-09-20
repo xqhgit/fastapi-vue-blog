@@ -9,7 +9,8 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleOpen('create')"
-        >新增</el-button>
+        >新增
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -18,18 +19,19 @@
           type="success"
           icon="el-icon-edit"
           size="mini"
-          @click="handleDelete"
-        >编辑</el-button>
+        >编辑
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
-          :disabled="multiple"
+          :disabled="single"
           style="margin-top: 5px"
           type="danger"
           icon="el-icon-delete"
           size="mini"
           @click="handleDelete"
-        >删除</el-button>
+        >删除
+        </el-button>
       </el-col>
     </el-row>
     <el-table
@@ -43,29 +45,34 @@
       @sotr-change="handleSortChange"
       @filter-change="handleFilterChange"
     >
-      <el-table-column type="selection" align="center" />
-      <el-table-column label="分类名称" prop="name" sortable="custom" />
-      <el-table-column label="封面图片" prop="img" >
-        <template slot-scope="scope">
-          <img :src="'data:image/jpeg;base64,' + scope.row.image" class="card-img" alt="...">
-        </template>
-      </el-table-column>
-      <el-table-column label="创建时间" prop="timestamp" sortable="custom" >
+      <el-table-column type="selection" align="center"/>
+      <el-table-column label="分类名称" prop="name" sortable="custom"/>
+      <!--<el-table-column label="封面图片" prop="img" >-->
+      <!--<template slot-scope="scope">-->
+      <!--<img :src="'data:image/jpeg;base64,' + scope.row.image" class="card-img" alt="...">-->
+      <!--</template>-->
+      <!--</el-table-column>-->
+      <el-table-column label="创建时间" prop="timestamp" sortable="custom">
         <template slot-scope="scope">
           <span>{{ scope.row.timestamp | getLocalTime }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="文章数量" prop="post_count" />
+      <el-table-column label="文章数量" prop="post_count"/>
     </el-table>
-    <pagination :total="total" :page.sync="queryParams.page" :limit.sync="queryParams.limit" auto-scroll @pagination="getData" />
-    <create-dialog ref="createDialog" :visible.sync="openCreate" @callback="getData" />
+    <pagination
+      :total="total"
+      :page.sync="queryParams.page"
+      :limit.sync="queryParams.limit"
+      auto-scroll
+      @pagination="getData"/>
+    <create-dialog ref="createDialog" :visible.sync="openCreate" @callback="getData"/>
   </div>
 </template>
 
 <script>
 import Pagination from '@/components/Pagination'
 import CreateDialog from './components/CreateDialog'
-import { getCategories } from '@/api/categories'
+import { getCategories, deleteCategory } from '@/api/categories'
 
 export default {
   name: 'ManageCategories',
@@ -89,7 +96,7 @@ export default {
       total: 0,
       queryParams: {
         page: 1,
-        limit: 5
+        limit: 10
       }
     }
   },
@@ -111,12 +118,13 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-
+        return deleteCategory(this.row.id)
       }).then(() => {
         this.$message({
           type: 'success',
           message: '删除成功'
         })
+        this.getData()
       }).catch(() => {
         this.$message({
           message: '删除失败',
