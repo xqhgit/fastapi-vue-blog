@@ -35,8 +35,18 @@
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item label="封面" prop="title">
-            <el-input v-model="form.title" clearable />
+          <el-form-item label="封面" prop="cover_image">
+            <el-upload
+              :on-change="handleCoverImageChange"
+              :on-remove="handleRemoveCoverImage"
+              :auto-upload="false"
+              :limit="1"
+              list-type="picture"
+              action="#"
+            >
+              <el-button size="small" type="primary">点击选择</el-button>
+              <div slot="tip" class="el-upload__tip">只能上传jpg/png文件</div>
+            </el-upload>
           </el-form-item>
         </el-col>
       </el-row>
@@ -51,7 +61,11 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button style="margin-top:5px;" type="primary" icon="el-icon-document">
+        <el-button
+          style="margin-top:5px;"
+          type="primary"
+          icon="el-icon-document"
+          @click="handleSave">
           保存
         </el-button>
       </el-form-item>
@@ -60,7 +74,7 @@
 </template>
 
 <script>
-import { getCategoriesOptions } from '@/api/posts'
+import { getCategoriesOptions, uploadAttachement } from '@/api/posts'
 
 export default {
   name: 'ManagePost',
@@ -71,6 +85,7 @@ export default {
         is_publish: false,
         can_comment: true,
         category_id: undefined,
+        cover_image: undefined,
         content: ''
       },
       rules: {
@@ -84,6 +99,9 @@ export default {
           { required: true, message: '不能为空', trigger: 'blur' }
         ],
         category_id: [
+          { required: true, message: '不能为空', trigger: 'blur' }
+        ],
+        cover_image: [
           { required: true, message: '不能为空', trigger: 'blur' }
         ]
       },
@@ -112,10 +130,27 @@ export default {
     imgAdd(filename, imgfile) {
       console.log(filename)
       console.log(imgfile)
-      console.log(this.$refs.md)
+      // console.log(this.$refs.md)
+      const data = new FormData()
+      data.append('file', imgfile)
+      uploadAttachement(data).then(res => {
+        const data = res.data
+        this.$refs.md.$img2Url(filename, data.url)
+      }).catch(() => {
+
+      })
     },
     imgDel(filename) {
-
+      console.log(filename)
+    },
+    handleCoverImageChange(file, fileList) {
+      this.form.cover_image = file.raw
+    },
+    handleRemoveCoverImage(file, fileList) {
+      this.form.cover_image = undefined
+    },
+    handleSave() {
+      console.log(this.$refs.md)
     }
   }
 }

@@ -98,7 +98,6 @@ export default {
     submitForm() {
       this.$refs['form'].validate(valid => {
         if (valid) {
-          console.log(this.form)
           const data = new FormData()
           data.append('name', this.form.name)
           data.append('img', this.form.img)

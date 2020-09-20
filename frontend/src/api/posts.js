@@ -14,3 +14,13 @@ export function getCategoriesOptions() {
     method: 'get'
   })
 }
+
+export function uploadAttachement(data) {
+  console.log('print upload data', data)
+  return request({
+    url: '/attachments/',
+    method: 'post',
+    data
+  })
+}
+
