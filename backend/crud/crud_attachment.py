@@ -25,6 +25,10 @@ class CRUDAttachment(CRUDBase[Attachment, AttachmentCreate, AttachmentUpdate]):
         db_obj = self.create(db, obj_in=obj_in)
         return db_obj
 
+    def delete_by_url(self, db: Session, *, url: str):
+        db.query(self.model).filter(self.model.url == url).delete()
+        db.commit()
+
     def save_file(self, *, file: UploadFile, uid, request: Request) -> str:
         file_object = file.file
         file_path = os.path.join(settings.BASEDIR, 'static/attachments/{}'.format(uid))

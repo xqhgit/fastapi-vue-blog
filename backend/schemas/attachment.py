@@ -15,3 +15,8 @@ class AttachmentCreate(AttachmentBase):
 
 class AttachmentUpdate(AttachmentBase):
     pass
+
+
+class AttachmentDelete(AttachmentBase):
+    url: str
+

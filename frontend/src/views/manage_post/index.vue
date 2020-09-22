@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import { getCategoriesOptions, uploadAttachement } from '@/api/posts'
+import { getCategoriesOptions, uploadAttachment, deleteAttachment } from '@/api/manage_post'
 
 export default {
   name: 'ManagePost',
@@ -133,7 +133,7 @@ export default {
       // console.log(this.$refs.md)
       const data = new FormData()
       data.append('file', imgfile)
-      uploadAttachement(data).then(res => {
+      uploadAttachment(data).then(res => {
         const data = res.data
         this.$refs.md.$img2Url(filename, data.url)
       }).catch(() => {
@@ -141,7 +141,11 @@ export default {
       })
     },
     imgDel(filename) {
-      console.log(filename)
+      const file_url = filename[0]
+      deleteAttachment({ 'url': file_url }).then(res => {
+      }).catch((err) => {
+        console.log(err)
+      })
     },
     handleCoverImageChange(file, fileList) {
       this.form.cover_image = file.raw
