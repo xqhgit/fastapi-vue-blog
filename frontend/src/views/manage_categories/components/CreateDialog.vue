@@ -17,6 +17,7 @@
           <el-col :span="24">
             <el-form-item label="显示封面" prop="img" >
               <el-upload
+                ref="upload"
                 :on-change="handleFileChange"
                 :on-remove="handleRemoveFile"
                 :auto-upload="false"
@@ -78,6 +79,7 @@ export default {
         name: undefined,
         img: undefined
       }
+      this.$refs.upload.clearFiles()
       this.resetForm()
     },
     resetForm() {
