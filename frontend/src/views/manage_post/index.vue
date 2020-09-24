@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import { getCategoriesOptions, uploadAttachment, deleteAttachment } from '@/api/manage_post'
+import { getCategoriesOptions, uploadAttachment, deleteAttachment, createPost } from '@/api/manage_post'
 
 export default {
   name: 'ManagePost',
