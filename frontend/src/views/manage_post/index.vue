@@ -154,7 +154,30 @@ export default {
       this.form.cover_image = undefined
     },
     handleSave() {
-      console.log(this.$refs.md)
+      console.log(this.form)
+      this.$refs['form'].validate(valid => {
+        if (valid) {
+          const data = new FormData()
+          data.append('title', this.form.title)
+          data.append('can_comment', this.form.can_comment)
+          data.append('is_publish', this.form.is_publish)
+          data.append('category_id', this.form.category_id)
+          data.append('cover_image', this.form.cover_image)
+          data.append('content', this.form.content)
+          createPost(data).then(res => {
+            this.$message({
+              type: 'success',
+              message: '成功'
+            })
+            this.goBack()
+          }).catch(() => {
+            this.$message({
+              type: 'error',
+              message: '失败'
+            })
+          })
+        }
+      })
     }
   }
 }

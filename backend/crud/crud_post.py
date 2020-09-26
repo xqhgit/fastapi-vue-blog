@@ -11,10 +11,13 @@ from backend.schemas.post import PostCreate, PostUpdate
 class CRUDPost(CRUDBase[Post, PostCreate, PostUpdate]):
 
     def create(self, db: Session, *, obj_in: PostCreate):
-        category = crud.category.get(obj_in.category_id)
+        category = crud.category.get(db, id=obj_in.category_id)
         if not category:
             raise ValueError
-        return super().create(db, obj_in=obj_in)
+        db_obj = self.model(
+         **obj_in.dict()
+        )
+        return db_obj
 
 
 post = CRUDPost(Post)
