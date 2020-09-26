@@ -1,4 +1,4 @@
-from typing import TypeVar, Generic, Type, Optional, Any, Dict, List, Iterable
+from typing import TypeVar, Generic, Type, Optional, Any, Dict, List, Tuple
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from sqlalchemy import Table, Column
@@ -50,9 +50,9 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             self,
             db: Session,
             *,
-            filters: Iterable = tuple(),
-            order_by: Column = None,
-            page: int = 0,
+            filters: Tuple = tuple(),
+            order_by=None,
+            page: int = 1,
             limit: int = 10
     ) -> Optional[List[ModelType]]:
         offset = limit * (page - 1)

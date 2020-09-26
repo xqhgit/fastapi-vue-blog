@@ -14,28 +14,18 @@ router = APIRouter()
 
 @router.get('/')
 def read_posts(
+        db: Session = Depends(deps.get_db),
         limit: int = 10,
         page: int = 1
 ):
-    offset = limit * (page - 1)
-    images = [
-        '1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg'
-    ]
-    items = []
-    x = 1
-    for image in images:
-        items.append({
-            'image': utils.img_base64(image),
-            'id': x
-        })
-        x += 1
-    total = len(items)
-    items = items[offset:offset + limit]
+    posts = crud.post.get_multi(db, limit=limit, page=page)
     result = {
-        "total": total,
-        "items": items
+        'total': len(posts),
+        'items': [p._asdict() for p in posts]
     }
-    return JSONResponse(content=jsonable_encoder(result), status_code=status.HTTP_200_OK)
+    return JSONResponse(
+        content=jsonable_encoder(result), status_code=status.HTTP_200_OK
+    )
 
 
 @router.post('/', dependencies=[Depends(deps.get_current_active_admin)], status_code=status.HTTP_201_CREATED)
@@ -61,3 +51,12 @@ def create_post(
             status_code=status.HTTP_400_BAD_REQUEST, detail="Parameter error"
         )
     return JSONResponse(content='ok', status_code=status.HTTP_201_CREATED)
+
+
+@router.get('/manage', dependencies=[Depends(deps.get_current_active_admin)])
+def manage_read_posts(
+        db: Session = Depends(deps.get_db),
+        limit: int = 10,
+        page: int = 1
+):
+    pass

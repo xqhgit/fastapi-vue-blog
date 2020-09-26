@@ -6,9 +6,13 @@
       </div>
       <div class="col-md-8" style="background-color: rgb(248, 249, 250)">
         <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+
+          <h5 class="card-title">
+            <span class="badge badge-secondary" style="font-size: 100%;">New</span>
+            {{ title }}
+          </h5>
+          <p class="card-text">{{ content }}</p>
+          <p class="card-text"><small class="text-muted">{{ timestamp | getLocalTime }}</small></p>
         </div>
       </div>
     </div>
@@ -17,10 +21,28 @@
 
 <script>
 export default {
-  name: 'PostCard',
+  name: 'PostCard', filters: {
+    getLocalTime(nS) {
+      const n = nS - (new Date().getTimezoneOffset() * 60)
+      const date = new Date(n * 1000)
+      return date.toLocaleDateString()
+    }
+  },
   props: {
+    title: {
+      type: String,
+      required: true
+    },
     image: {
       type: String,
+      required: true
+    },
+    content: {
+      type: String,
+      required: true
+    },
+    timestamp: {
+      type: Number,
       required: true
     }
   }
