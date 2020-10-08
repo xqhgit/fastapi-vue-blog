@@ -51,6 +51,10 @@ export const constantRoutes = [
       name: 'posts',
       component: () => import('@/views/posts/index')
     }, {
+      path: 'post',
+      name: 'post',
+      component: () => import('@/views/post/index')
+    }, {
       path: 'categories',
       name: 'categories',
       component: () => import('@/views/categories/index')
@@ -59,7 +63,7 @@ export const constantRoutes = [
       name: 'about',
       component: () => import('@/views/about/index')
     }, {
-      path: '/login',
+      path: 'login',
       name: 'login',
       component: () => import('@/views/login')
     }]

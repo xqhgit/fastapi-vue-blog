@@ -6,10 +6,11 @@
       </div>
       <div class="col-md-8" style="background-color: rgb(248, 249, 250)">
         <div class="card-body">
-
           <h5 class="card-title">
             <span class="badge badge-secondary" style="font-size: 100%;">New</span>
-            {{ title }}
+            <span style="color: #17a2b8;cursor: pointer;">
+              <router-link :to="{name: 'post'}" >{{ title }}</router-link>
+            </span>
           </h5>
           <p class="card-text">{{ content }}</p>
           <p class="card-text"><small class="text-muted">{{ timestamp | getLocalTime }}</small></p>
