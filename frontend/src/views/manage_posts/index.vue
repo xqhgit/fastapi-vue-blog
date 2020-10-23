@@ -103,6 +103,9 @@ export default {
     }
   },
   methods: {
+    getData(){
+
+    },
     handleOpen(name) {
       switch (name) {
         case 'create':

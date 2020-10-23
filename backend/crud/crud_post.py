@@ -42,5 +42,25 @@ class CRUDPost(CRUDBase[Post, PostCreate, PostUpdate]):
         query = query.offset(offset).limit(limit)
         return query.all()
 
+    def get_manage_list(
+            self,
+            db: Session,
+            *,
+            filters: Tuple = tuple(),
+            order_by=None,
+            page: int = 1,
+            limit: int = 10
+    ):
+        offset = limit * (page - 1)
+        query = db.query(
+            self.model.id, Post.title, Post.timestamp
+        ).outerjoin(Post.category)
+        if filters:
+            query = query.filter(*filters)
+        if order_by is not None:
+            query = query.order_by(order_by)
+        query = query.offset(offset).limit(limit)
+        return query.all()
+
 
 post = CRUDPost(Post)

@@ -53,10 +53,18 @@ def create_post(
     return JSONResponse(content='ok', status_code=status.HTTP_201_CREATED)
 
 
-@router.get('/manage', dependencies=[Depends(deps.get_current_active_admin)])
-def manage_read_posts(
+@router.get('/admin', dependencies=[Depends(deps.get_current_active_admin)])
+def admin_read_posts(
         db: Session = Depends(deps.get_db),
         limit: int = 10,
         page: int = 1
 ):
-    pass
+    posts = crud.post.get_manage_list(db, limit=limit, page=page)
+    result = {
+        'total': len(posts),
+        'items': [p._asdict() for p in posts]
+    }
+    return JSONResponse(
+        content=jsonable_encoder(result), status_code=status.HTTP_200_OK
+    )
+
