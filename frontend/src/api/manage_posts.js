@@ -1,9 +1,10 @@
 import request from '@/utils/request'
 
-export function getCategoriesOptions() {
+export function getPosts(params) {
   return request({
     url: '/posts/admin',
-    method: 'get'
+    method: 'get',
+    data: params
   })
 }
 

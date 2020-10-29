@@ -15,6 +15,11 @@
             </el-form-item>
           </el-col>
           <el-col :span="24">
+            <el-form-item label="简介" prop="description">
+              <el-input v-model="form.description" type="textarea" placeholder="简介" clearable />
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
             <el-form-item label="显示封面" prop="img" >
               <el-upload
                 ref="upload"
@@ -55,10 +60,12 @@ export default {
     return {
       form: {
         name: undefined,
+        description: undefined,
         img: undefined
       },
       rules: {
         name: [{ required: true, trigger: 'blur', message: '不能为空' }],
+        description: [{ required: true, trigger: 'blur', message: '不能为空' }],
         img: [{ required: true, trigger: 'blur', message: '不能为空' }]
       }
     }

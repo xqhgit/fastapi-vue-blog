@@ -71,6 +71,8 @@
 </template>
 
 <script>
+import { getPosts } from '@/api/manage_posts'
+
 export default {
   name: 'ManagePosts',
   filters: {
@@ -87,24 +89,37 @@ export default {
       multiple: true,
       loading: false,
       queryParams: {
-        title: undefined
+        // title: undefined
+        page: 1,
+        limit: 10
       },
-      dataList: [{
-        'id': 1,
-        'title': 'test title',
-        'timestamp': '1267987324',
-        'comments_count': 30
-      }, {
-        'id': 2,
-        'title': 'test title2',
-        'timestamp': '1267987324',
-        'comments_count': 30
-      }]
+      // dataList: [{
+      //   'id': 1,
+      //   'title': 'test title',
+      //   'timestamp': '1267987324',
+      //   'comments_count': 30
+      // }, {
+      //   'id': 2,
+      //   'title': 'test title2',
+      //   'timestamp': '1267987324',
+      //   'comments_count': 30
+      // }],
+      dataList: [],
+      total: 0
     }
   },
+  created() {
+    this.getData()
+  },
   methods: {
-    getData(){
+    getData() {
+      getPosts(this.queryParams).then(res => {
+        const data = res.data
+        this.dataList = data.items
+        this.total = data.total
+      }).catch(() => {
 
+      })
     },
     handleOpen(name) {
       switch (name) {
