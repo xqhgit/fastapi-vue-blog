@@ -1,8 +1,9 @@
 from typing import Optional
+from sqlalchemy import func
 from sqlalchemy.orm import Session
 from fastapi.encoders import jsonable_encoder
 
-from backend.models import Category
+from backend.models import Category, Post
 from backend.crud.base import CRUDBase
 from backend.schemas.category import CategoryCreate, CategoryUpdate
 
@@ -22,6 +23,12 @@ class CRUDCategory(CRUDBase[Category, CategoryCreate, CategoryUpdate]):
         )
         if filters is not None:
             query = query.filter(*filters)
+        return [r._asdict() for r in query.all()]
+
+    def get_list(self, db: Session):
+        query = db.query(
+            self.model.id, self.model.name, func.count(Post.id).label('count')
+        ).outerjoin(Post).group_by(self.model.id)
         return [r._asdict() for r in query.all()]
 
 

@@ -4,6 +4,9 @@
     <div class="container" style="margin-top: 15px;">
       <app-main/>
     </div>
+    <div class="footer">
+      <br>
+    </div>
   </div>
 </template>
 

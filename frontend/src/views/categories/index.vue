@@ -5,6 +5,7 @@
     <b-card-group
       v-loading="loading"
       columns
+      style="min-height: 600px;"
     >
       <b-card
         v-for="i in items"

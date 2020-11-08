@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="row">
+    <div class="row" style="min-height: 600px;">
       <div class="col-md-8">
         <div class="row">
           <div v-for="i in items" :key="i.id" class="col-md-12">
@@ -15,22 +15,7 @@
         </div>
       </div>
       <div class="col-md-4">
-        <b-card no-body header="分类">
-          <b-list-group flush>
-            <b-list-group-item href="#" class="d-flex justify-content-between align-items-center">
-              Cras justo odio
-              <b-badge variant="primary" pill>2</b-badge>
-            </b-list-group-item>
-            <b-list-group-item href="#" class="d-flex justify-content-between align-items-center">
-              Cras justo odio
-              <b-badge variant="primary" pill>2</b-badge>
-            </b-list-group-item>
-            <b-list-group-item href="#" class="d-flex justify-content-between align-items-center">
-              Cras justo odio
-              <b-badge variant="primary" pill>2</b-badge>
-            </b-list-group-item>
-          </b-list-group>
-        </b-card>
+        <category-list />
       </div>
     </div>
     <div class="row">
@@ -45,12 +30,13 @@
 <script>
 import { getPosts } from '@/api/posts'
 import PostCard from './components/PostCard'
+import CategoryList from './components/CategoryList'
 import Pagination from '@/components/Pagination'
 
 export default {
   name: 'Posts',
   components: {
-    PostCard, Pagination
+    PostCard, Pagination, CategoryList
   },
   data() {
     return {

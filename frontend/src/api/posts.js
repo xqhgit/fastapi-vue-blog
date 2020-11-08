@@ -8,3 +8,10 @@ export function getPosts(query) {
   })
 }
 
+export function getCategoriesList() {
+  return request({
+    url: '/categories/list',
+    method: 'get'
+  })
+}
+

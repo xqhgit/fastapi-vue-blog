@@ -8,7 +8,7 @@
         <div class="card-body">
           <h5 class="card-title">
             <span class="badge badge-secondary" style="font-size: 80%;">{{ category }}</span>
-            <span style="color: #17a2b8;cursor: pointer;">
+            <span class="my-title">
               <router-link :to="{name: 'post'}" >{{ title }}</router-link>
             </span>
           </h5>
@@ -63,8 +63,16 @@ export default {
 }
 .card-img:hover {
   cursor:pointer;
-}.card-title:hover {
+}
+/*.card-title:hover {*/
+  /*color: black;*/
+  /*cursor:pointer;*/
+/*}*/
+.card-title .my-title >>> a {
+  color: black;
+  text-decoration:none;
+}
+.card-title .my-title >>> a:hover {
   color: #17a2b8;
-  cursor:pointer;
 }
 </style>
