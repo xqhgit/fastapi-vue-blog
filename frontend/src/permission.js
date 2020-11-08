@@ -3,7 +3,7 @@ import store from './store'
 import { Message } from 'element-ui'
 import { getToken } from './utils/auth'
 
-const whiteList = ['/login', '/posts', '/categories', '/about'] // no redirect whitelist
+const whiteList = ['/login', '/posts', '/post', '/categories', '/about'] // no redirect whitelist
 
 router.beforeEach(async(to, from, next) => {
   const hasToken = getToken()
