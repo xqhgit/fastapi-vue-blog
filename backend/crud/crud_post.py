@@ -33,7 +33,7 @@ class CRUDPost(CRUDBase[Post, PostCreate, PostUpdate]):
         offset = limit * (page - 1)
         query = db.query(
             self.model.id, Post.title, Post.timestamp,
-            Post.cover_image, Post.content, Category.name
+            Post.cover_image, Post.summary, Category.name.label('category')
         ).outerjoin(Post.category)
         if filters:
             query = query.filter(*filters)

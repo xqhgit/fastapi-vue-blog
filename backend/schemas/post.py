@@ -1,3 +1,4 @@
+from fastapi import Form
 from pydantic import BaseModel
 
 
@@ -6,6 +7,7 @@ class PostBase(BaseModel):
 
 
 class PostCreate(PostBase):
+    summary: str
     content: str
     is_publish: bool
     can_comment: bool

@@ -1,7 +1,7 @@
 <template>
   <div class="my-navbar" style="background-color: #f8f9fa">
     <b-navbar toggleable="lg" type="light" variant="light" class="container container-fluid">
-      <b-navbar-brand href="#">开源博客</b-navbar-brand>
+      <b-navbar-brand href="/posts">开源博客</b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"/>
 

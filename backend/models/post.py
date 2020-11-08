@@ -9,6 +9,7 @@ class Post(Base):
     id = Column(Integer, primary_key=True)
     timestamp = Column(Integer, default=lambda: int(datetime.timestamp(datetime.utcnow())), index=True)
     title = Column(String(60))
+    summary = Column(Text)
     content = Column(Text)
     is_publish = Column(Boolean, default=False)
     can_comment = Column(Boolean, default=True)

@@ -35,6 +35,11 @@
           </el-form-item>
         </el-col>
         <el-col :span="24">
+          <el-form-item label="概要" prop="summary">
+            <el-input v-model="form.summary" type="textarea"/>
+          </el-form-item>
+        </el-col>
+        <el-col :span="24">
           <el-form-item label="封面" prop="cover_image">
             <el-upload
               :on-change="handleCoverImageChange"
@@ -86,6 +91,7 @@ export default {
         can_comment: true,
         category_id: undefined,
         cover_image: undefined,
+        summary: '',
         content: ''
       },
       rules: {
@@ -102,6 +108,12 @@ export default {
           { required: true, message: '不能为空', trigger: 'blur' }
         ],
         cover_image: [
+          { required: true, message: '不能为空', trigger: 'blur' }
+        ],
+        summary: [
+          { required: true, message: '不能为空', trigger: 'blur' }
+        ],
+        content: [
           { required: true, message: '不能为空', trigger: 'blur' }
         ]
       },
@@ -122,15 +134,10 @@ export default {
       this.$router.go(-1)
     },
     handleEditorSave(value, render) {
-      console.log(value)
-      console.log(render)
     },
     handleMarkdownChange(value, render) {
     },
     imgAdd(filename, imgfile) {
-      console.log(filename)
-      console.log(imgfile)
-      // console.log(this.$refs.md)
       const data = new FormData()
       data.append('file', imgfile)
       uploadAttachment(data).then(res => {
@@ -163,6 +170,7 @@ export default {
           data.append('is_publish', this.form.is_publish)
           data.append('category_id', this.form.category_id)
           data.append('cover_image', this.form.cover_image)
+          data.append('summary', this.form.summary)
           data.append('content', this.form.content)
           createPost(data).then(res => {
             this.$message({

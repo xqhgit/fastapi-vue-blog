@@ -33,8 +33,8 @@ def create_post(
         db: Session = Depends(deps.get_db), *,
         title: str = Form(...), is_publish: bool = Form(...),
         can_comment: bool = Form(...), category_id: int = Form(...),
-        cover_image: UploadFile = File(...), content: str = Form(...)
-        # *, post_in: schemas.PostCreate
+        cover_image: UploadFile = File(...), content: str = Form(...),
+        summary: str = Form(...)
 ):
     obj_in = schemas.PostCreate(
         title=title,
@@ -42,7 +42,8 @@ def create_post(
         can_comment=can_comment,
         category_id=category_id,
         cover_image=base64.b64encode(cover_image.file.read()),
-        content=content
+        content=content,
+        summary=summary
     )
     try:
         post = crud.post.create(db, obj_in=obj_in)

@@ -7,27 +7,30 @@
             <post-card
               :image="'data:image/jpeg;base64,' + i.cover_image"
               :title="i.title"
+              :category="i.category"
               :timestamp="i.timestamp"
-              :content="i.content"
+              :summary="i.summary"
             />
           </div>
         </div>
       </div>
       <div class="col-md-4">
-        <ul class="list-group">
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            python
-            <span class="badge badge-primary badge-pill">14</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            flask
-            <span class="badge badge-primary badge-pill">2</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            fastapi
-            <span class="badge badge-primary badge-pill">1</span>
-          </li>
-        </ul>
+        <b-card no-body header="分类">
+          <b-list-group flush>
+            <b-list-group-item href="#" class="d-flex justify-content-between align-items-center">
+              Cras justo odio
+              <b-badge variant="primary" pill>2</b-badge>
+            </b-list-group-item>
+            <b-list-group-item href="#" class="d-flex justify-content-between align-items-center">
+              Cras justo odio
+              <b-badge variant="primary" pill>2</b-badge>
+            </b-list-group-item>
+            <b-list-group-item href="#" class="d-flex justify-content-between align-items-center">
+              Cras justo odio
+              <b-badge variant="primary" pill>2</b-badge>
+            </b-list-group-item>
+          </b-list-group>
+        </b-card>
       </div>
     </div>
     <div class="row">
