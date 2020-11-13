@@ -9,7 +9,7 @@
           <h5 class="card-title">
             <span class="badge badge-secondary" style="font-size: 80%;">{{ category }}</span>
             <span class="my-title">
-              <router-link :to="{name: 'post'}" >{{ title }}</router-link>
+              <router-link :to="{name: 'post', params: {'post_id': postId}}" >{{ title }}</router-link>
             </span>
           </h5>
           <p class="card-text">{{ summary }}</p>
@@ -47,6 +47,10 @@ export default {
       required: true
     },
     timestamp: {
+      type: Number,
+      required: true
+    },
+    postId: {
       type: Number,
       required: true
     }

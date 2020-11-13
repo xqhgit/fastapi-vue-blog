@@ -21,6 +21,13 @@ class CRUDPost(CRUDBase[Post, PostCreate, PostUpdate]):
         db.commit()
         return db_obj
 
+    def get(self, db: Session, *, id: int):
+        query = db.query(
+            self.model.id, self.model.content
+        )
+        obj = query.filter(self.model.id == id).first()
+        return obj._asdict() if obj else {}
+
     def get_multi(
             self,
             db: Session,

@@ -7,6 +7,7 @@
             <post-card
               :image="'data:image/jpeg;base64,' + i.cover_image"
               :title="i.title"
+              :post-id="i.id"
               :category="i.category"
               :timestamp="i.timestamp"
               :summary="i.summary"

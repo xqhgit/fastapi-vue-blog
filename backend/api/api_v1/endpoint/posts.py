@@ -69,3 +69,13 @@ def admin_read_posts(
         content=jsonable_encoder(result), status_code=status.HTTP_200_OK
     )
 
+
+@router.get('/{post_id}')
+def read_post(
+        db: Session = Depends(deps.get_db), *,
+        post_id: int
+):
+    data = crud.post.get(db, id=post_id)
+    return JSONResponse(
+        content=jsonable_encoder(data), status_code=status.HTTP_200_OK
+    )
