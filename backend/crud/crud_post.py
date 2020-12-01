@@ -23,8 +23,10 @@ class CRUDPost(CRUDBase[Post, PostCreate, PostUpdate]):
 
     def get(self, db: Session, *, id: int):
         query = db.query(
-            self.model.id, self.model.content
-        )
+            self.model.id, self.model.content, self.model.title, self.model.timestamp,
+            self.model.summary,
+            Category.name.label('category')
+        ).join(self.model.category)
         obj = query.filter(self.model.id == id).first()
         return obj._asdict() if obj else {}
 
