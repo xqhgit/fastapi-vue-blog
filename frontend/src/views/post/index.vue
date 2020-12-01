@@ -2,7 +2,7 @@
   <div class="row">
     <!--<h1>Hello World</h1>-->
     <div class="col-md-10">
-      <div v-html="contentMD" ></div>
+      <div v-html="contentMD" />
     </div>
     <div class="col-md-2">
       <span/>
@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import marked from 'marked'
-import { getPost } from '@/api/post'
+// import marked from 'marked'
+// import { getPost } from '@/api/post'
 
 export default {
   name: 'PostIndex',

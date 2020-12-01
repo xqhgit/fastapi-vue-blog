@@ -1,6 +1,10 @@
 # -*-coding:utf-8-*-
 # fix to ModuleNotFound
-import sys; sys.path = ['', '..'] + sys.path[1:]
+import sys
+import os
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(project_root)
+
 import logging
 from backend.db.init_db import init_db
 from backend.db.session import engine, SessionLocal
