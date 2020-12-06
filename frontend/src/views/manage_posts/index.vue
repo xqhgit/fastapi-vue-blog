@@ -18,7 +18,7 @@
           type="success"
           icon="el-icon-edit"
           size="mini"
-          @click="handleOpen"
+          @click="handleOpen('edit')"
         >编辑</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -89,21 +89,9 @@ export default {
       multiple: true,
       loading: false,
       queryParams: {
-        // title: undefined
         page: 1,
         limit: 10
       },
-      // dataList: [{
-      //   'id': 1,
-      //   'title': 'test title',
-      //   'timestamp': '1267987324',
-      //   'comments_count': 30
-      // }, {
-      //   'id': 2,
-      //   'title': 'test title2',
-      //   'timestamp': '1267987324',
-      //   'comments_count': 30
-      // }],
       dataList: [],
       total: 0
     }
@@ -126,6 +114,10 @@ export default {
         case 'create':
           this.$router.push({ name: 'manage-post' })
           break
+        case 'edit':
+          console.log(this.row)
+          this.$router.push({ name: 'manage-post', query: { post_id: this.row.id }})
+          break
       }
     },
     handleQuery() {
@@ -143,6 +135,9 @@ export default {
       this.single = selection.length !== 1
       this.multiple = !selection.length
       this.row = undefined
+      if (!this.single) {
+        this.row = selection[0]
+      }
     }
   }
 }

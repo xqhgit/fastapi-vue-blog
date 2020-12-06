@@ -24,7 +24,7 @@ class CRUDPost(CRUDBase[Post, PostCreate, PostUpdate]):
     def get(self, db: Session, *, id: int):
         query = db.query(
             self.model.id, self.model.content, self.model.title, self.model.timestamp,
-            self.model.summary,
+            self.model.summary, self.model.is_publish, self.model.can_comment,
             Category.name.label('category')
         ).join(self.model.category)
         obj = query.filter(self.model.id == id).first()

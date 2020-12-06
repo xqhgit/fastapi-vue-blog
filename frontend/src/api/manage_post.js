@@ -31,3 +31,9 @@ export function createPost(data) {
   })
 }
 
+export function getPost(id) {
+  return request({
+    url: `/posts/${id}`,
+    method: 'get'
+  })
+}

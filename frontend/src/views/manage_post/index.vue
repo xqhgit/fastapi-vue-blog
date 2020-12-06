@@ -79,12 +79,13 @@
 </template>
 
 <script>
-import { getCategoriesOptions, uploadAttachment, deleteAttachment, createPost } from '@/api/manage_post'
+import { getCategoriesOptions, uploadAttachment, deleteAttachment, createPost, getPost } from '@/api/manage_post'
 
 export default {
   name: 'ManagePost',
   data() {
     return {
+      post_id: undefined,
       form: {
         title: undefined,
         is_publish: false,
@@ -128,6 +129,16 @@ export default {
     getCategoriesOptions().then(res => {
       this.categoryOptions = res.data
     })
+    if (this.$route.query.post_id) {
+      this.post_id = parseInt(this.$route.query.post_id)
+      getPost(this.post_id).then(res => {
+        this.form.title = res.data.title
+        this.form.summary = res.data.summary
+        this.form.content = res.data.content
+        this.form.is_publish = res.data.is_publish
+        this.form.can_comment = res.data.can_comment
+      }).catch(() => {})
+    }
   },
   methods: {
     goBack() {
@@ -161,31 +172,34 @@ export default {
       this.form.cover_image = undefined
     },
     handleSave() {
-      console.log(this.form)
-      this.$refs['form'].validate(valid => {
-        if (valid) {
-          const data = new FormData()
-          data.append('title', this.form.title)
-          data.append('can_comment', this.form.can_comment)
-          data.append('is_publish', this.form.is_publish)
-          data.append('category_id', this.form.category_id)
-          data.append('cover_image', this.form.cover_image)
-          data.append('summary', this.form.summary)
-          data.append('content', this.form.content)
-          createPost(data).then(res => {
-            this.$message({
-              type: 'success',
-              message: '成功'
+      if (this.post_id === undefined) {
+        this.$refs['form'].validate(valid => {
+          if (valid) {
+            const data = new FormData()
+            data.append('title', this.form.title)
+            data.append('can_comment', this.form.can_comment)
+            data.append('is_publish', this.form.is_publish)
+            data.append('category_id', this.form.category_id)
+            data.append('cover_image', this.form.cover_image)
+            data.append('summary', this.form.summary)
+            data.append('content', this.form.content)
+            createPost(data).then(res => {
+              this.$message({
+                type: 'success',
+                message: '成功'
+              })
+              this.goBack()
+            }).catch(() => {
+              this.$message({
+                type: 'error',
+                message: '失败'
+              })
             })
-            this.goBack()
-          }).catch(() => {
-            this.$message({
-              type: 'error',
-              message: '失败'
-            })
-          })
-        }
-      })
+          }
+        })
+      } else {
+        console.log('admin edit post')
+      }
     }
   }
 }
