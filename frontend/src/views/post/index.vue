@@ -16,7 +16,51 @@
     </div>
     <div class="row page-content">
       <div class="col-md-12">
-        <div v-html="content"/>
+        <div class="page-content-img" v-html="content"/>
+      </div>
+    </div>
+    <hr>
+    <div class="row page-comments">
+      <div class="col-md-12">
+        <h3>0 评论</h3>
+        <form @submit.prevent="onSubmit">
+          <div class="form-group">
+            <textarea id="exampleInputEmail1" class="form-control" placeholder="说点什么吧。。。" required />
+          </div>
+          <button class="btn btn-secondary">评论</button>
+        </form>
+        <br>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">网友1</h5>
+              <small data-toggle="tooltip" data-placement="top" data-delay="500" data-timestamp="2020-02-13T09:45:28Z" data-original-title="" title="">
+                <span class="" data-timestamp="2020-02-13T09:45:28Z" data-format="fromNow(0)" data-refresh="0" style="">10 months ago</span>
+              </small>
+            </div>
+            <p class="mb-1">好看</p>
+            <div class="float-right">
+              <a href="javascript:;" class="btn btn-light btn-sm">回复</a>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">网友2</h5>
+              <small data-toggle="tooltip" data-placement="top" data-delay="500" data-timestamp="2020-02-13T09:45:28Z" data-original-title="" title="">
+                <span class="" data-timestamp="2020-02-13T09:45:28Z" data-format="fromNow(0)" data-refresh="0" style="">10 months ago</span>
+              </small>
+            </div>
+            <p class="alert alert-dark">
+              网友1
+              <br>
+              好看
+            </p>
+            <p class="mb-1">好看222</p>
+            <div class="float-right">
+              <a href="javascript:;" class="btn btn-light btn-sm">回复</a>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -58,6 +102,9 @@ export default {
       }).catch(() => {
 
       })
+    },
+    onSubmit() {
+      alert('Submit')
     }
   }
 }
@@ -67,5 +114,8 @@ export default {
 .post-page {
   margin-left: 15px;
   margin-right: 15px;
+}
+.page-content-img >>> img {
+  max-width: 100%;
 }
 </style>

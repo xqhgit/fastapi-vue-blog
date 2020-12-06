@@ -1,11 +1,12 @@
 import base64
 
+from sqlalchemy import desc
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends, HTTPException, status, Form, UploadFile, File
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 
-from backend import crud, schemas
+from backend import crud, schemas, models
 from backend.utils import utils
 from backend.api import deps
 
@@ -18,7 +19,7 @@ def read_posts(
         limit: int = 10,
         page: int = 1
 ):
-    posts = crud.post.get_multi(db, limit=limit, page=page)
+    posts = crud.post.get_multi(db, limit=limit, page=page, order_by=desc(models.Post.timestamp))
     result = {
         'total': len(posts),
         'items': [p._asdict() for p in posts]
