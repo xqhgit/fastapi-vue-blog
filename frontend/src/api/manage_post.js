@@ -25,7 +25,7 @@ export function deleteAttachment(data) {
 
 export function createPost(data) {
   return request({
-    url: '/posts/',
+    url: '/posts/admin',
     method: 'post',
     data
   })
@@ -33,7 +33,7 @@ export function createPost(data) {
 
 export function getPost(id) {
   return request({
-    url: `/posts/${id}`,
+    url: `/posts/admin/${id}`,
     method: 'get'
   })
 }

@@ -133,6 +133,7 @@ export default {
       this.post_id = parseInt(this.$route.query.post_id)
       getPost(this.post_id).then(res => {
         this.form.title = res.data.title
+        this.form.category_id = res.data.category_id
         this.form.summary = res.data.summary
         this.form.content = res.data.content
         this.form.is_publish = res.data.is_publish

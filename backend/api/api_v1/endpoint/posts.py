@@ -29,7 +29,7 @@ def read_posts(
     )
 
 
-@router.post('/', dependencies=[Depends(deps.get_current_active_admin)], status_code=status.HTTP_201_CREATED)
+@router.post('/admin', dependencies=[Depends(deps.get_current_active_admin)], status_code=status.HTTP_201_CREATED)
 def create_post(
         db: Session = Depends(deps.get_db), *,
         title: str = Form(...), is_publish: bool = Form(...),
@@ -68,6 +68,17 @@ def admin_read_posts(
     }
     return JSONResponse(
         content=jsonable_encoder(result), status_code=status.HTTP_200_OK
+    )
+
+
+@router.get('/admin/{post_id}', dependencies=[Depends(deps.get_current_active_admin)])
+def admin_read_post(
+        db: Session = Depends(deps.get_db), *,
+        post_id: int
+):
+    data = crud.post.admin_get(db, id=post_id)
+    return JSONResponse(
+        content=jsonable_encoder(data), status_code=status.HTTP_200_OK
     )
 
 
