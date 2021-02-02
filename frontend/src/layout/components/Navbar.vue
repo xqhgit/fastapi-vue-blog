@@ -11,8 +11,8 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item :to="{name: 'posts'}" active-class="active">
-            文章
+          <b-nav-item :to="{name: 'index'}" active-class="active">
+            首页
           </b-nav-item>
           <!--<b-nav-item :to="{name: 'categories'}" active-class="active">-->
           <!--分类-->
@@ -98,8 +98,10 @@ export default {
 .my-navbar {
   background-color: #f8f9fa;
   height: 50px;
+  border-bottom: 1px solid #ccc;
 }
 .my-navbar >>> .navbar {
   height: 50px;
+  border-bottom: 1px solid #ccc;
 }
 </style>

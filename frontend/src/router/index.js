@@ -49,7 +49,11 @@ export const constantRoutes = [
     children: [{
       path: 'index',
       name: 'index',
-      component: () => import('@/views/posts/index')
+      component: () => import('@/views/index/index')
+    }, {
+      path: 'post',
+      name: 'post',
+      component: () => import('@/views/post/index')
     }]
   }
 ]
