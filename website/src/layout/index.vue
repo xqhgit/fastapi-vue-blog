@@ -1,10 +1,12 @@
 <template>
   <div>
     <navbar/>
+    <br>
     <div class="container">
       <app-main/>
+      <br>
       <div id="footer">
-        <p>© 2020-2021 by WorkerXu. All rights reserved. </p>
+        <p>© 2021 by FastAPI-Vue-Blog. All rights reserved. </p>
       </div>
     </div>
   </div>

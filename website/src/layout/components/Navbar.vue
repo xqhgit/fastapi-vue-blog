@@ -21,30 +21,31 @@
 
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
-          <!--<b-nav-form>-->
-          <!--<b-form-input size="sm" class="mr-sm-2" placeholder="标题关键字"/>-->
-          <!--<b-button size="sm" class="my-2 my-sm-0" type="submit">搜索文章</b-button>-->
-          <!--</b-nav-form>-->
-          <!--<b-nav-item v-if="!name" :to="{name: 'login'}" active-class="active">-->
-          <!--登录-->
-          <!--</b-nav-item>-->
-          <!--<b-nav-item-dropdown v-if="name" right>-->
-          <!--&lt;!&ndash; Using 'button-content' slot &ndash;&gt;-->
-          <!--<template v-slot:button-content>-->
-          <!--<em>管理</em>-->
-          <!--</template>-->
-          <!--<b-dropdown-item :to="{name: 'manage-posts'}" active-class="active">文章</b-dropdown-item>-->
-          <!--<b-dropdown-item :to="{name: 'manage-categories'}" active-class="active">分类</b-dropdown-item>-->
-          <!--<b-dropdown-item href="#">评论</b-dropdown-item>-->
-          <!--</b-nav-item-dropdown>-->
-          <!--<b-nav-item-dropdown v-if="name" right>-->
-          <!--&lt;!&ndash; Using 'button-content' slot &ndash;&gt;-->
-          <!--<template v-slot:button-content>-->
-          <!--<em>{{ name }}</em>-->
-          <!--</template>-->
-          <!--<b-dropdown-item href="#">配置</b-dropdown-item>-->
-          <!--<b-dropdown-item href="#" @click="handleLogout">退出</b-dropdown-item>-->
-          <!--</b-nav-item-dropdown>-->
+          <!--          <b-nav-form>-->
+          <!--          <b-form-input size="sm" class="mr-sm-2" placeholder="标题关键字"/>-->
+          <!--          <b-button size="sm" class="my-2 my-sm-0" type="submit">搜索文章</b-button>-->
+          <!--          </b-nav-form>-->
+
+          <b-nav-item-dropdown right>
+            <!-- Using 'button-content' slot -->
+            <template v-slot:button-content>
+              管理
+            </template>
+            <b-dropdown-item :to="{name: 'manage-posts'}">文章</b-dropdown-item>
+            <b-dropdown-item :to="{name: 'manage-categories'}">分类</b-dropdown-item>
+            <b-dropdown-item href="#">评论</b-dropdown-item>
+          </b-nav-item-dropdown>
+          <b-nav-item :to="{name: 'login'}" active-class="active">
+            登录
+          </b-nav-item>
+          <!--          <b-nav-item-dropdown right>-->
+          <!--            &lt;!&ndash; Using 'button-content' slot &ndash;&gt;-->
+          <!--            <template v-slot:button-content>-->
+          <!--              <em>{{ name }}</em>-->
+          <!--            </template>-->
+          <!--            <b-dropdown-item href="#">配置</b-dropdown-item>-->
+          <!--            <b-dropdown-item href="#" @click="handleLogout">退出</b-dropdown-item>-->
+          <!--          </b-nav-item-dropdown>-->
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>

@@ -8,9 +8,9 @@
             <a href="/post?learn-socket-io-with-python-and-javascript-in-90-minutes">Learn Socket.IO with Python and JavaScript in 90 Minutes!</a>
           </h1>
           <div class="posted">
-            Posted by
+            由
             <span class="badge badge-danger"><a href="#">Demo</a></span>
-            under
+            发布
             <span class="badge badge-info"><a href="#">Python</a></span>
             <span class="badge badge-info"><a href="#">JavaScript</a></span>
           </div>
@@ -25,7 +25,7 @@
           </div>
         </div>
         <h4 style="text-align: right;">
-          <a>4 comments</a>
+          <a>4 个评论</a>
         </h4>
         <div class="comment">
           <ul>
@@ -67,9 +67,9 @@
             </li>
           </ul>
         </div>
-        <h3>Leave a comment</h3>
+        <h3>留下你的评论</h3>
         <b-form>
-          <b-form-group id="input-group-1" label="Your Name:" label-for="input-1">
+          <b-form-group id="input-group-1" label="你的名字:" label-for="input-1">
             <b-form-input
               id="input-1"
               required
@@ -77,7 +77,7 @@
           </b-form-group>
           <b-form-group
             id="input-group-2"
-            label="Email address:"
+            label="电子邮箱:"
             label-for="input-2"
           >
             <b-form-input
@@ -88,7 +88,7 @@
           </b-form-group>
           <b-form-group
             id="input-group-3"
-            label="Comments:"
+            label="评论:"
             label-for="input-3"
           >
             <b-form-textarea
@@ -98,7 +98,7 @@
             />
           </b-form-group>
         </b-form>
-        <b-button type="submit" variant="outline-secondary">Submit</b-button>
+        <b-button type="submit" variant="outline-secondary">提交</b-button>
       </div>
     </div>
     <div class="col-md-4 sidebar-bg">

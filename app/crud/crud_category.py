@@ -33,3 +33,23 @@
 #
 #
 # category = CRUDCategory(Category)
+
+from typing import Optional, Tuple
+from sqlalchemy import func
+from sqlalchemy.orm import Session
+from app.crud.base import CRUDBase
+from app.models import Category, Post
+from app.schemas.category import CategoryCreate, CategoryUpdate
+
+
+class CRUDCategory(CRUDBase[Category, CategoryCreate, CategoryUpdate]):
+
+    def get_list(self, db: Session):
+        query = db.query(
+            self.model.id, self.model.name,
+            func.count(Post.id).label('count')
+        ).outerjoin(Post).group_by(self.model.id)
+        return [r._asdict() for r in query.all()]
+
+
+category = CRUDCategory(Category)

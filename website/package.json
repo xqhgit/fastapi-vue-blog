@@ -11,8 +11,10 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "@toast-ui/editor": "^2.5.2",
     "axios": "^0.21.1",
     "bootstrap-vue": "^2.21.2",
+    "codemirror": "^5.61.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vuex": "^3.6.2"

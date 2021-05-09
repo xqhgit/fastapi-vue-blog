@@ -7,8 +7,7 @@ class CategoryBase(BaseModel):
 
 
 class CategoryCreate(CategoryBase):
-    name: str
-    image: bytes
+    pass
 
 
 class CategoryUpdate(CategoryBase):
@@ -18,8 +17,7 @@ class CategoryUpdate(CategoryBase):
 class CategoryOut(CategoryBase):
     id: int
     name: str
-    image: bytes
-    timestamp: int
+    count: int
 
     class Config:
         orm_mode = True

@@ -2,15 +2,16 @@
   <div class="row">
     <div class="col-md-8">
       <div id="main">
-        <div class="post">
+        <b-alert show>默认通知</b-alert>
+        <div v-for="i in [1,2,3]" :key="i" class="post">
           <p class="date">January 11 2021</p>
           <h1 class="post-title">
             <a href="/post?learn-socket-io-with-python-and-javascript-in-90-minutes">Learn Socket.IO with Python and JavaScript in 90 Minutes!</a>
           </h1>
           <div class="posted">
-            Posted by
+            由
             <span class="badge badge-danger"><a href="#">Demo</a></span>
-            under
+            发布
             <span class="badge badge-info"><a href="#">Python</a></span>
             <span class="badge badge-info"><a href="#">JavaScript</a></span>
           </div>
@@ -24,100 +25,16 @@
             </p>
           </div>
           <h4 style="float: right;">
-            <a href="#">4 comments</a>
+            <a href="#">4 个评论</a>
           </h4>
           <div class="post_more" style="clear: both;">
-            <a href="#">Read more...</a>
-          </div>
-        </div>
-        <div class="post">
-          <p class="date">January 11 2021</p>
-          <h1 class="post-title">
-            <a href="#">Learn Socket.IO with Python and JavaScript in 90 Minutes!</a>
-          </h1>
-          <div class="posted">
-            Posted by
-            <span class="badge badge-danger"><a href="#">Demo</a></span>
-            under
-            <span class="badge badge-info"><a href="#">Python</a></span>
-            <span class="badge badge-info"><a href="#">JavaScript</a></span>
-          </div>
-          <div class="post_body">
-            <p>
-              This is the list of chapters, each with a link to the code for each part of the tutorial:
-              This is the list of chapters, each with a link to the code for each part of the tutorial:
-              This is the list of chapters, each with a link to the code for each part of the tutorial:
-              This is the list of chapters, each with a link to the code for each part of the tutorial:
-              This is the list of chapters, each with a link to the code for each part of the tutorial:
-            </p>
-          </div>
-          <h4 style="float: right;">
-            <a href="#">4 comments</a>
-          </h4>
-          <div class="post_more" style="clear: both;">
-            <a href="#">Read more...</a>
-          </div>
-        </div>
-        <div class="post">
-          <p class="date">January 11 2021</p>
-          <h1 class="post-title">
-            <a href="#">Learn Socket.IO with Python and JavaScript in 90 Minutes!</a>
-          </h1>
-          <div class="posted">
-            Posted by
-            <span class="badge badge-danger"><a href="#">Demo</a></span>
-            under
-            <span class="badge badge-info"><a href="#">Python</a></span>
-            <span class="badge badge-info"><a href="#">JavaScript</a></span>
-          </div>
-          <div class="post_body">
-            <p>
-              This is the list of chapters, each with a link to the code for each part of the tutorial:
-              This is the list of chapters, each with a link to the code for each part of the tutorial:
-              This is the list of chapters, each with a link to the code for each part of the tutorial:
-              This is the list of chapters, each with a link to the code for each part of the tutorial:
-              This is the list of chapters, each with a link to the code for each part of the tutorial:
-            </p>
-          </div>
-          <h4 style="float: right;">
-            <a href="#">4 comments</a>
-          </h4>
-          <div class="post_more" style="clear: both;">
-            <a href="#">Read more...</a>
-          </div>
-        </div>
-        <div class="post">
-          <p class="date">January 11 2021</p>
-          <h1 class="post-title">
-            <a href="#">Learn Socket.IO with Python and JavaScript in 90 Minutes!</a>
-          </h1>
-          <div class="posted">
-            Posted by
-            <span class="badge badge-danger"><a href="#">Demo</a></span>
-            under
-            <span class="badge badge-info"><a href="#">Python</a></span>
-            <span class="badge badge-info"><a href="#">JavaScript</a></span>
-          </div>
-          <div class="post_body">
-            <p>
-              This is the list of chapters, each with a link to the code for each part of the tutorial:
-              This is the list of chapters, each with a link to the code for each part of the tutorial:
-              This is the list of chapters, each with a link to the code for each part of the tutorial:
-              This is the list of chapters, each with a link to the code for each part of the tutorial:
-              This is the list of chapters, each with a link to the code for each part of the tutorial:
-            </p>
-          </div>
-          <h4 style="float: right;">
-            <a href="#">4 comments</a>
-          </h4>
-          <div class="post_more" style="clear: both;">
-            <a href="#">Read more...</a>
+            <a href="#">继续阅读...</a>
           </div>
         </div>
         <div class="page">
           <ul class="pager">
-            <li class="previous disabled"><a href="#">← Newer Posts</a></li>
-            <li class="next"><a href="#">Older Posts →</a></li>
+            <li class="previous disabled"><a href="#">← 上一页</a></li>
+            <li class="next"><a href="#">下一页 →</a></li>
           </ul>
         </div>
       </div>

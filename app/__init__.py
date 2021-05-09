@@ -18,8 +18,10 @@ def create_app():
     )
     if settings.BACKEND_CORS_ORIGINS:
         register_cors(app)
-    register_static(app)
-    register_exception_handler(app)
+    app.include_router(api_router, prefix=settings.API_V1_STR)
+
+    # register_static(app)
+    # register_exception_handler(app)
     return app
 
 
@@ -35,7 +37,7 @@ def register_cors(app):
 
 def register_static(app):
     # mount frontend static files
-    app.mount("/static", StaticFiles(directory="app/static"), name="static")
+    app.mount("/static", StaticFiles(directory="static"), name="static")
     app.include_router(api_router, prefix=settings.API_V1_STR)
 
     @app.get('/')

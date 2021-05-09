@@ -1,6 +1,6 @@
 <template>
   <div id="sidebar">
-    <h1>Categories</h1>
+    <h1>分类</h1>
     <ul>
       <li>
         <a href=""><img src="/static/rss-small.png" alt=""></a>

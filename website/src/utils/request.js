@@ -1,7 +1,7 @@
 import axios from 'axios'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
-import { MessageBox, Message } from 'element-ui'
+// import { MessageBox, Message } from 'element-ui'
 
 // 创建一个axios实例
 const service = axios.create({
@@ -30,22 +30,25 @@ service.interceptors.response.use(
   },
   error => {
     if (error.response.status === 403) {
-      MessageBox.confirm('登录状态已过期，您可以继续留在该页面，或者重新登录', '系统提示', {
-        confirmButtonText: '重新登录',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        store.dispatch('user/resetToken').then(() => {
-          location.reload()
-        })
+      // MessageBox.confirm('登录状态已过期，您可以继续留在该页面，或者重新登录', '系统提示', {
+      //   confirmButtonText: '重新登录',
+      //   cancelButtonText: '取消',
+      //   type: 'warning'
+      // }).then(() => {
+      //   store.dispatch('user/resetToken').then(() => {
+      //     location.reload()
+      //   })
+      // })
+      store.dispatch('user/resetToken').then(() => {
+        location.reload()
       })
     }
     console.log('err' + error) // for debug
-    Message({
-      message: error.response.data,
-      type: 'error',
-      duration: 5 * 1000
-    })
+    // Message({
+    //   message: error.response.data,
+    //   type: 'error',
+    //   duration: 5 * 1000
+    // })
     return Promise.reject(error)
   }
 )
