@@ -3,11 +3,11 @@ from pydantic import BaseModel
 
 
 class CategoryBase(BaseModel):
-    name: str
+    pass
 
 
 class CategoryCreate(CategoryBase):
-    pass
+    name: str
 
 
 class CategoryUpdate(CategoryBase):
@@ -28,3 +28,20 @@ class CategoryItems(BaseModel):
     items: List[CategoryOut]
 
 
+class CategoryCreateOut(CategoryBase):
+    name: str
+
+    class Config:
+        orm_mode = True
+
+
+class CategorySelectItem(CategoryBase):
+    id: int
+    name: str
+
+    class Config:
+        orm_mode = True
+
+
+class CategorySelectListOut(CategoryBase):
+    items: List[CategorySelectItem]

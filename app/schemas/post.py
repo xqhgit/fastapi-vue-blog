@@ -7,12 +7,8 @@ class PostBase(BaseModel):
 
 
 class PostCreate(PostBase):
-    summary: str
-    content: str
-    is_publish: bool
-    can_comment: bool
+    body: str
     category_id: int
-    cover_image: bytes
 
 
 class PostUpdate(PostBase):
@@ -20,3 +16,6 @@ class PostUpdate(PostBase):
     can_comment: bool
     category_id: int
 
+
+class PostCreateOut(PostBase):
+    title: str

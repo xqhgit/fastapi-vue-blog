@@ -34,7 +34,7 @@
 #
 # category = CRUDCategory(Category)
 
-from typing import Optional, Tuple
+from typing import Optional, Tuple, List
 from sqlalchemy import func
 from sqlalchemy.orm import Session
 from app.crud.base import CRUDBase
@@ -50,6 +50,10 @@ class CRUDCategory(CRUDBase[Category, CategoryCreate, CategoryUpdate]):
             func.count(Post.id).label('count')
         ).outerjoin(Post).group_by(self.model.id)
         return [r._asdict() for r in query.all()]
+
+    def get_select_list(self, db: Session) -> List[Category]:
+        objs = db.query(self.model).all()
+        return objs
 
 
 category = CRUDCategory(Category)
