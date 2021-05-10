@@ -31,3 +31,16 @@ def create_post(
     # print(obj_in.dict())
     db_obj = crud.post.create(db, obj_in=obj_in)
     return db_obj
+
+
+@router.get('/list', response_model=schemas.PostListOut, status_code=status.HTTP_200_OK,
+            # dependencies=[Depends(deps.get_current_active_admin), ]
+            )
+def get_posts_list(
+        db: Session = Depends(deps.get_db)
+):
+    total = crud.post.count(db)
+    items = crud.post.get_list(db)
+    print(items)
+    return {'total': total, 'items': items}
+

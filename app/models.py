@@ -84,5 +84,5 @@ class Comment(Base):
             tags=allowed_tags, strip=True))
 
 
-listen(Post.body, 'set', Post.on_changed_body)
-listen(Comment.body, 'set', Comment.on_changed_body)
+# listen(Post.body, 'set', Post.on_changed_body)
+# listen(Comment.body, 'set', Comment.on_changed_body)

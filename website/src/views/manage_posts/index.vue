@@ -4,7 +4,6 @@
       <h1>文章
         <span class="float-right"><router-link :to="{name: 'create-post'}" class="btn btn-primary btn-sm">新建文章</router-link></span>
       </h1>
-      <!--      <b-table :items="items" :fields="fields" striped hover/>-->
       <table class="table table-striped">
         <thead>
           <tr>

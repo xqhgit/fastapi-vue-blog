@@ -1,4 +1,5 @@
 from fastapi import Form
+from typing import Optional, List
 from pydantic import BaseModel
 
 
@@ -19,3 +20,14 @@ class PostUpdate(PostBase):
 
 class PostCreateOut(PostBase):
     title: str
+
+
+class PostListItem(PostBase):
+    id: int
+    title: str
+    category: str
+
+
+class PostListOut(PostBase):
+    total: Optional[int]
+    items: List[PostListItem]
