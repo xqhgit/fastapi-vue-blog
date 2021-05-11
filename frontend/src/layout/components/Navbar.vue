@@ -72,7 +72,7 @@ export default {
   methods: {
     handleLogout() {
       this.$store.dispatch('user/logout').then(() => {
-        this.$router.push({ name: 'posts' })
+        `this.$router.push({ name: 'posts' })`
       }).catch(() => {
 
       })

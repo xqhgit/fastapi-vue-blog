@@ -22,5 +22,25 @@ class CRUDPost(CRUDBase[Post, PostCreate, PostUpdate]):
         ).outerjoin(self.model.category)
         return [r._asdict() for r in query.all()]
 
+    def get_multi(
+            self,
+            db: Session,
+            *,
+            filters: Tuple = tuple(),
+            order_by=None,
+            page: int = 1,
+            limit: int = 10
+    ):
+        offset = limit * (page - 1)
+        query = db.query(
+            self.model.id, self.model.title, self.model.description, Category.name.label('category')
+        ).outerjoin(self.model.category)
+        if filters:
+            query = query.filter(*filters)
+        if order_by is not None:
+            query = query.order_by(order_by)
+        query = query.offset(offset).limit(limit)
+        return [r._asdict() for r in query.all()]
+
 
 post = CRUDPost(Post)

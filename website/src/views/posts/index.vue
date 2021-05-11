@@ -3,26 +3,21 @@
     <div class="col-md-8">
       <div id="main">
         <b-alert show>默认通知</b-alert>
-        <div v-for="i in [1,2,3]" :key="i" class="post">
+        <div v-for="item in items" :key="item.id" class="post">
           <p class="date">January 11 2021</p>
           <h1 class="post-title">
-            <a href="/post?learn-socket-io-with-python-and-javascript-in-90-minutes">Learn Socket.IO with Python and JavaScript in 90 Minutes!</a>
+            <a href="/post?learn-socket-io-with-python-and-javascript-in-90-minutes">
+              {{ item.title }}
+            </a>
           </h1>
           <div class="posted">
             由
             <span class="badge badge-danger"><a href="#">Demo</a></span>
             发布
-            <span class="badge badge-info"><a href="#">Python</a></span>
-            <span class="badge badge-info"><a href="#">JavaScript</a></span>
+            <span class="badge badge-info"><a href="#">{{ item.category }}</a></span>
           </div>
           <div class="post_body">
-            <p>
-              This is the list of chapters, each with a link to the code for each part of the tutorial:
-              This is the list of chapters, each with a link to the code for each part of the tutorial:
-              This is the list of chapters, each with a link to the code for each part of the tutorial:
-              This is the list of chapters, each with a link to the code for each part of the tutorial:
-              This is the list of chapters, each with a link to the code for each part of the tutorial:
-            </p>
+            <div v-html="item.description"/>
           </div>
           <h4 style="float: right;">
             <a href="#">4 个评论</a>
@@ -47,7 +42,7 @@
 </template>
 
 <script>
-// import { getPosts } from '@/api/posts'
+import { getPosts } from '@/api/posts'
 import Sidebar from '@/components/Siderbar'
 // import PostCard from './components/PostCard'
 // import CategoryList from './components/CategoryList'
@@ -74,10 +69,10 @@ export default {
   },
   methods: {
     getData() {
-      // getPosts(this.query).then(response => {
-      //   this.total = response.data.total
-      //   this.items = response.data.items
-      // })
+      getPosts(this.query).then(response => {
+        this.total = response.data.total
+        this.items = response.data.items
+      })
     }
   }
 }

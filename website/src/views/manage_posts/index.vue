@@ -24,21 +24,41 @@
         </tr>
       </table>
     </div>
+    <div class="mt-3">
+      <b-pagination v-model="currentPage" :total-rows="total" align="right"/>
+    </div>
   </div>
 </template>
 
 <script>
+import { getPostList } from '@/api/manage_posts'
+
 export default {
   name: 'MangePostsIndex',
   data() {
     return {
       fields: [''],
-      items: [
-        { id: 40, title: 'Dickerson', category: 'Macdonald' },
-        { id: 21, title: 'Larsen', category: 'Shaw' },
-        { id: 89, title: 'Geneva', category: 'Wilson' },
-        { id: 38, title: 'Jami', category: 'Carney' }
-      ]
+      total: 0,
+      items: [],
+      currentPage: 1
+    }
+  },
+  mounted() {
+    this.getData()
+  },
+  methods: {
+    getData() {
+      getPostList().then(res => {
+        this.total = res.data.total
+        this.items = res.data.items
+        // this.$bvToast.toast('创建成功', {
+        //   title: '通知',
+        //   variant: null,
+        //   solid: true
+        // })
+      }).catch(_ => {
+
+      })
     }
   }
 }

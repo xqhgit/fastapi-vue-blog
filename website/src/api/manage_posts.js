@@ -15,3 +15,11 @@ export function createPost(data) {
   })
 }
 
+export function getPostList(params) {
+  return request({
+    url: '/posts/list',
+    method: 'get',
+    params: params
+  })
+}
+

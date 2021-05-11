@@ -38,8 +38,8 @@ class Category(Base):
 class Post(Base):
     id = Column(Integer, primary_key=True)
     title = Column(String(64))
+    description = Column(Text)
     body = Column(Text)
-    body_html = Column(Text)
     timestamp = Column(DateTime, default=datetime.utcnow, index=True)
     can_comment = Column(Boolean, default=True)
 
@@ -53,8 +53,10 @@ class Post(Base):
         allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
                         'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
                         'h1', 'h2', 'h3', 'p']
-        target.body_html = bleach.linkify(bleach.clean(
-            markdown(value, output_format='html'),
+        # 截取h2前面的文本作为简介内容
+        description = value[0:value.rfind('/', 1)]
+        target.description = bleach.linkify(bleach.clean(
+            markdown(description, output_format='html'),
             tags=allowed_tags, strip=True))
 
 
@@ -84,5 +86,5 @@ class Comment(Base):
             tags=allowed_tags, strip=True))
 
 
-# listen(Post.body, 'set', Post.on_changed_body)
+listen(Post.body, 'set', Post.on_changed_body)
 # listen(Comment.body, 'set', Comment.on_changed_body)

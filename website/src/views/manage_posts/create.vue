@@ -72,9 +72,19 @@ export default {
     onSubmit(event) {
       event.preventDefault()
       createPost(this.form).then(res => {
-        console.log(res)
+        this.$bvToast.toast('创建成功', {
+          title: '通知',
+          variant: null,
+          solid: true
+        })
+        this.$router.push({ name: 'manage-posts' })
+      }).catch(_ => {
+        this.$bvToast.toast('创建失败', {
+          title: '错误',
+          variant: 'danger',
+          solid: true
+        })
       })
-      // alert(JSON.stringify(this.form))
     },
     onReset(event) {
       event.preventDefault()
@@ -82,11 +92,6 @@ export default {
       this.form.title = undefined
       this.form.category_id = undefined
       this.form.body = undefined
-      // Trick to reset/clear native browser form validation state
-      // this.show = false
-      // this.$nextTick(() => {
-      //   this.show = true
-      // })
     }
   }
 }

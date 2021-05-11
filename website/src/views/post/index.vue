@@ -9,7 +9,7 @@
           </h1>
           <div class="posted">
             由
-            <span class="badge badge-danger"><a href="#">Demo</a></span>
+            <span class="badge badge-danger"><a href="#">Admin</a></span>
             发布
             <span class="badge badge-info"><a href="#">Python</a></span>
             <span class="badge badge-info"><a href="#">JavaScript</a></span>
