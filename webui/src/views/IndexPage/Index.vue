@@ -1,5 +1,7 @@
 <template>
-  <div/>
+  <div>
+    IndexPage
+  </div>
 </template>
 
 <script>
