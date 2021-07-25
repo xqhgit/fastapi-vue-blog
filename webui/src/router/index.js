@@ -13,7 +13,12 @@ export const constantRoutes = [
       path: 'index',
       name: 'index',
       component: () => import('@/views/IndexPage')
-    }, {
+    }]
+  },
+  {
+    path: '/admin',
+    component: Layout,
+    children: [{
       path: 'login',
       name: 'login',
       component: () => import('@/views/LoginPage')

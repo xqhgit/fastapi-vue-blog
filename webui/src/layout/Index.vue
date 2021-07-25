@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navbar/>
+    <navbar style="background-color: #f5f6f9"/>
     <div class="container" style="margin-top: 15px;">
       <app-main/>
     </div>
