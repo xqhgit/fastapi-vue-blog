@@ -1,5 +1,5 @@
 <template>
-  <div id="app" style="background-color: #f5f6f9">
+  <div id="app" style="height: 100%;">
     <router-view/>
   </div>
 </template>
