@@ -15,8 +15,8 @@ class Settings(BaseSettings):
     SQLALCHEMY_DATABASE_URI: str = 'mysql+aiomysql://root:@localhost/fastapi_sqlalchemy_async'
     SECRET_KEY: str = secrets.token_urlsafe(32)
 
-    # 60 minutes * 24 hours * 8 days = 1 days
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 1
+    # 30 minutes
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
 
     LOGGING = {
         'version': 1,
