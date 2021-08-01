@@ -3,29 +3,6 @@
     <div class="col-md-8">
       <div id="main">
         <b-alert show>默认通知</b-alert>
-        <!--        <div v-for="item in items" :key="item.id" class="post">-->
-        <!--          <p class="date">January 11 2021</p>-->
-        <!--          <h1 class="post-title">-->
-        <!--            <a href="/post?learn-socket-io-with-python-and-javascript-in-90-minutes">-->
-        <!--              {{ item.title }}-->
-        <!--            </a>-->
-        <!--          </h1>-->
-        <!--          <div class="posted">-->
-        <!--            由-->
-        <!--            <span class="badge badge-danger"><a href="#">Demo</a></span>-->
-        <!--            发布-->
-        <!--            <span class="badge badge-info"><a href="#">{{ item.category }}</a></span>-->
-        <!--          </div>-->
-        <!--          <div class="post_body">-->
-        <!--            <div v-html="item.description"/>-->
-        <!--          </div>-->
-        <!--          <h4 style="float: right;">-->
-        <!--            <a href="#">4 个评论</a>-->
-        <!--          </h4>-->
-        <!--          <div class="post_more" style="clear: both;">-->
-        <!--            <a href="#">继续阅读...</a>-->
-        <!--          </div>-->
-        <!--        </div>-->
         <div class="post">
           <p class="date">January 11 2021</p>
           <h1 class="post-title">
@@ -45,12 +22,6 @@
             to show you how to integrate the dataTables.js library in your templates,
             which will allow you to create fully featured tables with ease!
           </div>
-          <!--          <h4 style="float: right;">-->
-          <!--            <a href="#">4 个评论</a>-->
-          <!--          </h4>-->
-          <!--          <div class="post_more" style="clear: both;">-->
-          <!--            <a href="#">继续阅读...</a>-->
-          <!--          </div>-->
           <div style="padding-top: 10px;" class="d-flex justify-content-between">
             <a href="#">4 个评论</a>
             <a href="#">继续阅读...</a>
@@ -64,8 +35,8 @@
         </div>
       </div>
     </div>
-    <div class="col-md-4 sidebar-bg">
-      <sidebar />
+    <div class="col-md-4 category-sidebar-bg">
+      <category-sidebar />
     </div>
   </div>
 
@@ -73,7 +44,7 @@
 
 <script>
 // import { getPosts } from '@/api/posts'
-import Sidebar from '@/components/Siderbar'
+import CategorySidebar from '@/components/CategorySidebar'
 // import PostCard from './components/PostCard'
 // import CategoryList from './components/CategoryList'
 // import Pagination from '@/components/Pagination'
@@ -81,7 +52,7 @@ import Sidebar from '@/components/Siderbar'
 export default {
   name: 'IndexPage',
   components: {
-    Sidebar
+    CategorySidebar
   },
   data() {
     return {
@@ -135,13 +106,6 @@ export default {
     padding-bottom: 5px;
     margin-top: 20px;
   }
-  #main h4 {
-    font-size: 120%;
-    font-weight: normal;
-  }
-  #main h4 a {
-    color: #66a;
-  }
 
   #main p {
     font-size: 120%;
@@ -151,11 +115,11 @@ export default {
   #main .post {
     margin-bottom: 20px;
   }
-  .main h1.post-title {
-    color: #666;
-    padding-bottom: 0;
-    margin-bottom: 0;
-  }
+  /*main h1.post-title {*/
+  /*  color: #666;*/
+  /*  padding-bottom: 0;*/
+  /*  margin-bottom: 0;*/
+  /*}*/
   #main h1.post-title a {
     color: #666;
     cursor:pointer;
@@ -221,7 +185,7 @@ export default {
     background-color: #fff;
   }
 
-  .sidebar-bg {
+  .category-sidebar-bg {
     background-color: #f0f0f0;
     margin-top: 10px;
     height: 100%;

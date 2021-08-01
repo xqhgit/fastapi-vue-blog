@@ -13,6 +13,10 @@ export const constantRoutes = [
       path: 'index',
       name: 'index',
       component: () => import('@/views/IndexPage')
+    }, {
+      path: 'post',
+      name: 'post',
+      component: () => import('@/views/PostPage')
     }]
   },
   {
