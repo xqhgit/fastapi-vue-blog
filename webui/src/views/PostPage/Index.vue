@@ -1,11 +1,11 @@
 <template>
   <div>
-    <b-modal v-model="showReplyModal" title="回复">
+    <b-modal v-model="showReplyModal" title="回复" @close="handleReplyModalCancel">
       <template v-slot:modal-title>
         回复：<span>demo</span>
       </template>
       <div class="d-block">
-        <b-form @submit="handleReplyModalOk">
+        <b-form @submit="handleReplyModalOk" @reset="handleReplyModalCancel">
           <b-form-group
             id="input-group-1"
             label="你的名字:"
@@ -13,6 +13,7 @@
           >
             <b-form-input
               id="input-1"
+              v-model="replyForm.name"
               required
             />
           </b-form-group>
@@ -23,6 +24,7 @@
           >
             <b-form-input
               id="input-2"
+              v-model="replyForm.email"
               type="email"
               required
             />
@@ -30,19 +32,21 @@
           <b-form-group id="input-group-3" label="评论:" label-for="input-3">
             <b-form-textarea
               id="input-3"
+              v-model="replyForm.comment"
               required
               style="height: 100px;"
             />
           </b-form-group>
+          <b-button type="submit" size="sm" variant="outline-secondary">
+            提交
+          </b-button>
+          <b-button type="reset" size="sm" variant="outline-danger">
+            取消
+          </b-button>
         </b-form>
       </div>
       <template v-slot:modal-footer="{ ok, cancel, hide }">
-        <b-button size="sm" variant="outline-secondary" @click="handleReplyModalOk()">
-          提交
-        </b-button>
-        <b-button size="sm" variant="outline-danger" @click="handleReplyModalCancel()">
-          取消
-        </b-button>
+        <div/>
       </template>
     </b-modal>
     <div class="row">
@@ -99,16 +103,20 @@
                     <p style="margin-bottom: 0">@demo</p>
                     <p>Yes. I don't have a release date yet, but I'm working on a longer React tutorial.</p>
                   </div>
+                  <div class="can-reply d-flex flex-row-reverse">
+                    <button type="button" size="sm" variant="outline-secondary" @click="handleShowReply">回复</button>
+                  </div>
                 </div>
               </li>
             </ul>
           </div>
 
           <h5>留下你的评论</h5>
-          <b-form>
+          <b-form @submit="handleReplyOk">
             <b-form-group id="input-group-1" label="你的名字:" label-for="input-1">
               <b-form-input
                 id="input-1"
+                v-model="replyForm.name"
                 required
               />
             </b-form-group>
@@ -119,6 +127,7 @@
             >
               <b-form-input
                 id="input-2"
+                v-model="replyForm.email"
                 type="email"
                 required
               />
@@ -130,12 +139,13 @@
             >
               <b-form-textarea
                 id="input-3"
+                v-model="replyForm.comment"
                 required
                 style="height: 150px;"
               />
             </b-form-group>
+            <b-button type="submit" variant="outline-secondary">提交</b-button>
           </b-form>
-          <b-button type="submit" variant="outline-secondary">提交</b-button>
         </div>
       </div>
       <div class="col-md-4 category-sidebar-bg">
@@ -153,19 +163,30 @@ export default {
   components: { CategorySidebar },
   data() {
     return {
-      showReplyModal: false
+      showReplyModal: false,
+      replyForm: {
+        name: undefined,
+        email: undefined,
+        comment: undefined
+      }
     }
   },
   methods: {
     handleShowReply() {
       this.showReplyModal = true
     },
-    handleReplyModalOk() {
+    handleReplyModalOk(evt) {
+      evt.preventDefault()
       console.log('ok')
+      console.log(this.replyForm)
     },
     handleReplyModalCancel() {
       console.log('cancel')
       this.showReplyModal = false
+    },
+    handleReplyOk(evt) {
+      evt.preventDefault()
+      console.log(this.replyForm)
     }
   }
 }
