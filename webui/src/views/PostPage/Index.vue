@@ -1,33 +1,50 @@
 <template>
   <div>
-    <div id="exampleModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 id="exampleModalLabel" class="modal-title">New message</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="form-group">
-                <label for="recipient-name" class="col-form-label">Recipient:</label>
-                <input id="recipient-name" type="text" class="form-control">
-              </div>
-              <div class="form-group">
-                <label for="message-text" class="col-form-label">Message:</label>
-                <textarea id="message-text" class="form-control"/>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Send message</button>
-          </div>
-        </div>
+    <b-modal v-model="showReplyModal" title="回复">
+      <template v-slot:modal-title>
+        回复：<span>demo</span>
+      </template>
+      <div class="d-block">
+        <b-form @submit="handleReplyModalOk">
+          <b-form-group
+            id="input-group-1"
+            label="你的名字:"
+            label-for="input-1"
+          >
+            <b-form-input
+              id="input-1"
+              required
+            />
+          </b-form-group>
+          <b-form-group
+            id="input-group-2"
+            label="电子邮箱:"
+            label-for="input-2"
+          >
+            <b-form-input
+              id="input-2"
+              type="email"
+              required
+            />
+          </b-form-group>
+          <b-form-group id="input-group-3" label="评论:" label-for="input-3">
+            <b-form-textarea
+              id="input-3"
+              required
+              style="height: 100px;"
+            />
+          </b-form-group>
+        </b-form>
       </div>
-    </div>
+      <template v-slot:modal-footer="{ ok, cancel, hide }">
+        <b-button size="sm" variant="outline-secondary" @click="handleReplyModalOk()">
+          提交
+        </b-button>
+        <b-button size="sm" variant="outline-danger" @click="handleReplyModalCancel()">
+          取消
+        </b-button>
+      </template>
+    </b-modal>
     <div class="row">
       <div class="col-md-8">
         <div id="main">
@@ -67,7 +84,7 @@
                     <p>Do you plan to make a paid guide/tutorial on this topic?  If not,do you have any resources that you'd recommend for a beginner, besides your videos?</p>
                   </div>
                   <div class="can-reply d-flex flex-row-reverse">
-                    <b-button type="button" size="sm" variant="outline-secondary">回复</b-button>
+                    <button type="button" size="sm" variant="outline-secondary" @click="handleShowReply">回复</button>
                   </div>
                 </div>
               </li>
@@ -133,7 +150,24 @@ import CategorySidebar from '@/components/CategorySidebar'
 
 export default {
   name: 'PostPageIndex',
-  components: { CategorySidebar }
+  components: { CategorySidebar },
+  data() {
+    return {
+      showReplyModal: false
+    }
+  },
+  methods: {
+    handleShowReply() {
+      this.showReplyModal = true
+    },
+    handleReplyModalOk() {
+      console.log('ok')
+    },
+    handleReplyModalCancel() {
+      console.log('cancel')
+      this.showReplyModal = false
+    }
+  }
 }
 </script>
 
