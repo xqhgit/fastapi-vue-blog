@@ -23,10 +23,13 @@ export const constantRoutes = [
   {
     path: '/admin/login',
     component: () => import('@/views/Admin/LoginPage')
+  },
+  {
+    path: '/admin/test',
+    component: () => import('@/layout_admin')
   }
   // {
   //   path: '/admin',
-  //   // component: Layout,
   //   children: [{
   //     path: 'login',
   //     name: 'login',
