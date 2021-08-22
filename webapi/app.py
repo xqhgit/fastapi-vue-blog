@@ -4,9 +4,9 @@ import uvicorn
 app = FastAPI()
 
 
-@app.get("/", tags=["Root"])
-async def read_root():
-    return {"message": "Welcome to this fantastic app!"}
+@app.get("/ping")
+async def pong():
+    return {"ping": "pong!"}
 
 
 if __name__ == "__main__":
