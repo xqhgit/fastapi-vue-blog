@@ -1,8 +1,8 @@
 <template>
   <div class="sidebar">
     <el-menu
+      :default-active="$route.path"
       router
-      default-active="/admin/dashboard"
       class="el-menu-vertical-demo"
       background-color="#545c64"
       text-color="#fff"
