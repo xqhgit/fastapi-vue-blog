@@ -12,7 +12,8 @@ class Settings(BaseSettings):
     BACKEND_CORS_ORIGINS: List = ['*']
 
     # SQLALCHEMY_DATABASE_URI: str = f'sqlite:///{BASEDIR}/fastapi-vue-blog.db'
-    SQLALCHEMY_DATABASE_URI: str = 'mysql+aiomysql://root:@localhost/fastapi_sqlalchemy_async'
+    # SQLALCHEMY_DATABASE_URI: str = 'mysql+aiomysql://root:@localhost/fastapi_sqlalchemy_async'
+    SQLALCHEMY_DATABASE_URI: str = 'mysql+aiomysql://root:Grandhonor12306@192.168.3.100:10000/xqh'
     SECRET_KEY: str = secrets.token_urlsafe(32)
 
     # 30 minutes
