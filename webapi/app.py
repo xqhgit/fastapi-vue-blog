@@ -1,7 +1,10 @@
 from fastapi import FastAPI
 import uvicorn
 
+from webapi.routers import category_router
+
 app = FastAPI()
+app.include_router(category_router.router)
 
 
 @app.get("/ping")
