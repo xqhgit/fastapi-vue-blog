@@ -6,6 +6,7 @@
       </el-col>
       <el-col :span="20">
         <navbar/>
+        <app-main />
       </el-col>
     </el-row>
   </div>
@@ -14,11 +15,12 @@
 <script>
 import Sidebar from './components/Sidebar'
 import Navbar from './components/Navbar'
+import AppMain from './components/AppMain'
 
 export default {
   name: 'LayoutAdmin',
   components: {
-    Sidebar, Navbar
+    Sidebar, Navbar, AppMain
   }
 }
 </script>

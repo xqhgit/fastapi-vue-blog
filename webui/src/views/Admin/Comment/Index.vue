@@ -1,9 +1,8 @@
 <template>
   <div>
-    Dashboard
+    Comment
   </div>
 </template>
-
 <script>
 export default {
   name: 'Index'

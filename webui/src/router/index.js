@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Layout from '@/layout'
-// import LayoutAdmin from '@/layout_admin'
+import LayoutAdmin from '@/layout_admin'
 
 Vue.use(Router)
 
@@ -25,17 +25,31 @@ export const constantRoutes = [
     component: () => import('@/views/Admin/LoginPage')
   },
   {
-    path: '/admin/test',
+    path: '/admin/layout',
     component: () => import('@/layout_admin')
+  },
+  {
+    path: '/admin',
+    component: LayoutAdmin,
+    redirect: '/admin/dashboard',
+    children: [{
+      path: 'dashboard',
+      name: 'AdminDashboard',
+      component: () => import('@/views/Admin/Dashboard')
+    }, {
+      path: 'post',
+      name: 'AdminPost',
+      component: () => import('@/views/Admin/Post')
+    }, {
+      path: 'category',
+      name: 'AdminCategory',
+      component: () => import('@/views/Admin/Category')
+    }, {
+      path: 'comment',
+      name: 'AdminComment',
+      component: () => import('@/views/Admin/Comment')
+    }]
   }
-  // {
-  //   path: '/admin',
-  //   children: [{
-  //     path: 'login',
-  //     name: 'login',
-  //     component: () => import('@/views/Admin/LoginPage')
-  //   }]
-  // }
 ]
 
 const createRouter = () => new Router({

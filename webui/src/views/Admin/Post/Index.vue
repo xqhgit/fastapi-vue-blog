@@ -1,6 +1,6 @@
 <template>
   <div>
-    Dashboard
+    Post
   </div>
 </template>
 
