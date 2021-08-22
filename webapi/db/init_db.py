@@ -1,5 +1,6 @@
 import asyncio
 from webapi.db.config import engine, Base
+from webapi.db.models import *
 
 
 async def init_table():

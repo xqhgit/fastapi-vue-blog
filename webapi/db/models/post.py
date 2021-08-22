@@ -7,6 +7,8 @@ from webapi.db.config import Base
 
 
 class Post(Base):
+    __tablename__ = 'Post'
+
     id = Column(Integer, primary_key=True)
     title = Column(String(64), unique=True)
     description = Column(Text)
@@ -14,7 +16,7 @@ class Post(Base):
     timestamp = Column(DateTime, default=datetime.utcnow, index=True)
     can_comment = Column(Boolean, default=True)
 
-    category_id = Column(Integer, ForeignKey('category.id'))
+    category_id = Column(Integer, ForeignKey('Category.id'))
 
     category = relationship('Category', back_populates='posts')
     comments = relationship('Comment', back_populates='post', cascade='all, delete-orphan')

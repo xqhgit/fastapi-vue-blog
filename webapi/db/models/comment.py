@@ -18,8 +18,8 @@ class Comment(Base):
     email = Column(String(254))
     body = Column(Text)
 
-    replied_id = Column(Integer, ForeignKey('comment.id'))
-    post_id = Column(Integer, ForeignKey('post.id'))
+    replied_id = Column(Integer, ForeignKey('Comment.id'))
+    post_id = Column(Integer, ForeignKey('Post.id'))
 
     post = relationship('Post', back_populates='comments')
     replies = relationship('Comment', back_populates='replied', cascade='all, delete-orphan')
