@@ -17,6 +17,11 @@ class Settings(BaseSettings):
     # 30 minutes
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
 
+    ADMIN_USERNAME = 'admin'
+    ADMIN_PASSWORD = 'admin'
+    ADMIN_NICKNAME = 'admin'
+    ADMIN_EMAIL = '1104440778@qq.com'
+
     LOGGING = {
         'version': 1,
         'disable_existing_loggers': False,
