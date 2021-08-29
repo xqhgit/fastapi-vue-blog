@@ -12,10 +12,11 @@ class UserDAL:
         self.db_session = db_session
 
     async def authenticate(self, *, username, password):
-        user = await self.db_session.execute(select(User).where(User.username == username))
+        q = await self.db_session.execute(select(User).where(User.username == username))
+        user = q.fetchone()
         if not user:
             return None
-        if not user.verify_password(password, user.password_hash):
+        if not User.verify_password(password, user.password_hash):
             return None
         return user
 
