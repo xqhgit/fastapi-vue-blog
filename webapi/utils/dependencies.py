@@ -9,10 +9,10 @@ from webapi.db.dals.category_dal import CategoryDAL
 
 
 class DALGetter:
-    def __init__(self, model_cls):
-        self.model_cls = model_cls
+    def __init__(self, dal_cls):
+        self.dal_cls = dal_cls
 
     async def __call__(self):
         async with async_session() as session:
             async with session.begin():
-                yield CategoryDAL(session)
+                yield self.dal_cls(session)
