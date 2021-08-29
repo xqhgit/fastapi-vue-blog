@@ -12,3 +12,8 @@ router = APIRouter()
 async def get_all_categories(dal: CategoryDAL = Depends(DALGetter(CategoryDAL))) -> List[Category]:
     return await dal.get_all_categories()
 
+
+@router.post('/categories', tags=['Category'])
+async def create_category(dal: CategoryDAL = Depends(DALGetter(CategoryDAL))):
+    pass
+

@@ -15,6 +15,7 @@ class Post(Base):
     body = Column(Text)
     timestamp = Column(DateTime, default=datetime.utcnow, index=True)
     can_comment = Column(Boolean, default=True)
+    is_published = Column(Boolean, default=True)
 
     category_id = Column(Integer, ForeignKey('Category.id'))
 

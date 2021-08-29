@@ -1,9 +1,10 @@
 from fastapi import FastAPI
 import uvicorn
 
-from webapi.routers import category_router
+from webapi.routers import category_router, post_router
 
 app = FastAPI()
+app.include_router(post_router.router)
 app.include_router(category_router.router)
 
 

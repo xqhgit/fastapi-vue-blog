@@ -15,4 +15,5 @@ class DALGetter:
     async def __call__(self):
         async with async_session() as session:
             async with session.begin():
+                print(self.dal_cls)
                 yield self.dal_cls(session)
