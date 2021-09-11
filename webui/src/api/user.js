@@ -1,21 +1,24 @@
 import request from '@/utils/request'
 
 export function login(data) {
-  const form = new FormData()
-  const keys = Object.keys(data)
-  keys.forEach(key => {
-    form.append(key, data[key])
-  })
   return request({
-    url: '/login/access-token',
+    url: '/vue-admin-template/user/login',
     method: 'post',
-    data: form
+    data
   })
 }
 
-export function getInfo() {
+export function getInfo(token) {
   return request({
-    url: '/login/info',
-    method: 'get'
+    url: '/vue-admin-template/user/info',
+    method: 'get',
+    params: { token }
+  })
+}
+
+export function logout() {
+  return request({
+    url: '/vue-admin-template/user/logout',
+    method: 'post'
   })
 }

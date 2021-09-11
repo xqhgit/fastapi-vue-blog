@@ -1,4 +1,4 @@
-/build/
-/config/
-/dist/
-/*.js
+build/*.js
+src/assets
+public
+dist
