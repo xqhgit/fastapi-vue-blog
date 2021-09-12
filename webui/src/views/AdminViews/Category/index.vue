@@ -64,7 +64,7 @@ export default {
         limit: 10
       },
       rowData: [],
-      currentRow: undefined,
+      currentRow: {},
       currentRows: []
     }
   },

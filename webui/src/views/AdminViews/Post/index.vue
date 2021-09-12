@@ -83,7 +83,7 @@ export default {
         limit: 10
       },
       rowData: [],
-      currentRow: undefined,
+      currentRow: {},
       currentRows: []
     }
   },
@@ -92,7 +92,7 @@ export default {
 
     },
     handleCreate() {
-
+      this.$router.push({ 'name': 'PostCreate' })
     },
     handleQuery() {
 

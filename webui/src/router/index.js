@@ -80,6 +80,12 @@ export const constantRoutes = [
       name: 'Post',
       component: () => import('@/views/AdminViews/Post/index'),
       meta: { title: '文章管理', icon: 'el-icon-document' }
+    }, {
+      path: 'create',
+      name: 'PostCreate',
+      component: () => import('@/views/AdminViews/Post/create'),
+      meta: { title: '创建文章' },
+      hidden: true
     }]
   },
 

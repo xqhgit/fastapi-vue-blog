@@ -1,13 +1,14 @@
 import Vue from 'vue'
+import Cookies from 'js-cookie'
 
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import locale from 'element-ui/lib/locale/lang/en' // lang i18n
+// import locale from 'element-ui/lib/locale/lang/en' // lang i18n
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
-// import 'bootstrap/dist/css/bootstrap.css'
-// import 'bootstrap-vue/dist/bootstrap-vue.css'
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
 
 import '@/styles/index.scss' // global css
 
@@ -32,12 +33,15 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // set ElementUI lang to EN
-Vue.use(ElementUI, { locale })
+// Vue.use(ElementUI, { locale })
 // 如果想要中文版 element-ui，按如下方式声明
 // Vue.use(ElementUI)
+Vue.use(ElementUI, {
+  size: Cookies.get('size') || 'small' // set element-ui default size
+})
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
-// console.log('BootstrapVue', BootstrapVue)
+Vue.use(mavonEditor)
 
 Vue.config.productionTip = false
 
