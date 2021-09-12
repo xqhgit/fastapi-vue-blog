@@ -110,7 +110,8 @@ export default {
         if (valid) {
           this.loading = true
           this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.$router.push({ path: this.redirect || '/admin' })
+            // this.$router.push({ path: this.redirect || '/admin' })
+            this.$router.push('/admin/dashboard')
             this.loading = false
           }).catch(() => {
             this.loading = false
