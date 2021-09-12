@@ -18,7 +18,7 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
 
     ADMIN_USERNAME = 'admin'
-    ADMIN_PASSWORD = 'admin'
+    ADMIN_PASSWORD = '123456'
     ADMIN_NICKNAME = 'admin'
     ADMIN_EMAIL = '1104440778@qq.com'
 

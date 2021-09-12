@@ -13,7 +13,7 @@ class UserDAL:
 
     async def authenticate(self, *, username, password):
         q = await self.db_session.execute(select(User).where(User.username == username))
-        user = q.fetchone()
+        user = q.scalar()
         if not user:
             return None
         if not User.verify_password(password, user.password_hash):
