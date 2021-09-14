@@ -20,3 +20,8 @@ class UserDAL:
             return None
         return user
 
+    async def get(self, *, id):
+        q = await self.db_session.execute(select(User).where(User.id == id))
+        user = q.scalar()
+        return user
+

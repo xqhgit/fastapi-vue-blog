@@ -1,12 +1,18 @@
-from fastapi import FastAPI
 import uvicorn
+from fastapi import FastAPI
 
 from webapi.routers import category_router, post_router, user_router
 
-app = FastAPI()
-app.include_router(post_router.router)
-app.include_router(category_router.router)
-app.include_router(user_router.router)
+
+def create_application() -> FastAPI:
+    application = FastAPI()
+    # application.include_router(post_router.router)
+    application.include_router(category_router.router, prefix='/categories')
+    application.include_router(user_router.router, prefix='/admin')
+    return application
+
+
+app = create_application()
 
 
 @app.get("/ping")

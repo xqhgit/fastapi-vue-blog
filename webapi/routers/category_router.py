@@ -9,13 +9,13 @@ from webapi.db.schemas.category import CategoryCreate, CategoryOut
 router = APIRouter()
 
 
-@router.get("/categories", tags=['Category'])
+@router.get("/", tags=['Category'])
 async def get_all_categories(dal: CategoryDAL = Depends(DALGetter(CategoryDAL))) -> List[Category]:
     return await dal.get_all()
 
 
 # TODO: Admin Auth
-@router.post('/categories', tags=['Category'],
+@router.post('/', tags=['Category'],
              response_model=CategoryOut, status_code=status.HTTP_201_CREATED)
 async def create_category(
         category_schema: CategoryCreate,

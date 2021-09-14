@@ -3,17 +3,18 @@ from datetime import timedelta
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
+from fastapi.responses import JSONResponse
 
 from webapi.db.dals.user_dal import User, UserDAL
 from webapi.db.schemas.token import Token
-from webapi.utils.dependencies import DALGetter
+from webapi.utils.dependencies import DALGetter, get_current_user
 from webapi.setting import settings
 from webapi.utils import security
 
 router = APIRouter()
 
 
-@router.post("/login/access_token", tags=['User'],
+@router.post("/login/access_token/", tags=['User'],
              response_model=Token, status_code=status.HTTP_201_CREATED)
 async def login_access_token(
         dal: UserDAL = Depends(DALGetter(UserDAL)),
@@ -34,3 +35,14 @@ async def login_access_token(
         ),
         "token_type": "bearer"
     }
+
+
+@router.get('/login/getinfo', tags=['User'])
+async def login_getinfo(
+    current_user: User = Depends(get_current_user)
+):
+    data = {
+        'username': current_user.username,
+        'nickname': current_user.nickname
+    }
+    return JSONResponse(content=data, status_code=status.HTTP_200_OK)
