@@ -19,3 +19,22 @@ class CategoryOut(CategoryBase):
 
     class Config:
         orm_mode = True
+
+
+class CategoryAllOutItem(BaseModel):
+    id: int
+    name: str
+    posts: int
+
+
+class CategoryAllOut(BaseModel):
+    __root__: List[CategoryAllOutItem]
+
+
+class CategorySelectionOutItem(BaseModel):
+    id: int
+    name: str
+
+
+class CategorySelectionOut(BaseModel):
+    __root__: List[CategorySelectionOutItem]

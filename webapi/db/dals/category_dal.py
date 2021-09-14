@@ -21,3 +21,7 @@ class CategoryDAL:
     async def get_all(self) -> List[Category]:
         q = await self.db_session.execute(select(Category).order_by(Category.id))
         return q.scalars().all()
+
+    async def get_selection(self) -> List[Category]:
+        q = await self.db_session.execute(select(Category.id, Category.name).order_by(Category.id))
+        return q.scalars().all()
