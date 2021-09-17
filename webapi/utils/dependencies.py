@@ -11,7 +11,7 @@ from webapi.utils import security
 
 
 reusable_oauth2 = OAuth2PasswordBearer(
-    tokenUrl=f'/admin/login/access_token/'
+    tokenUrl=f'/api/admin/login/access_token/'
 )
 
 

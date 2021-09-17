@@ -17,7 +17,7 @@ def test_create_category_no_token(test_app: TestClient, monkeypatch):
         return Category(**response_data)
 
     monkeypatch.setattr(CategoryDAL, "create", mock_create)
-    response = test_app.post(url='/categories/', json=data)
+    response = test_app.post(url='/api/categories/', json=data)
     assert response.status_code == 401
 
 
@@ -34,13 +34,13 @@ def test_create_category(test_app_token: TestClient, monkeypatch):
         return Category(**response_data)
 
     monkeypatch.setattr(CategoryDAL, "create", mock_create)
-    response = test_app_token.post(url='/categories/', json=data)
+    response = test_app_token.post(url='/api/categories/', json=data)
     assert response.status_code == 201
     assert response.json() == response_data
 
 
 def test_create_category_invalid_data(test_app_token: TestClient):
-    response = test_app_token.post(url='/categories/', json={})
+    response = test_app_token.post(url='/api/categories/', json={})
     assert response.status_code == 422
     assert response.json() == {
         "detail": [
@@ -72,7 +72,7 @@ def test_read_all_categories(test_app: TestClient, monkeypatch):
 
     monkeypatch.setattr(CategoryDAL, "get_all", mock_get_all)
 
-    response = test_app.get(url='/categories/')
+    response = test_app.get(url='/api/categories/')
     assert response.status_code == 200
     assert response.json() == test_data
 
@@ -94,6 +94,6 @@ def test_read_categories_selection(test_app: TestClient, monkeypatch):
 
     monkeypatch.setattr(CategoryDAL, "get_selection", mock_get_selection)
 
-    response = test_app.get(url='/categories/selection/')
+    response = test_app.get(url='/api/categories/selection/')
     assert response.status_code == 200
     assert response.json() == test_data
