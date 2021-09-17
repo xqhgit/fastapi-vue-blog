@@ -37,7 +37,7 @@ async def login_access_token(
     }
 
 
-@router.get('/login/getinfo', tags=['User'])
+@router.get('/login/getinfo/', tags=['User'])
 async def login_getinfo(
     current_user: User = Depends(get_current_user)
 ):

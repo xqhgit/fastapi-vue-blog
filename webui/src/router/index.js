@@ -67,6 +67,11 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   {
+    path: '/admin',
+    redirect: '/admin/dashboard',
+    hidden: true
+  },
+  {
     path: '/admin/dashboard',
     component: Layout,
     redirect: '/admin/dashboard/index',
