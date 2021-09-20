@@ -1,14 +1,12 @@
 <template>
   <el-table
-    v-loading="loading"
     ref="table"
+    v-loading="loading"
     :max-height="maxHeight"
     :data="currentRowData"
     :stripe="true"
     :row-style="{'height':'35px'}"
-    :cell-style="{padding:'0px'}"
     :header-row-style="{height:'40px'}"
-    :header-cell-style="{padding:'0px'}"
     style="width: 100%;"
     highlight-current-row
     @select="pinSelect"
@@ -16,9 +14,9 @@
     @selection-change="handleSelectionChange"
   >
     <slot name="selection">
-      <el-table-column type="selection" min-width="5%"/>
+      <el-table-column type="selection" min-width="5%" />
     </slot>
-    <slot/>
+    <slot />
   </el-table>
 </template>
 

@@ -109,7 +109,7 @@ export const asyncRoutes = [
       path: 'index',
       name: 'Category',
       component: () => import('@/views/AdminViews/Category/index'),
-      meta: { title: '分类管理', icon: 'el-icon-discount' }
+      meta: { title: '类别管理', icon: 'el-icon-discount' }
     }]
   },
 

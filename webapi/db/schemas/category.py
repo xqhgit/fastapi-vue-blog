@@ -31,7 +31,8 @@ class CategoryAllOutItem(BaseModel):
 
 
 class CategoryAllOut(BaseModel):
-    __root__: List[CategoryAllOutItem]
+    total: int
+    items: List[CategoryAllOutItem]
 
 
 class CategorySelectionOutItem(BaseModel):

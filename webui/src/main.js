@@ -19,6 +19,9 @@ import router from './router'
 import '@/icons' // icon
 import '@/permission' // permission control
 
+import './utils/dialog_drag'
+import './utils/prevent_reclick'
+
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api

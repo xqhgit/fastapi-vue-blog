@@ -26,15 +26,24 @@
       </el-col>
     </el-row>
     <selection-table
+      ref="table"
       :data="rowData"
       :loading="loading"
       :select-row.sync="currentRow"
       :select-rows.sync="currentRows"
-      rref="table"
     >
-      <el-table-column label="名称" prop="title" />
-      <el-table-column label="文章数" prop="title" />
-      <el-table-column label="操作" prop="title" />
+      <el-table-column label="名称" prop="name" />
+      <el-table-column label="文章数" prop="posts" />
+      <el-table-column label="操作" prop="title">
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            @click="handleEdit(scope.row)"
+          >编辑</el-button>
+        </template>
+      </el-table-column>
     </selection-table>
 
     <pagination
@@ -44,16 +53,20 @@
       auto-scroll
       @pagination="getData"
     />
+
+    <create-dialog ref="CreateDialog" :visible.sync="createVisible" @success="getData" />
   </div>
 </template>
 
 <script>
+import { getAllCategories } from '@/api/category'
 import SelectionTable from '@/components/SelectionTable'
 import Pagination from '@/components/Pagination'
+import CreateDialog from './components/CreateDialog'
 
 export default {
   name: 'Index',
-  components: { SelectionTable, Pagination },
+  components: { SelectionTable, Pagination, CreateDialog },
   data() {
     return {
       loading: false,
@@ -65,21 +78,33 @@ export default {
       },
       rowData: [],
       currentRow: {},
-      currentRows: []
+      currentRows: [],
+      createVisible: false
     }
+  },
+  mounted() {
+    this.getData()
   },
   methods: {
     getData() {
-
+      this.loading = true
+      getAllCategories(this.queryParams).then(res => {
+        this.total = res.data.total
+        this.rowData = res.data.items
+        this.loading = false
+      })
     },
     handleCreate() {
-
+      this.createVisible = true
     },
     handleQuery() {
 
     },
     resetQuery() {
 
+    },
+    handleEdit(row) {
+      this.$refs['CreateDialog'].showData(row)
     }
   }
 }

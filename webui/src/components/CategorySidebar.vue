@@ -1,6 +1,6 @@
 <template>
   <div class="category-sidebar">
-    <h1>分类</h1>
+    <h1>类别</h1>
     <ul>
       <li>
         <span class="badge badge-info"><a href="#">Python</a></span>
