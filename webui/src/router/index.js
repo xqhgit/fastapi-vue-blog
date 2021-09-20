@@ -49,7 +49,8 @@ export const constantRoutes = [
   },
   {
     path: '/login',
-    component: () => import('@/views/AdminViews/Login/index'),
+    // component: () => import('@/views/AdminViews/Login/index'),
+    component: () => import('@/views/AdminViews/Login/index_new'),
     hidden: true
   },
 
