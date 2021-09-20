@@ -1,7 +1,7 @@
 <template>
   <drag-dialog
     v-loading="loading"
-    title="创建类别"
+    :title="title"
     :visible.sync="currentVisible"
     width="500px"
     @close="handleClose"
@@ -31,6 +31,7 @@ export default {
   },
   data() {
     return {
+      title: '创建类别',
       loading: false,
       form: {
         name: undefined
@@ -56,10 +57,10 @@ export default {
   methods: {
     reset() {
       this.loading = false
-      this.form = {
-        name: undefined
-      }
       this.$nextTick(() => {
+        this.form = {
+          name: undefined
+        }
         this.$refs['form'].resetFields()
       })
     },
@@ -101,10 +102,15 @@ export default {
         }
       })
     },
-    showData(record) {
+    updateData(record) {
+      this.title = '修改类别'
       this.currentVisible = true
       this.form.recordId = record.id
       this.form.name = record.name
+    },
+    createData() {
+      this.title = '创建类别'
+      this.currentVisible = true
     }
   }
 }

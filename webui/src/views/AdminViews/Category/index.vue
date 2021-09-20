@@ -5,7 +5,7 @@
         <el-form ref="queryForm" :model="queryParams" :inline="true" label-width="68px" @submit.native.prevent>
           <el-form-item label="" style="margin-bottom: 0">
             <el-input
-              v-model="queryParams.search"
+              v-model="queryParams.name"
               clearable
               prefix-icon="el-icon-search"
               size="small"
@@ -74,7 +74,8 @@ export default {
       total: 0,
       queryParams: {
         page: 1,
-        limit: 10
+        limit: 10,
+        unlimit: false
       },
       rowData: [],
       currentRow: {},
@@ -95,16 +96,17 @@ export default {
       })
     },
     handleCreate() {
-      this.createVisible = true
+      this.$refs['CreateDialog'].createData()
     },
     handleQuery() {
-
+      this.getData()
     },
     resetQuery() {
-
+      this.queryParams.name = undefined
+      this.getData()
     },
     handleEdit(row) {
-      this.$refs['CreateDialog'].showData(row)
+      this.$refs['CreateDialog'].updateData(row)
     }
   }
 }
