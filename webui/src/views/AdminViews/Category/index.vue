@@ -42,6 +42,18 @@
             icon="el-icon-edit"
             @click="handleEdit(scope.row)"
           >编辑</el-button>
+          <el-divider direction="vertical" />
+          <el-popconfirm
+            title="这是一段内容确定删除吗？"
+            @onConfirm="handleDelete(scope.row)"
+          >
+            <el-button
+              slot="reference"
+              size="mini"
+              type="text"
+              icon="el-icon-delete"
+            >删除</el-button>
+          </el-popconfirm>
         </template>
       </el-table-column>
     </selection-table>
@@ -59,7 +71,7 @@
 </template>
 
 <script>
-import { getAllCategories } from '@/api/category'
+import { getAllCategories, deleteCategory } from '@/api/category'
 import SelectionTable from '@/components/SelectionTable'
 import Pagination from '@/components/Pagination'
 import CreateDialog from './components/CreateDialog'
@@ -107,6 +119,15 @@ export default {
     },
     handleEdit(row) {
       this.$refs['CreateDialog'].updateData(row)
+    },
+    handleDelete(row) {
+      deleteCategory(row.id).then(res => {
+        this.$message({
+          type: 'success',
+          message: '删除成功'
+        })
+        this.getData()
+      }).catch(() => {})
     }
   }
 }

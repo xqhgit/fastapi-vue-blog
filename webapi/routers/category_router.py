@@ -54,3 +54,15 @@ async def create_category(
         return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'detail': '类别不存在'})
     db_obj = await dal.update(db_obj=obj, obj_in=category_schema)
     return db_obj
+
+
+@router.delete('/{category_id}/', tags=['Category'], dependencies=[Depends(get_current_user), ], status_code=status.HTTP_200_OK)
+async def delete_category(
+        category_id: int,
+        dal: CategoryDAL = Depends(DALGetter(CategoryDAL))
+):
+    obj = await dal.get_by_id(category_id)
+    if not obj:
+        return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'detail': '类别不存在'})
+    await dal.delete(record_id=category_id)
+    return JSONResponse(status_code=status.HTTP_200_OK, content={'detail': 'OK'})

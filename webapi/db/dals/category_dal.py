@@ -1,7 +1,9 @@
 # -*-coding:utf-8 -*-
 from typing import List, Optional
+from fastapi import status
+from fastapi.exceptions import HTTPException
 
-from sqlalchemy import update, insert, func
+from sqlalchemy import update, insert, func, delete
 from sqlalchemy.future import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -12,6 +14,14 @@ from webapi.db.schemas.category import CategoryCreate, CategoryUpdate
 class CategoryDAL:
     def __init__(self, db_session: AsyncSession):
         self.db_session = db_session
+
+    async def delete(self, *, record_id: int):
+        sql = select(func.count(Post.id).label('posts')).outerjoin(Category.posts).where(Category.id == record_id)
+        q = await self.db_session.execute(sql)
+        posts = q.one()['posts']
+        if posts:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='类别下有文章，无法删除类别')
+        await self.db_session.execute(delete(Category).where(Category.id == record_id))
 
     async def create(self, obj_in: CategoryCreate):
         db_obj = Category(**obj_in.dict())

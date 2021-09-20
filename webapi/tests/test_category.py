@@ -153,3 +153,23 @@ def test_update_category(test_app_token: TestClient, monkeypatch):
     response = test_app_token.put(url='/api/categories/1/', json=test_data)
     assert response.status_code == 200
     assert response.json() == test_result
+
+
+def test_delete_category(test_app_token: TestClient, monkeypatch):
+    test_data = {
+        'id': 1,
+        'name': 'Category'
+    }
+
+    async def mock_get_by_id(self, record_id):
+        return Category(**test_data)
+
+    async def mock_delete(self, record_id):
+        return
+
+    monkeypatch.setattr(CategoryDAL, "get_by_id", mock_get_by_id)
+    monkeypatch.setattr(CategoryDAL, "update", mock_delete)
+
+    response = test_app_token.delete(url='/api/categories/1/')
+    assert response.status_code == 200
+    assert response.json() == {'detail': 'OK'}

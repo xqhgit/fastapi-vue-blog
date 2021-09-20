@@ -16,6 +16,13 @@ export function updateCategory(recordId, data) {
   })
 }
 
+export function deleteCategory(recordId) {
+  return request({
+    url: `/categories/${recordId}/`,
+    method: 'delete'
+  })
+}
+
 export function getAllCategories(params) {
   return request({
     url: '/categories/',
