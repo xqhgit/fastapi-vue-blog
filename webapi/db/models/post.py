@@ -4,6 +4,7 @@ from sqlalchemy import Text, Integer, Column, String, DateTime, Boolean, Foreign
 from sqlalchemy.orm import relationship
 
 from webapi.db.config import Base
+from webapi.db.models.m2m import post_category
 
 
 class Post(Base):
@@ -17,7 +18,6 @@ class Post(Base):
     can_comment = Column(Boolean, default=True)
     is_published = Column(Boolean, default=True)
 
-    category_id = Column(Integer, ForeignKey('Category.id'))
-
-    category = relationship('Category', back_populates='posts')
     comments = relationship('Comment', back_populates='post', cascade='all, delete-orphan')
+    categories = relationship('Category', back_populates='posts', secondary=post_category)
+

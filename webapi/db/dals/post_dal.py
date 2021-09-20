@@ -2,13 +2,13 @@ from typing import List, Optional
 
 from sqlalchemy import update
 from sqlalchemy.future import select
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from webapi.db.models import Post
 
 
 class PostDAL:
-    def __init__(self, db_session: Session):
+    def __init__(self, db_session: AsyncSession):
         self.db_session = db_session
 
     # async def create_category(self, name: str):

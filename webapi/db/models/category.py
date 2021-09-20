@@ -2,6 +2,7 @@ from sqlalchemy import Text, Integer, Column, String, DateTime, Boolean, Foreign
 from sqlalchemy.orm import relationship
 
 from webapi.db.config import Base
+from webapi.db.models.m2m import post_category
 
 
 class Category(Base):
@@ -9,4 +10,4 @@ class Category(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(32), unique=True)
-    posts = relationship('Post', back_populates='category')
+    posts = relationship('Post', back_populates='categories', secondary=post_category)

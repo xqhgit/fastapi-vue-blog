@@ -26,6 +26,9 @@ class CategoryAllOutItem(BaseModel):
     name: str
     posts: int
 
+    class Config:
+        orm_mode = True
+
 
 class CategoryAllOut(BaseModel):
     __root__: List[CategoryAllOutItem]
@@ -34,6 +37,9 @@ class CategoryAllOut(BaseModel):
 class CategorySelectionOutItem(BaseModel):
     id: int
     name: str
+
+    class Config:
+        orm_mode = True
 
 
 class CategorySelectionOut(BaseModel):
