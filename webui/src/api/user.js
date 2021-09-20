@@ -8,11 +8,24 @@ import request from '@/utils/request'
 //   })
 // }
 
+// export function login(data) {
+//   return request({
+//     url: '/admin/login/access_token/',
+//     method: 'post',
+//     data
+//   })
+// }
+
 export function login(data) {
+  const form = new FormData()
+  const keys = Object.keys(data)
+  keys.forEach(key => {
+    form.append(key, data[key])
+  })
   return request({
     url: '/admin/login/access_token/',
     method: 'post',
-    data
+    data: form
   })
 }
 
@@ -24,17 +37,16 @@ export function login(data) {
 //   })
 // }
 
-export function getInfo(token) {
+export function getInfo() {
   return request({
-    url: '/vue-admin-template/user/info',
-    method: 'get',
-    params: { token }
+    url: '/admin/login/getinfo/',
+    method: 'get'
   })
 }
 
-export function logout() {
-  return request({
-    url: '/vue-admin-template/user/logout',
-    method: 'post'
-  })
-}
+// export function logout() {
+//   return request({
+//     url: '/vue-admin-template/user/logout',
+//     method: 'post'
+//   })
+// }

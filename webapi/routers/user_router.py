@@ -39,10 +39,11 @@ async def login_access_token(
 
 @router.get('/login/getinfo/', tags=['User'])
 async def login_getinfo(
-    current_user: User = Depends(get_current_user)
+        current_user: User = Depends(get_current_user)
 ):
     data = {
         'username': current_user.username,
-        'nickname': current_user.nickname
+        'nickname': current_user.nickname,
+        'roles': ['admin', ]
     }
     return JSONResponse(content=data, status_code=status.HTTP_200_OK)

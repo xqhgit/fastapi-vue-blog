@@ -9,7 +9,7 @@ import os
 class Settings(BaseSettings):
     BASEDIR = os.path.abspath(os.path.dirname(__file__))
     LOG_PATH = os.path.join(BASEDIR, 'logs')
-    BACKEND_CORS_ORIGINS: List = ['*']
+    BACKEND_CORS_ORIGINS: List = ['http://localhost:8080']
 
     SQLALCHEMY_DATABASE_URI: str = 'mysql+aiomysql://root:@127.0.0.1:3306/FastAPIVueBlog'
     SECRET_KEY: str = secrets.token_urlsafe(32)
