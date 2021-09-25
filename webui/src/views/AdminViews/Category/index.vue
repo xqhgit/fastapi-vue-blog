@@ -111,6 +111,8 @@ export default {
       this.$refs['CreateDialog'].createData()
     },
     handleQuery() {
+      this.queryParams.page = 1
+      this.queryParams.limit = 10
       this.getData()
     },
     resetQuery() {

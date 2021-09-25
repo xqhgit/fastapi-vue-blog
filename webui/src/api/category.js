@@ -30,3 +30,10 @@ export function getAllCategories(params) {
     params: params
   })
 }
+
+export function getCategoriesSelection() {
+  return request({
+    url: '/categories/selection/',
+    method: 'get'
+  })
+}
