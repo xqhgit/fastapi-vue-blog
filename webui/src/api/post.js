@@ -7,3 +7,10 @@ export function getPosts(params) {
     params: params
   })
 }
+
+export function getPost(postId) {
+  return request({
+    url: `/posts/${postId}`,
+    method: 'get'
+  })
+}

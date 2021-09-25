@@ -99,6 +99,12 @@ export const asyncRoutes = [
       component: () => import('@/views/AdminViews/Post/create'),
       meta: { title: '创建文章' },
       hidden: true
+    }, {
+      path: 'edit/:postId',
+      name: 'PostEdit',
+      component: () => import('@/views/AdminViews/Post/edit'),
+      meta: { title: '编辑文章' },
+      hidden: true
     }]
   },
 

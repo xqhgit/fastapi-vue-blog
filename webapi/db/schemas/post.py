@@ -57,3 +57,33 @@ class PostsListOutItem(BaseModel):
 class PostsListOut(BaseModel):
     total: int
     items: List[PostsListOutItem]
+
+
+class PostOutCategories(BaseModel):
+    id: int
+    name: str
+
+    class Config:
+        orm_mode = True
+
+
+class PostOutComments(BaseModel):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+
+class PostOut(BaseModel):
+    id: int
+    title: str
+    description: str
+    body: str
+    timestamp: datetime
+    can_comment: bool
+    is_published: bool
+    categories: List[PostOutCategories]
+    comments: List[PostOutComments]
+
+    class Config:
+        orm_mode = True

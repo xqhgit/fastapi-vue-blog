@@ -23,6 +23,12 @@ class PostDAL:
     #     q = await self.db_session.execute(select(Post).order_by(Post.id))
     #     return q.scalars().all()
 
+    async def get_by_id(self, record_id: int):
+        stmt = select(Post).options(selectinload(Post.categories), selectinload(Post.comments)).where(
+            Post.id == record_id)
+        q = await self.db_session.execute(stmt)
+        return q.scalars().one()
+
     async def get_limit(self, title=None, *, page, limit) -> List[Post]:
         offset = limit * (page - 1)
         stmt = select(Post).options(selectinload(Post.categories), selectinload(Post.comments))

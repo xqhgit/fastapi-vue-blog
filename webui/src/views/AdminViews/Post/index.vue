@@ -163,7 +163,7 @@ export default {
       this.getData()
     },
     handleEdit(record) {
-
+      this.$router.push({ name: 'PostEdit', params: { postId: record.id }})
     },
     handleDelete(record) {
 
