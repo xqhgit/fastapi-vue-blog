@@ -57,5 +57,7 @@ Python异步后端实现博客系统
 ![avatar](./description/index.png)
 ![avatar](./description/blog.png)
 ![avatar](./description/mange_login.png)
+![avatar](./description/manage_post.png)
+![avatar](./description/create_post.png)
 ![avatar](./description/manage_category.png)
 ![avatar](./description/swagger.png)
