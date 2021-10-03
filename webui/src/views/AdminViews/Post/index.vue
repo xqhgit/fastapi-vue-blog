@@ -97,7 +97,7 @@
                     size="mini"
                     type="text"
                     icon="el-icon-delete"
-                  >返回</el-button>
+                  >删除</el-button>
                 </el-popconfirm>
               </el-dropdown-item>
             </el-dropdown-menu>
@@ -122,7 +122,7 @@
 import SelectionTable from '@/components/SelectionTable'
 import Pagination from '@/components/Pagination'
 import { getPosts } from '@/api/post'
-import { updatePost } from '@/api/post'
+import { updatePost, deletePost } from '@/api/post'
 
 export default {
   name: 'Index',
@@ -170,7 +170,14 @@ export default {
       this.$router.push({ name: 'PostEdit', params: { postId: record.id }})
     },
     handleDelete(record) {
-
+      this.loading = true
+      deletePost(record.id).then(res => {
+        this.$message({
+          type: 'success',
+          message: '删除成功'
+        })
+        this.getData()
+      })
     },
     changeCanComment(record) {
       this.loading = true

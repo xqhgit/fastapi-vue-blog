@@ -30,3 +30,10 @@ export function updatePost(recordId, data) {
     data
   })
 }
+
+export function deletePost(recordId) {
+  return request({
+    url: `/posts/${recordId}`,
+    method: 'delete'
+  })
+}

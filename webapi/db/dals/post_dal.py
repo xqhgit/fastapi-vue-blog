@@ -1,11 +1,14 @@
 from typing import List, Optional
+from fastapi import status
+from fastapi.exceptions import HTTPException
 
-from sqlalchemy import update, func
+
+from sqlalchemy import update, func, delete
 from sqlalchemy.future import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
-from webapi.db.models import Post, Category
+from webapi.db.models import Post, Category, post_category
 from webapi.db.schemas.post import PostIn, PostInUpdate
 
 
@@ -37,12 +40,16 @@ class PostDAL:
         update_data = obj_in.dict(exclude_none=True)
         categories = await self.get_categories_by_ids(update_data.pop('categories', []))
         update_data['categories'] = categories
-        print(update_data)
         for field in update_data:
             setattr(db_obj, field, update_data[field])
         self.db_session.add(db_obj)
         await self.db_session.flush()
         return db_obj
+
+    async def delete(self, *, db_obj: Post):
+        db_obj.categories = []
+        await self.db_session.flush()
+        await self.db_session.execute(delete(Post).where(Post.id == db_obj.id))
 
     async def count(self, title=None):
         stmt = select(func.count(Post.id).label('total'))

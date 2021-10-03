@@ -234,3 +234,29 @@ def test_update_post_no_toke(test_app: TestClient, monkeypatch):
     monkeypatch.setattr(PostDAL, 'update', mock_update)
     response = test_app.put(url='/api/posts/1/', json=update_data)
     assert response.status_code == 401
+
+
+def test_delete_post(test_app_token: TestClient, monkeypatch):
+    async def mock_get_by_id(self, title):
+        return [1, ]
+
+    async def mock_delete(self, db_obj):
+        pass
+
+    monkeypatch.setattr(PostDAL, 'get_by_id', mock_get_by_id)
+    monkeypatch.setattr(PostDAL, 'delete', mock_delete)
+    response = test_app_token.delete(url='/api/posts/1/')
+    assert response.status_code == 200
+
+
+def test_delete_post_no_token(test_app: TestClient, monkeypatch):
+    async def mock_get_by_id(self, title):
+        return [1, ]
+
+    async def mock_delete(self, db_obj):
+        pass
+
+    monkeypatch.setattr(PostDAL, 'get_by_id', mock_get_by_id)
+    monkeypatch.setattr(PostDAL, 'delete', mock_delete)
+    response = test_app.delete(url='/api/posts/1/')
+    assert response.status_code == 401

@@ -51,3 +51,16 @@ async def update_post(
         return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'detail': '文章不存在'})
     db_obj = await dal.update(db_obj=obj, obj_in=obj_in)
     return db_obj
+
+
+@router.delete('/{post_id}/', tags=['Post'],  dependencies=[Depends(get_current_user), ],
+               status_code=status.HTTP_200_OK)
+async def delete_post(
+        dal: PostDAL = Depends(DALGetter(PostDAL)), *,
+        post_id: int
+):
+    obj = await dal.get_by_id(post_id)
+    if not obj:
+        return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'detail': '文章不存在'})
+    await dal.delete(db_obj=obj)
+    return JSONResponse(status_code=status.HTTP_200_OK, content={'detail': 'OK'})

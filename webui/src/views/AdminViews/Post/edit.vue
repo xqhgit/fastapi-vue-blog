@@ -34,7 +34,7 @@
       </el-form-item>
       <el-form-item>
         <el-button v-preventReClick type="primary" @click="onSubmit">保存</el-button>
-        <el-button @click="onCancel">取消</el-button>
+        <el-button @click="onCancel">返回</el-button>
       </el-form-item>
     </el-form>
   </div>
