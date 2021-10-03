@@ -97,7 +97,7 @@
                     size="mini"
                     type="text"
                     icon="el-icon-delete"
-                  >删除</el-button>
+                  >返回</el-button>
                 </el-popconfirm>
               </el-dropdown-item>
             </el-dropdown-menu>
