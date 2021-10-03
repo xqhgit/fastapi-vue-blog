@@ -1,7 +1,7 @@
 import json
 from typing import Optional, List
 from datetime import datetime
-from pydantic import BaseModel, root_validator, validator
+from pydantic import BaseModel, root_validator, validator, Field
 
 
 def json_dumps(v, *, default=None):
@@ -87,3 +87,20 @@ class PostOut(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class PostOutCreate(BaseModel):
+    id: int
+    title: str
+
+    class Config:
+        orm_mode = True
+
+
+class PostIn(BaseModel):
+    title: str = Field(..., max_length=64)
+    description: str
+    body: str
+    can_comment: bool
+    is_published: bool
+    categories: List[int]

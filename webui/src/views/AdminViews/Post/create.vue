@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <el-form ref="form" v-loading="loading" :model="form" :rules="rules" label-width="80px">
       <el-form-item label="标题" prop="title">
         <el-input v-model="form.title" />
       </el-form-item>
@@ -33,7 +33,7 @@
         <el-switch v-model="form.can_comment" />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">立即创建</el-button>
+        <el-button v-preventReClick type="primary" @click="onSubmit">创建</el-button>
         <el-button @click="onCancel">取消</el-button>
       </el-form-item>
     </el-form>
@@ -42,11 +42,13 @@
 
 <script>
 import { getCategoriesSelection } from '@/api/category'
+import { createPost } from '@/api/post'
 
 export default {
   name: 'Create',
   data() {
     return {
+      loading: false,
       form: {
         title: undefined,
         categories: undefined,
@@ -120,7 +122,15 @@ export default {
     onSubmit() {
       this.$refs.form.validate((valid) => {
         if (valid) {
-          console.log(this.form)
+          this.loading = true
+          createPost(this.form).then(res => {
+            this.loading = false
+            this.$message({
+              type: 'success',
+              message: '创建成功'
+            })
+            this.$router.push({ name: 'PostIndex' })
+          })
         }
       })
     },

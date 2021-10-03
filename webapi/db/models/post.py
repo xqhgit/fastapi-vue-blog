@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import Text, Integer, Column, String, DateTime, Boolean, ForeignKey
+from sqlalchemy import Text, Integer, Column, String, DateTime, Boolean, ForeignKey, func
 from sqlalchemy.orm import relationship
 
 from webapi.db.config import Base
@@ -10,7 +10,7 @@ from webapi.db.models.m2m import post_category
 class Post(Base):
     __tablename__ = 'Post'
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     title = Column(String(64), unique=True)
     description = Column(Text)
     body = Column(Text)
@@ -19,5 +19,6 @@ class Post(Base):
     is_published = Column(Boolean, default=True)
 
     comments = relationship('Comment', back_populates='post', cascade='all, delete-orphan')
-    categories = relationship('Category', back_populates='posts', secondary=post_category)
+    categories = relationship('Category', back_populates='posts', secondary=lambda: post_category)
 
+    __mapper_args__ = {"eager_defaults": True}

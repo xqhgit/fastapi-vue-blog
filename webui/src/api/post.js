@@ -14,3 +14,12 @@ export function getPost(postId) {
     method: 'get'
   })
 }
+
+export function createPost(data) {
+  return request({
+    url: `/posts/`,
+    method: 'post',
+    data
+  })
+}
+

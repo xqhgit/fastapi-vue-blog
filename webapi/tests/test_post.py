@@ -94,3 +94,68 @@ def test_get_post(test_app: TestClient, monkeypatch):
     response = test_app.get(url='/api/posts/1/')
     assert response.status_code == 200
     assert response.json() == data
+
+
+def test_create_post(test_app_token: TestClient, monkeypatch):
+    data = {
+        "id": 1,
+        "title": "test",
+        "description": "aaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaa",
+        "body": "a",
+        "can_comment": True,
+        "is_published": True
+    }
+
+    create_data = {
+        **data,
+        "categories": []
+    }
+
+    result = {
+        "id": 1,
+        "title": "test",
+    }
+
+    async def mock_get_by_title(self, title):
+        return []
+
+    async def mock_create(self, obj_in):
+        return Post(**data)
+
+    monkeypatch.setattr(PostDAL, 'get_by_title', mock_get_by_title)
+    monkeypatch.setattr(PostDAL, 'create', mock_create)
+    response = test_app_token.post(url='/api/posts/', json=create_data)
+    assert response.status_code == 201
+    assert response.json() == result
+
+
+def test_create_post_no_token(test_app: TestClient, monkeypatch):
+    data = {
+        "id": 1,
+        "title": "test",
+        "description": "aaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaa",
+        "body": "a",
+        "can_comment": True,
+        "is_published": True
+    }
+
+    create_data = {
+        **data,
+        "categories": []
+    }
+
+    result = {
+        "id": 1,
+        "title": "test",
+    }
+
+    async def mock_get_by_title(self, title):
+        return []
+
+    async def mock_create(self, obj_in):
+        return Post(**data)
+
+    monkeypatch.setattr(PostDAL, 'get_by_title', mock_get_by_title)
+    monkeypatch.setattr(PostDAL, 'create', mock_create)
+    response = test_app.post(url='/api/posts/', json=create_data)
+    assert response.status_code == 401

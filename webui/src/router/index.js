@@ -90,7 +90,7 @@ export const asyncRoutes = [
     redirect: '/admin/post/index',
     children: [{
       path: 'index',
-      name: 'Post',
+      name: 'PostIndex',
       component: () => import('@/views/AdminViews/Post/index'),
       meta: { title: '文章管理', icon: 'el-icon-document' }
     }, {
