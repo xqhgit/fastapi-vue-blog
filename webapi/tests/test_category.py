@@ -168,7 +168,7 @@ def test_delete_category(test_app_token: TestClient, monkeypatch):
         return
 
     monkeypatch.setattr(CategoryDAL, "get_by_id", mock_get_by_id)
-    monkeypatch.setattr(CategoryDAL, "update", mock_delete)
+    monkeypatch.setattr(CategoryDAL, "delete", mock_delete)
 
     response = test_app_token.delete(url='/api/categories/1/')
     assert response.status_code == 200

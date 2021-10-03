@@ -23,3 +23,10 @@ export function createPost(data) {
   })
 }
 
+export function updatePost(recordId, data) {
+  return request({
+    url: `/posts/${recordId}/`,
+    method: 'put',
+    data
+  })
+}

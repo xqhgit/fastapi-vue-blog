@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from webapi.db.models import Post, Category
-from webapi.db.schemas.post import PostIn
+from webapi.db.schemas.post import PostIn, PostInUpdate
 
 
 class PostDAL:
@@ -33,6 +33,17 @@ class PostDAL:
         await self.db_session.flush()
         return db_obj
 
+    async def update(self, db_obj: Post, obj_in: PostInUpdate):
+        update_data = obj_in.dict(exclude_none=True)
+        categories = await self.get_categories_by_ids(update_data.pop('categories', []))
+        update_data['categories'] = categories
+        print(update_data)
+        for field in update_data:
+            setattr(db_obj, field, update_data[field])
+        self.db_session.add(db_obj)
+        await self.db_session.flush()
+        return db_obj
+
     async def count(self, title=None):
         stmt = select(func.count(Post.id).label('total'))
         if title is not None:
@@ -45,9 +56,10 @@ class PostDAL:
         q = await self.db_session.execute(sql)
         return q.all()
 
-    # async def get_all_posts(self) -> List[Post]:
-    #     q = await self.db_session.execute(select(Post).order_by(Post.id))
-    #     return q.scalars().all()
+    async def exist(self, record: int):
+        stmt = select(Post).where(Post.id == record)
+        q = await self.db_session.execute(stmt)
+        return q.scalars().one()
 
     async def get_by_id(self, record_id: int):
         stmt = select(Post).options(selectinload(Post.categories), selectinload(Post.comments)).where(

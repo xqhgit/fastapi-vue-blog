@@ -56,6 +56,7 @@
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button
+            v-preventReClick
             size="mini"
             type="text"
             icon="el-icon-edit"
@@ -70,18 +71,20 @@
 
               <el-dropdown-item>
                 <el-button
+                  v-preventReClick
                   size="mini"
                   type="text"
                   icon="el-icon-edit-outline"
-                  @click="handleEdit(scope.row)"
+                  @click="changeCanComment(scope.row)"
                 >切换评论</el-button>
               </el-dropdown-item>
               <el-dropdown-item>
                 <el-button
+                  v-preventReClick
                   size="mini"
                   type="text"
                   icon="el-icon-edit-outline"
-                  @click="handleEdit(scope.row)"
+                  @click="changeIsPublished(scope.row)"
                 >切换发布</el-button>
               </el-dropdown-item>
               <el-dropdown-item>
@@ -119,6 +122,7 @@
 import SelectionTable from '@/components/SelectionTable'
 import Pagination from '@/components/Pagination'
 import { getPosts } from '@/api/post'
+import { updatePost } from '@/api/post'
 
 export default {
   name: 'Index',
@@ -167,6 +171,26 @@ export default {
     },
     handleDelete(record) {
 
+    },
+    changeCanComment(record) {
+      this.loading = true
+      updatePost(record.id, { 'can_comment': !record.can_comment }).then(res => {
+        this.$message({
+          type: 'success',
+          message: '修改成功'
+        })
+        this.getData()
+      })
+    },
+    changeIsPublished(record) {
+      this.loading = true
+      updatePost(record.id, { 'is_published': !record.is_published }).then(res => {
+        this.$message({
+          type: 'success',
+          message: '修改成功'
+        })
+        this.getData()
+      })
     }
   }
 }

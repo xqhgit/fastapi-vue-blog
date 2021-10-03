@@ -6,7 +6,7 @@ from fastapi.responses import JSONResponse
 
 from webapi.db.dals.post_dal import Post, PostDAL
 from webapi.utils.dependencies import DALGetter, get_current_user
-from webapi.db.schemas.post import PostsListOut, PostOut, PostIn, PostOutCreate
+from webapi.db.schemas.post import PostsListOut, PostOut, PostIn, PostOutCreate, PostInUpdate, PostOutUpdate
 
 router = APIRouter()
 
@@ -28,9 +28,6 @@ async def create_post(
         dal: PostDAL = Depends(DALGetter(PostDAL)), *,
         obj_in: PostIn
 ):
-    exist = await dal.get_by_title(obj_in.title)
-    if exist:
-        return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'detail': '标题已存在'})
     return await dal.create(obj_in)
 
 
@@ -41,3 +38,16 @@ async def get_post(
 ):
     obj = await dal.get_by_id(post_id)
     return obj
+
+
+@router.put('/{post_id}/', tags=['Post'], dependencies=[Depends(get_current_user), ],
+            status_code=status.HTTP_200_OK, response_model=PostOutUpdate)
+async def update_post(
+        dal: PostDAL = Depends(DALGetter(PostDAL)), *,
+        post_id: int, obj_in: PostInUpdate
+):
+    obj = await dal.get_by_id(post_id)
+    if not obj:
+        return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'detail': '文章不存在'})
+    db_obj = await dal.update(db_obj=obj, obj_in=obj_in)
+    return db_obj

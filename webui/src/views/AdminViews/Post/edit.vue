@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <el-form ref="form" v-loading="loading" :model="form" :rules="rules" label-width="80px">
       <el-form-item label="标题" prop="title">
         <el-input v-model="form.title" />
       </el-form-item>
@@ -33,7 +33,7 @@
         <el-switch v-model="form.can_comment" />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">保存</el-button>
+        <el-button v-preventReClick type="primary" @click="onSubmit">保存</el-button>
         <el-button @click="onCancel">取消</el-button>
       </el-form-item>
     </el-form>
@@ -42,12 +42,14 @@
 
 <script>
 import { getCategoriesSelection } from '@/api/category'
-import { getPost } from '@/api/post'
+import { getPost, updatePost } from '@/api/post'
 
 export default {
   name: 'Create',
   data() {
     return {
+      loading: false,
+      postId: undefined,
       form: {
         title: undefined,
         categories: undefined,
@@ -120,10 +122,9 @@ export default {
       })
     },
     getData() {
-      // console.log(this.$route.params)
+      this.loading = true
       const postId = this.$route.params.postId
       getPost(postId).then(res => {
-        console.log(res)
         this.form.categories = res.data.categories.map((value, index) => {
           return value['id']
         })
@@ -133,12 +134,21 @@ export default {
         this.form.body = res.data.body
         this.form.can_comment = res.data.can_comment
         this.form.is_published = res.data.is_published
+        this.postId = postId
+        this.loading = false
       })
     },
     onSubmit() {
       this.$refs.form.validate((valid) => {
         if (valid) {
-          console.log(this.form)
+          this.loading = true
+          updatePost(this.postId, this.form).then(res => {
+            this.$message({
+              type: 'success',
+              message: '修改成功'
+            })
+            this.loading = false
+          })
         }
       })
     },

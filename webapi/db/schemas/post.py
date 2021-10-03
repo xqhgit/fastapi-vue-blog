@@ -104,3 +104,16 @@ class PostIn(BaseModel):
     can_comment: bool
     is_published: bool
     categories: List[int]
+
+
+class PostInUpdate(BaseModel):
+    title: str = Field(None, max_length=64)
+    description: str = None
+    body: str = None
+    can_comment: bool = None
+    is_published: bool = None
+    categories: List[int] = None
+
+
+class PostOutUpdate(PostOutCreate):
+    pass

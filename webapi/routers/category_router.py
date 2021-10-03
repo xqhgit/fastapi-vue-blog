@@ -44,7 +44,7 @@ async def get_selection_categories(dal: CategoryDAL = Depends(DALGetter(Category
 
 @router.put('/{category_id}/', tags=['Category'], dependencies=[Depends(get_current_user), ],
             response_model=CategoryOut, status_code=status.HTTP_200_OK)
-async def create_category(
+async def update_category(
         category_id: int,
         category_schema: CategoryUpdate,
         dal: CategoryDAL = Depends(DALGetter(CategoryDAL)),

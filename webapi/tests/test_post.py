@@ -159,3 +159,41 @@ def test_create_post_no_token(test_app: TestClient, monkeypatch):
     monkeypatch.setattr(PostDAL, 'create', mock_create)
     response = test_app.post(url='/api/posts/', json=create_data)
     assert response.status_code == 401
+
+
+def test_update_post(test_app_token: TestClient, monkeypatch):
+    data = {
+        "id": 1,
+        "title": "test",
+        "description": "aaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaa",
+        "body": "a",
+        "timestamp": "2021-09-20T17:03:06",
+        "can_comment": True,
+        "is_published": True
+    }
+
+    update_data = {
+        "title": "test",
+        "description": "aaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaa",
+        "body": "a",
+        "can_comment": True,
+        "is_published": True,
+        "categories": []
+    }
+
+    result = {
+        "id": 1,
+        "title": "test",
+    }
+
+    async def mock_get_by_id(self, title):
+        return [1, ]
+
+    async def mock_update(self, db_obj, obj_in):
+        return Post(**data)
+
+    monkeypatch.setattr(PostDAL, 'get_by_id', mock_get_by_id)
+    monkeypatch.setattr(PostDAL, 'update', mock_update)
+    response = test_app_token.put(url='/api/posts/1/', json=update_data)
+    assert response.status_code == 200
+    assert response.json() == result

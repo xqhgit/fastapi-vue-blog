@@ -11,7 +11,7 @@ class Post(Base):
     __tablename__ = 'Post'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    title = Column(String(64), unique=True)
+    title = Column(String(64))
     description = Column(Text)
     body = Column(Text)
     timestamp = Column(DateTime, default=datetime.utcnow, index=True)
