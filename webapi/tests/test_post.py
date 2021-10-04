@@ -71,6 +71,7 @@ def test_get_post(test_app: TestClient, monkeypatch):
         "title": "a",
         "description": "aaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaa",
         "body": "a",
+        "body_html": "a",
         "timestamp": "2021-09-20T17:03:06",
         "can_comment": True,
         "is_published": True,
@@ -102,6 +103,7 @@ def test_create_post(test_app_token: TestClient, monkeypatch):
         "title": "test",
         "description": "aaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaa",
         "body": "a",
+        "body_html": "a",
         "can_comment": True,
         "is_published": True
     }

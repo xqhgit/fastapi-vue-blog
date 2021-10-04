@@ -1,30 +1,26 @@
 <template>
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-9">
       <div id="main">
-        <b-alert show>默认通知</b-alert>
-        <div class="post">
-          <p class="date">January 11 2021</p>
+        <!--        <b-alert show>默认通知</b-alert>-->
+        <div v-for="item in dataList" :key="item.id" class="post">
+          <p class="date">{{ item.timestamp }}</p>
           <h1 class="post-title">
-            <a href="#">
-              Beautiful Interactive Tables for your Flask Templates
+            <a :href="`/post?postId=${item.id}`">
+              {{ item.title }}
             </a>
           </h1>
           <div class="posted">
             <span>类别：</span>
-            <b-badge variant="info">Python</b-badge>,
-            <b-badge variant="info">JavaScript</b-badge>.
+            <b-badge v-for="category in item.categories" :key="category" style="margin-right: 10px;" variant="info">{{ category }}</b-badge>
           </div>
           <div class="post_body">
-            Rendering a table with data in a Flask template is a relatively simple task when
-            the table is short, but can be incredibly hard for larger tables that require
-            features such as sorting, pagination and searching. In this article I'm going
-            to show you how to integrate the dataTables.js library in your templates,
-            which will allow you to create fully featured tables with ease!
+            {{ item.description }}
           </div>
+          <br>
           <div style="padding-top: 10px;" class="d-flex justify-content-between">
-            <a href="#">4 个评论</a>
-            <a href="#">继续阅读...</a>
+            <a href="#">{{ item.comments }} 个评论</a>
+            <a :href="`/post?postId=${item.id}`">继续阅读...</a>
           </div>
         </div>
         <div class="page">
@@ -35,7 +31,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-4 category-sidebar-bg">
+    <div class="col-md-3 category-sidebar-bg">
       <category-sidebar />
     </div>
   </div>
@@ -45,7 +41,7 @@
 <script>
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-// import { getPosts } from '@/api/posts'
+import { getPosts } from '@/api/post'
 import CategorySidebar from '@/components/CategorySidebar'
 // import PostCard from './components/PostCard'
 // import CategoryList from './components/CategoryList'
@@ -59,7 +55,7 @@ export default {
   data() {
     return {
       total: 0,
-      items: [],
+      dataList: [],
       query: {
         page: 1,
         limit: 10
@@ -72,10 +68,10 @@ export default {
   },
   methods: {
     getData() {
-      // getPosts(this.query).then(response => {
-      //   this.total = response.data.total
-      //   this.items = response.data.items
-      // })
+      getPosts(this.query).then(response => {
+        this.total = response.data.total
+        this.dataList = response.data.items
+      })
     }
   }
 }

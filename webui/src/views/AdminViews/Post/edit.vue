@@ -55,6 +55,7 @@ export default {
         categories: undefined,
         description: undefined,
         body: undefined,
+        body_html: undefined,
         is_published: undefined,
         can_comment: undefined
       },
@@ -158,6 +159,7 @@ export default {
     handleEditorSave(value, render) {
     },
     handleMarkdownChange(value, render) {
+      this.form.body_html = render
     }
   }
 }

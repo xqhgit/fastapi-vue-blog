@@ -79,6 +79,7 @@ class PostOut(BaseModel):
     title: str
     description: str
     body: str
+    body_html: str
     timestamp: datetime
     can_comment: bool
     is_published: bool
@@ -101,6 +102,7 @@ class PostIn(BaseModel):
     title: str = Field(..., max_length=64)
     description: str
     body: str
+    body_html: str
     can_comment: bool
     is_published: bool
     categories: List[int]
@@ -110,6 +112,7 @@ class PostInUpdate(BaseModel):
     title: str = Field(None, max_length=64)
     description: str = None
     body: str = None
+    body_html: str = None
     can_comment: bool = None
     is_published: bool = None
     categories: List[int] = None

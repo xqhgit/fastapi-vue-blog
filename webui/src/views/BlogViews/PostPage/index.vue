@@ -40,36 +40,46 @@
           <b-button type="submit" size="sm" variant="outline-secondary">
             提交
           </b-button>
-          <b-button type="reset" size="sm" variant="outline-danger">
+          <b-button style="margin-left: 10px;" type="reset" size="sm" variant="outline-danger">
             取消
           </b-button>
         </b-form>
       </div>
       <template v-slot:modal-footer="{ ok, cancel, hide }">
-        <div/>
+        <div />
       </template>
     </b-modal>
-    <div class="row">
-      <div class="col-md-8">
+    <div v-if="postData" class="row">
+      <div class="col-md-9">
         <div id="main">
           <div class="post">
-            <p class="date">January 11 2021</p>
+            <p class="date">{{ postData.timestamp }}</p>
             <h1 class="post-title">
               <a href="#">
-                Beautiful Interactive Tables for your Flask Templates
+                {{ postData.title }}
               </a>
             </h1>
             <div class="posted">
               <span>类别：</span>
-              <b-badge variant="info">Python</b-badge>,
-              <b-badge variant="info">JavaScript</b-badge>.
+              <b-badge v-for="category in postData.categories" :key="category.name" style="margin-right: 10px;" variant="info">{{ category.name }}</b-badge>
+            </div>
+            <div class="post_desc">
+              {{ postData.description }}
             </div>
             <div class="post_body">
-              Rendering a table with data in a Flask template is a relatively simple task when
-              the table is short, but can be incredibly hard for larger tables that require
-              features such as sorting, pagination and searching. In this article I'm going
-              to show you how to integrate the dataTables.js library in your templates,
-              which will allow you to create fully featured tables with ease!
+              <!--              <div class="markdown-body" style="text-align:left;width:90%;margin-bottom:50px" v-html="postData.body_html" />-->
+
+              <!--              {{ postData.body }}-->
+              <mavon-editor
+                ref="md"
+                :ishljs="true"
+                :editable="false"
+                :toolbars-flag="false"
+                :navigation="true"
+                :box-shadow="false"
+                style="border: none; z-index: 2000;"
+                v-html="postData.body_html"
+              />
             </div>
           </div>
           <div class="comment">
@@ -148,7 +158,7 @@
           </b-form>
         </div>
       </div>
-      <div class="col-md-4 category-sidebar-bg">
+      <div class="col-md-3 category-sidebar-bg">
         <category-sidebar />
       </div>
     </div>
@@ -159,12 +169,17 @@
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import CategorySidebar from '@/components/CategorySidebar'
+import { getPost } from '@/api/post'
 
 export default {
   name: 'PostPageIndex',
   components: { CategorySidebar },
   data() {
     return {
+      loading: false,
+      postId: undefined,
+      postData: undefined,
+      commentData: [],
       showReplyModal: false,
       replyForm: {
         name: undefined,
@@ -173,7 +188,19 @@ export default {
       }
     }
   },
+  mounted() {
+    this.getData()
+  },
   methods: {
+    getData() {
+      this.loading = true
+      // const postId = this.$route.params.postId
+      const postId = this.$route.query.postId
+      getPost(postId).then(res => {
+        this.postData = res.data
+        this.loading = false
+      })
+    },
     handleShowReply() {
       this.showReplyModal = true
     },
@@ -276,4 +303,6 @@ export default {
     /*margin-left: 70px;*/
     overflow: auto;
   }
+
+  .v-note-wrapper{ z-index:1 !important; }
 </style>

@@ -14,6 +14,7 @@ class Post(Base):
     title = Column(String(64))
     description = Column(Text)
     body = Column(Text)
+    body_html = Column(Text)
     timestamp = Column(DateTime, default=datetime.utcnow, index=True)
     can_comment = Column(Boolean, default=True)
     is_published = Column(Boolean, default=True)

@@ -2,13 +2,9 @@
   <div class="category-sidebar">
     <h1>类别</h1>
     <ul>
-      <li>
-        <span class="badge badge-info"><a href="#">Python</a></span>
-        <span>(10)</span>
-      </li>
-      <li>
-        <span class="badge badge-info"><a href="#">JavaScript</a></span>
-        <span>(2)</span>
+      <li v-for="item in dataList" :key="item.id">
+        <span class="badge badge-info"><a href="#">{{ item.name }}</a></span>
+        <span>({{ item.posts }})</span>
       </li>
     </ul>
   </div>
@@ -17,8 +13,25 @@
 <script>
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import { getAllCategories } from '@/api/category'
+
 export default {
-  name: 'CategorySidebar'
+  name: 'CategorySidebar',
+  data() {
+    return {
+      dataList: []
+    }
+  },
+  mounted() {
+    this.getData()
+  },
+  methods: {
+    getData() {
+      getAllCategories({ params: { unlimit: true }}).then(res => {
+        this.dataList = res.data.items
+      })
+    }
+  }
 }
 </script>
 
