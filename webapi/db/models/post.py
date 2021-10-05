@@ -1,10 +1,11 @@
 from datetime import datetime
 
-from sqlalchemy import Text, Integer, Column, String, DateTime, Boolean, ForeignKey, func
+from sqlalchemy import Text, Integer, Column, String, DateTime, Boolean, ForeignKey, func, and_
 from sqlalchemy.orm import relationship
 
 from webapi.db.config import Base
 from webapi.db.models.m2m import post_category
+from webapi.db.models import Comment
 
 
 class Post(Base):

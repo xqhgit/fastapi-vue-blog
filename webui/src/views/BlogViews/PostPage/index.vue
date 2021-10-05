@@ -1,38 +1,42 @@
 <template>
   <div>
-    <b-modal v-model="showReplyModal" title="回复" @close="handleReplyModalCancel">
+    <b-modal v-if="curerntReplayComment" v-model="showReplyModal" title="回复" @close="handleReplyModalCancel">
       <template v-slot:modal-title>
-        回复：<span>demo</span>
+        回复：<span>{{ curerntReplayComment.author }}</span>
       </template>
+      <p v-if="curerntReplayComment.body.length > 50">{{ curerntReplayComment.body.slice(0, 60) }} ...</p>
+      <p v-else>{{ curerntReplayComment.body }}</p>
       <div class="d-block">
         <b-form @submit="handleReplyModalOk" @reset="handleReplyModalCancel">
-          <b-form-group
-            id="input-group-1"
-            label="你的名字:"
-            label-for="input-1"
-          >
-            <b-form-input
-              id="input-1"
-              v-model="replyForm.name"
-              required
-            />
-          </b-form-group>
-          <b-form-group
-            id="input-group-2"
-            label="电子邮箱:"
-            label-for="input-2"
-          >
-            <b-form-input
-              id="input-2"
-              v-model="replyForm.email"
-              type="email"
-              required
-            />
-          </b-form-group>
+          <div v-if="!isLogin">
+            <b-form-group
+              id="input-group-1"
+              label="你的名字:"
+              label-for="input-1"
+            >
+              <b-form-input
+                id="input-1"
+                v-model="replyForm.author"
+                required
+              />
+            </b-form-group>
+            <b-form-group
+              id="input-group-2"
+              label="电子邮箱:"
+              label-for="input-2"
+            >
+              <b-form-input
+                id="input-2"
+                v-model="replyForm.email"
+                type="email"
+                required
+              />
+            </b-form-group>
+          </div>
           <b-form-group id="input-group-3" label="评论:" label-for="input-3">
             <b-form-textarea
               id="input-3"
-              v-model="replyForm.comment"
+              v-model="replyForm.body"
               required
               style="height: 100px;"
             />
@@ -67,9 +71,6 @@
               {{ postData.description }}
             </div>
             <div class="post_body">
-              <!--              <div class="markdown-body" style="text-align:left;width:90%;margin-bottom:50px" v-html="postData.body_html" />-->
-
-              <!--              {{ postData.body }}-->
               <mavon-editor
                 ref="md"
                 :ishljs="true"
@@ -84,37 +85,52 @@
           </div>
           <div class="comment">
             <h5 style="text-align: right;">
-              <span>4 个评论</span>
+              <span>{{ postData.comments.length }} 个评论</span>
             </h5>
             <ul>
-              <li>
+              <!--              <li>-->
+              <!--                <div class="comment-body">-->
+              <!--                  <div style="padding-top: 10px;" class="d-flex flex-row">-->
+              <!--                    <b-badge variant="secondary">#1</b-badge>-->
+              <!--                    <b-badge variant="info" style="margin: 0 4px;">demo</b-badge>-->
+              <!--                    <span>2020-12-25T23:42:02Z</span>-->
+              <!--                  </div>-->
+              <!--                  <div style="overflow: auto;">-->
+              <!--                    <p>Do you plan to make a paid guide/tutorial on this topic?  If not,do you have any resources that you'd recommend for a beginner, besides your videos?</p>-->
+              <!--                  </div>-->
+              <!--                  <div class="can-reply d-flex flex-row-reverse">-->
+              <!--                    <button type="button" size="sm" variant="outline-secondary" @click="handleShowReply">回复</button>-->
+              <!--                  </div>-->
+              <!--                </div>-->
+              <!--              </li>-->
+              <!--              <li>-->
+              <!--                <div class="comment-body">-->
+              <!--                  <div style="padding-top: 10px;" class="d-flex flex-row">-->
+              <!--                    <b-badge variant="secondary">#2</b-badge>-->
+              <!--                    <b-badge variant="danger" style="margin: 0 4px;">admin</b-badge>-->
+              <!--                    <span>2020-12-25T23:42:02Z</span>-->
+              <!--                  </div>-->
+              <!--                  <div style="overflow: auto;">-->
+              <!--                    <p style="margin-bottom: 0">@demo</p>-->
+              <!--                    <p>Yes. I don't have a release date yet, but I'm working on a longer React tutorial.</p>-->
+              <!--                  </div>-->
+              <!--                  <div class="can-reply d-flex flex-row-reverse">-->
+              <!--                    <button type="button" size="sm" variant="outline-secondary" @click="handleShowReply">回复</button>-->
+              <!--                  </div>-->
+              <!--                </div>-->
+              <!--              </li>-->
+              <li v-for="(item, index) in postData.comments" :key="index">
                 <div class="comment-body">
                   <div style="padding-top: 10px;" class="d-flex flex-row">
-                    <b-badge variant="secondary">#1</b-badge>
-                    <b-badge variant="info" style="margin: 0 4px;">demo</b-badge>
-                    <span>2020-12-25T23:42:02Z</span>
+                    <b-badge variant="secondary">#{{ index+1 }}</b-badge>
+                    <b-badge variant="info" style="margin: 0 4px;">{{ item.author }}</b-badge>
+                    <span>{{ item.timestamp }}</span>
                   </div>
                   <div style="overflow: auto;">
-                    <p>Do you plan to make a paid guide/tutorial on this topic?  If not,do you have any resources that you'd recommend for a beginner, besides your videos?</p>
+                    <p>{{ item.body }}</p>
                   </div>
                   <div class="can-reply d-flex flex-row-reverse">
-                    <button type="button" size="sm" variant="outline-secondary" @click="handleShowReply">回复</button>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="comment-body">
-                  <div style="padding-top: 10px;" class="d-flex flex-row">
-                    <b-badge variant="secondary">#2</b-badge>
-                    <b-badge variant="danger" style="margin: 0 4px;">admin</b-badge>
-                    <span>2020-12-25T23:42:02Z</span>
-                  </div>
-                  <div style="overflow: auto;">
-                    <p style="margin-bottom: 0">@demo</p>
-                    <p>Yes. I don't have a release date yet, but I'm working on a longer React tutorial.</p>
-                  </div>
-                  <div class="can-reply d-flex flex-row-reverse">
-                    <button type="button" size="sm" variant="outline-secondary" @click="handleShowReply">回复</button>
+                    <button type="button" size="sm" variant="outline-secondary" @click="handleShowReply(item)">回复</button>
                   </div>
                 </div>
               </li>
@@ -123,25 +139,28 @@
 
           <h5>留下你的评论</h5>
           <b-form @submit="handleReplyOk">
-            <b-form-group id="input-group-1" label="你的名字:" label-for="input-1">
-              <b-form-input
-                id="input-1"
-                v-model="replyForm.name"
-                required
-              />
-            </b-form-group>
-            <b-form-group
-              id="input-group-2"
-              label="电子邮箱:"
-              label-for="input-2"
-            >
-              <b-form-input
-                id="input-2"
-                v-model="replyForm.email"
-                type="email"
-                required
-              />
-            </b-form-group>
+            <div v-if="!isLogin">
+              <b-form-group id="input-group-1" label="你的名字:" label-for="input-1">
+                <b-form-input
+                  id="input-1"
+                  v-model="replyForm.author"
+                  required
+                />
+              </b-form-group>
+              <b-form-group
+                id="input-group-2"
+                label="电子邮箱:"
+                label-for="input-2"
+              >
+                <b-form-input
+                  id="input-2"
+                  v-model="replyForm.email"
+                  type="email"
+                  required
+                />
+              </b-form-group>
+            </div>
+
             <b-form-group
               id="input-group-3"
               label="评论:"
@@ -149,7 +168,7 @@
             >
               <b-form-textarea
                 id="input-3"
-                v-model="replyForm.comment"
+                v-model="replyForm.body"
                 required
                 style="height: 150px;"
               />
@@ -170,6 +189,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import CategorySidebar from '@/components/CategorySidebar'
 import { getPost } from '@/api/post'
+import { createCommentAnonymous, createComment } from '@/api/comment'
 
 export default {
   name: 'PostPageIndex',
@@ -182,10 +202,19 @@ export default {
       commentData: [],
       showReplyModal: false,
       replyForm: {
-        name: undefined,
+        author: undefined,
         email: undefined,
-        comment: undefined
+        body: undefined
+      },
+      curerntReplayComment: undefined
+    }
+  },
+  computed: {
+    isLogin() {
+      if (this.$store.getters.token === '' || this.$store.getters.token === undefined) {
+        return false
       }
+      return true
     }
   },
   mounted() {
@@ -194,28 +223,80 @@ export default {
   methods: {
     getData() {
       this.loading = true
-      // const postId = this.$route.params.postId
       const postId = this.$route.query.postId
       getPost(postId).then(res => {
         this.postData = res.data
+        this.postId = postId
         this.loading = false
       })
     },
-    handleShowReply() {
+    handleShowReply(item) {
+      this.curerntReplayComment = item
       this.showReplyModal = true
     },
     handleReplyModalOk(evt) {
       evt.preventDefault()
-      console.log('ok')
-      console.log(this.replyForm)
+      this.loading = true
+      const data = {
+        post_id: this.postId,
+        body: this.replyForm.body,
+        replied_id: this.curerntReplayComment.id
+      }
+      this.submitData(data).then(res => {
+        this.$message({
+          type: 'success',
+          message: '评论成功'
+        })
+        this.reset()
+        this.getData()
+      })
     },
     handleReplyModalCancel() {
-      console.log('cancel')
-      this.showReplyModal = false
+      this.reset()
+    },
+    submitData(data) {
+      return new Promise((resolve, reject) => {
+        if (this.isLogin) {
+          createComment(data).then(res => {
+            return resolve(res)
+          }).catch(err => {
+            return reject(err)
+          })
+        } else {
+          data['author'] = this.replyForm.author
+          data['email'] = this.replyForm.email
+          createCommentAnonymous(data).then(res => {
+            return resolve(res)
+          }).catch(err => {
+            return reject(err)
+          })
+        }
+      })
     },
     handleReplyOk(evt) {
       evt.preventDefault()
-      console.log(this.replyForm)
+      this.loading = true
+      const data = {
+        post_id: this.postId,
+        body: this.replyForm.body
+      }
+      this.submitData(data).then(res => {
+        this.$message({
+          type: 'success',
+          message: '评论成功'
+        })
+        this.reset()
+        this.getData()
+      })
+    },
+    reset() {
+      this.replyForm = {
+        author: undefined,
+        email: undefined,
+        body: undefined
+      }
+      this.curerntReplayComment = undefined
+      this.showReplyModal = false
     }
   }
 }

@@ -69,6 +69,9 @@ class PostOutCategories(BaseModel):
 
 class PostOutComments(BaseModel):
     id: int
+    author: str
+    body: str
+    timestamp: datetime
 
     class Config:
         orm_mode = True

@@ -3,12 +3,12 @@ from fastapi import status
 from fastapi.exceptions import HTTPException
 
 
-from sqlalchemy import update, func, delete
+from sqlalchemy import update, func, delete, and_
 from sqlalchemy.future import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import selectinload
+from sqlalchemy.orm import selectinload, joinedload
 
-from webapi.db.models import Post, Category, post_category
+from webapi.db.models import Post, Category, Comment, post_category
 from webapi.db.schemas.post import PostIn, PostInUpdate
 
 
