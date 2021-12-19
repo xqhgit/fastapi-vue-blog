@@ -45,6 +45,10 @@ export const constantRoutes = [
       path: 'post',
       name: 'post',
       component: () => import('@/views/BlogViews/PostPage/index')
+    }, {
+      path: 'about',
+      name: 'about',
+      component: () => import('@/views/BlogViews/AboutPage/index')
     }]
   },
   {
