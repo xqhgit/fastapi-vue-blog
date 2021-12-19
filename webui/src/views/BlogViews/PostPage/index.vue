@@ -83,7 +83,7 @@
               />
             </div>
           </div>
-          <div class="comment">
+          <div v-if="postData.can_comment" class="comment">
             <h5 style="text-align: right;">
               <span>{{ postData.comments.length }} 个评论</span>
             </h5>
@@ -106,8 +106,9 @@
             </ul>
           </div>
 
-          <h5>留下你的评论</h5>
-          <b-form @submit="handleReplyOk">
+          <h5 v-if="postData.can_comment">留下你的评论</h5>
+          <h5 v-else>文章禁止评论</h5>
+          <b-form v-if="postData.can_comment" @submit="handleReplyOk">
             <div v-if="!isLogin">
               <b-form-group id="input-group-1" label="你的名字:" label-for="input-1">
                 <b-form-input

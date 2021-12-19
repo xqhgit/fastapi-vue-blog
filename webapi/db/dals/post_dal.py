@@ -55,8 +55,8 @@ class PostDAL:
         stmt = select(func.count(Post.id).label('total'))
         if title is not None:
             stmt = stmt.where(Post.title.like(f'%{title}%'))
-        if is_published is not None and is_published:
-            stmt = stmt.where(Post.is_published == True)
+        if is_published is not None:
+            stmt = stmt.where(Post.is_published == is_published)
         q = await self.db_session.execute(stmt)
         return q.one()['total']
 
@@ -70,11 +70,13 @@ class PostDAL:
         q = await self.db_session.execute(stmt)
         return q.scalars().one()
 
-    async def get_by_id(self, record_id: int, is_published=None):
+    async def get_by_id(self, record_id: int, is_published=None, can_comment=None):
         stmt = select(Post).options(selectinload(Post.categories), selectinload(Post.comments)).where(
             Post.id == record_id)
-        if is_published is not None and is_published:
-            stmt = stmt.where(Post.is_published == True)
+        if is_published is not None:
+            stmt = stmt.where(Post.is_published == is_published)
+        if can_comment is not None:
+            stmt = stmt.where(Post.can_comment == can_comment)
         q = await self.db_session.execute(stmt)
         result = q.scalars().all()
         if result:
@@ -87,8 +89,8 @@ class PostDAL:
         stmt = select(Post).options(selectinload(Post.categories), selectinload(Post.comments))
         if title is not None:
             stmt = stmt.where(Post.title.like(f'%{title}%'))
-        if is_published is not None and is_published:
-            stmt = stmt.where(Post.is_published == True)
+        if is_published is not None:
+            stmt = stmt.where(Post.is_published == is_published)
         stmt = stmt.offset(offset).limit(limit)
         q = await self.db_session.execute(stmt)
         return q.scalars().all()

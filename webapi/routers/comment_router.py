@@ -41,7 +41,7 @@ async def create_comment_anonymous(
         post_dal: PostDAL = Depends(DALGetter(PostDAL)), *,
         obj_in: CommentCreateAnonymous
 ):
-    post_obj = await post_dal.get_by_id(obj_in.post_id)
+    post_obj = await post_dal.get_by_id(obj_in.post_id, can_comment=True)
     if not post_obj:
         return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'detail': '文章不存在'})
     comment_schema = CommentCreate(
