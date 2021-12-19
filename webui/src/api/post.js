@@ -8,9 +8,24 @@ export function getPosts(params) {
   })
 }
 
+export function getPostsPublished(params) {
+  return request({
+    url: '/posts/published/',
+    method: 'get',
+    params: params
+  })
+}
+
 export function getPost(postId) {
   return request({
     url: `/posts/${postId}`,
+    method: 'get'
+  })
+}
+
+export function getPostPublished(postId) {
+  return request({
+    url: `/posts/published/${postId}`,
     method: 'get'
   })
 }

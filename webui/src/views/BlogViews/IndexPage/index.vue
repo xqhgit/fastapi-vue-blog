@@ -41,7 +41,7 @@
 <script>
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import { getPosts } from '@/api/post'
+import { getPostsPublished } from '@/api/post'
 import CategorySidebar from '@/components/CategorySidebar'
 // import PostCard from './components/PostCard'
 // import CategoryList from './components/CategoryList'
@@ -63,12 +63,11 @@ export default {
     }
   },
   created() {
-    console.log('index')
     this.getData()
   },
   methods: {
     getData() {
-      getPosts(this.query).then(response => {
+      getPostsPublished(this.query).then(response => {
         this.total = response.data.total
         this.dataList = response.data.items
       })

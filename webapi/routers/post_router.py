@@ -11,13 +11,25 @@ from webapi.db.schemas.post import PostsListOut, PostOut, PostIn, PostOutCreate,
 router = APIRouter()
 
 
-@router.get("/", tags=['Post'], status_code=status.HTTP_200_OK, response_model=PostsListOut)
+@router.get("/", tags=['Post'], dependencies=[Depends(get_current_user), ],
+            status_code=status.HTTP_200_OK, response_model=PostsListOut)
 async def get_posts(
         dal: PostDAL = Depends(DALGetter(PostDAL)),
         page: int = 1, limit: int = 10, title: str = None
 ):
     total = await dal.count(title)
     items = await dal.get_limit(title, page=page, limit=limit)
+    result = {'total': total, 'items': items}
+    return result
+
+
+@router.get("/published/", tags=['Post'], status_code=status.HTTP_200_OK, response_model=PostsListOut)
+async def get_posts_published(
+        dal: PostDAL = Depends(DALGetter(PostDAL)),
+        page: int = 1, limit: int = 10, title: str = None
+):
+    total = await dal.count(title, is_published=True)
+    items = await dal.get_limit(title, page=page, limit=limit, is_published=True)
     result = {'total': total, 'items': items}
     return result
 
@@ -31,12 +43,22 @@ async def create_post(
     return await dal.create(obj_in)
 
 
-@router.get('/{post_id}/', tags=['Post'], status_code=status.HTTP_200_OK, response_model=PostOut)
+@router.get('/{post_id}/', tags=['Post'], dependencies=[Depends(get_current_user), ],
+            status_code=status.HTTP_200_OK, response_model=PostOut)
 async def get_post(
         dal: PostDAL = Depends(DALGetter(PostDAL)), *,
         post_id: int
 ):
     obj = await dal.get_by_id(post_id)
+    return obj
+
+
+@router.get('/published/{post_id}/', tags=['Post'], status_code=status.HTTP_200_OK, response_model=PostOut)
+async def get_post_published(
+        dal: PostDAL = Depends(DALGetter(PostDAL)), *,
+        post_id: int
+):
+    obj = await dal.get_by_id(post_id, is_published=True)
     return obj
 
 
@@ -53,7 +75,7 @@ async def update_post(
     return db_obj
 
 
-@router.delete('/{post_id}/', tags=['Post'],  dependencies=[Depends(get_current_user), ],
+@router.delete('/{post_id}/', tags=['Post'], dependencies=[Depends(get_current_user), ],
                status_code=status.HTTP_200_OK)
 async def delete_post(
         dal: PostDAL = Depends(DALGetter(PostDAL)), *,

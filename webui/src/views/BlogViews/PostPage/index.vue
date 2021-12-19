@@ -157,7 +157,7 @@
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import CategorySidebar from '@/components/CategorySidebar'
-import { getPost } from '@/api/post'
+import { getPostPublished } from '@/api/post'
 import { createCommentAnonymous, createComment } from '@/api/comment'
 
 export default {
@@ -193,7 +193,7 @@ export default {
     getData() {
       this.loading = true
       const postId = this.$route.query.postId
-      getPost(postId).then(res => {
+      getPostPublished(postId).then(res => {
         this.postData = res.data
         this.postId = postId
         this.loading = false
