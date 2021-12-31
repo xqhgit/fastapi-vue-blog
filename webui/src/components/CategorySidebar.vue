@@ -3,7 +3,7 @@
     <h1>类别</h1>
     <ul>
       <li v-for="item in dataList" :key="item.id">
-        <span class="badge badge-info"><a href="#">{{ item.name }}</a></span>
+        <span class="badge badge-info"><a :href="`/index?categoryId=${item.id}&categoryName=${item.name}`">{{ item.name }}</a></span>
         <span>({{ item.posts }})</span>
       </li>
     </ul>

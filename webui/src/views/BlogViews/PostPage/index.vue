@@ -83,42 +83,11 @@
               />
             </div>
           </div>
-          <div class="comment">
+          <div v-if="postData.can_comment" class="comment">
             <h5 style="text-align: right;">
               <span>{{ postData.comments.length }} 个评论</span>
             </h5>
             <ul>
-              <!--              <li>-->
-              <!--                <div class="comment-body">-->
-              <!--                  <div style="padding-top: 10px;" class="d-flex flex-row">-->
-              <!--                    <b-badge variant="secondary">#1</b-badge>-->
-              <!--                    <b-badge variant="info" style="margin: 0 4px;">demo</b-badge>-->
-              <!--                    <span>2020-12-25T23:42:02Z</span>-->
-              <!--                  </div>-->
-              <!--                  <div style="overflow: auto;">-->
-              <!--                    <p>Do you plan to make a paid guide/tutorial on this topic?  If not,do you have any resources that you'd recommend for a beginner, besides your videos?</p>-->
-              <!--                  </div>-->
-              <!--                  <div class="can-reply d-flex flex-row-reverse">-->
-              <!--                    <button type="button" size="sm" variant="outline-secondary" @click="handleShowReply">回复</button>-->
-              <!--                  </div>-->
-              <!--                </div>-->
-              <!--              </li>-->
-              <!--              <li>-->
-              <!--                <div class="comment-body">-->
-              <!--                  <div style="padding-top: 10px;" class="d-flex flex-row">-->
-              <!--                    <b-badge variant="secondary">#2</b-badge>-->
-              <!--                    <b-badge variant="danger" style="margin: 0 4px;">admin</b-badge>-->
-              <!--                    <span>2020-12-25T23:42:02Z</span>-->
-              <!--                  </div>-->
-              <!--                  <div style="overflow: auto;">-->
-              <!--                    <p style="margin-bottom: 0">@demo</p>-->
-              <!--                    <p>Yes. I don't have a release date yet, but I'm working on a longer React tutorial.</p>-->
-              <!--                  </div>-->
-              <!--                  <div class="can-reply d-flex flex-row-reverse">-->
-              <!--                    <button type="button" size="sm" variant="outline-secondary" @click="handleShowReply">回复</button>-->
-              <!--                  </div>-->
-              <!--                </div>-->
-              <!--              </li>-->
               <li v-for="(item, index) in postData.comments" :key="index">
                 <div class="comment-body">
                   <div style="padding-top: 10px;" class="d-flex flex-row">
@@ -137,8 +106,9 @@
             </ul>
           </div>
 
-          <h5>留下你的评论</h5>
-          <b-form @submit="handleReplyOk">
+          <h5 v-if="postData.can_comment">留下你的评论</h5>
+          <h5 v-else>文章禁止评论</h5>
+          <b-form v-if="postData.can_comment" @submit="handleReplyOk">
             <div v-if="!isLogin">
               <b-form-group id="input-group-1" label="你的名字:" label-for="input-1">
                 <b-form-input
@@ -188,7 +158,7 @@
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import CategorySidebar from '@/components/CategorySidebar'
-import { getPost } from '@/api/post'
+import { getPostPublished } from '@/api/post'
 import { createCommentAnonymous, createComment } from '@/api/comment'
 
 export default {
@@ -224,10 +194,11 @@ export default {
     getData() {
       this.loading = true
       const postId = this.$route.query.postId
-      getPost(postId).then(res => {
+      getPostPublished(postId).then(res => {
         this.postData = res.data
         this.postId = postId
         this.loading = false
+        console.log(this.postData)
       })
     },
     handleShowReply(item) {
