@@ -9,7 +9,7 @@ Python异步后端实现博客系统
 * 后端框架：
 >1. Python Web 框架：FastAPI
 >2. ORM：SQLAlchemy
->3. 搜索：Elasticsearch
+>3. 搜索：Elasticsearch (未集成)
 
 * 前端框架：Vue
 >1. 博客界面：BootstrapVue
@@ -19,11 +19,17 @@ Python异步后端实现博客系统
 
 *后端*
 
-* python版本 3.7.x
+* python版本 3.7.x (建议使用虚拟环境)
 
++ 后端配置数据库和账号密码
+>1. 在fastapi-vue-blog/webapi目录下
+>2. 修改setting文件
+
++ 初始化和启动
 >1. 在fastapi-vue-blog/webapi目录下
 >2. pip install -r requirements.txt
->3. python app.py
+>3. 如果需要初始化数据库 python db/init_db.py
+>4. python app.py
 
 *前端*
 

@@ -11,16 +11,24 @@ class Settings(BaseSettings):
     LOG_PATH = os.path.join(BASEDIR, 'logs')
     BACKEND_CORS_ORIGINS: List = ['http://localhost:8080']
 
-    SQLALCHEMY_DATABASE_URI: str = 'mysql+aiomysql://root:@127.0.0.1:3306/FastAPIVueBlog'
-    SECRET_KEY: str = secrets.token_urlsafe(32)
-
-    # 30 minutes
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
-
+    # 默认管理员账号密码等信息
     ADMIN_USERNAME = 'admin'
     ADMIN_PASSWORD = '123456'
     ADMIN_NICKNAME = 'admin'
     ADMIN_EMAIL = '1104440778@qq.com'
+
+    # 数据库账号密码
+    DB_HOST = '127.0.0.1'
+    DB_PORT = 3306
+    DB_USER = 'root'
+    DB_PASSWORD = 'root'
+
+    DATABASE_URI = f'mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}'
+    SQLALCHEMY_DATABASE_URI: str = f'mysql+aiomysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/FastAPIVueBlog'
+    SECRET_KEY: str = secrets.token_urlsafe(32)
+
+    # 30 minutes
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
 
     LOGGING = {
         'version': 1,
