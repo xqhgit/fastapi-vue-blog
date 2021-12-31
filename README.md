@@ -30,8 +30,8 @@ Python异步后端实现博客系统
 + 初始化和启动
 >1. 在fastapi-vue-blog/webapi目录下
 >2. pip install -r requirements.txt
->3. 如果需要初始化数据库 python db/init_db.py
->4. python app.py
+>3. 如果需要初始化数据库 python3 db/init_db.py
+>4. python3 app.py
 
 *前端*
 
