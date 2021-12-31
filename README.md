@@ -8,8 +8,9 @@ Python异步后端实现博客系统
 
 * 后端框架：
 >1. Python Web 框架：FastAPI
->2. ORM：SQLAlchemy
->3. 搜索：Elasticsearch (未集成)
+>2. 数据库：MySQL
+>3. ORM：SQLAlchemy
+>4. 搜索：Elasticsearch (未集成)
 
 * 前端框架：Vue
 >1. 博客界面：BootstrapVue
@@ -19,7 +20,8 @@ Python异步后端实现博客系统
 
 *后端*
 
-* python版本 3.7.x (建议使用虚拟环境)
+* Python版本 3.7.x (建议使用虚拟环境)
+* MySQL版本 5.7.x
 
 + 后端配置数据库和账号密码
 >1. 在fastapi-vue-blog/webapi目录下
@@ -33,8 +35,8 @@ Python异步后端实现博客系统
 
 *前端*
 
-* node版本: 12.13.x
-* 安装好node和vue-cli
+* Node版本: 12.13.x
+* 安装好Node和vue-cli
 
 >1.  在fastapi-vue-blog/webapi目录下
 >2.  安装依赖: npm install
