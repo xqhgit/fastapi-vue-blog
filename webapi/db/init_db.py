@@ -3,7 +3,7 @@ import sys
 from sqlalchemy import create_engine
 from pathlib import Path
 
-sys.path.append(str(Path(__file__).parent.parent.parent))  # fix no module name
+sys.path.append(str(Path(__file__).absolute().parent.parent.parent))  # fix no module name
 
 from webapi.db.config import engine, Base, async_session
 from webapi.db.models import *

@@ -3,7 +3,7 @@ import sys
 from pathlib import Path
 import colorama
 
-sys.path.append(str(Path(__file__).parent.parent))  # fix no module name
+sys.path.append(str(Path(__file__).absolute().parent.parent))  # fix no module name
 
 from webapi import create_application
 
