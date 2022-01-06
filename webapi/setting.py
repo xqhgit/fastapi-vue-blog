@@ -27,8 +27,8 @@ class Settings(BaseSettings):
     SQLALCHEMY_DATABASE_URI: str = f'mysql+aiomysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/FastAPIVueBlog'
     SECRET_KEY: str = secrets.token_urlsafe(32)
 
-    # 30 minutes
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+    # 12 hours
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 12
 
     LOGGING = {
         'version': 1,
