@@ -1,0 +1,22 @@
+version: '3'
+services:
+  webapp:
+    build:
+      context: .
+      dockerfile: webappSimple.dockerfile
+    ports:
+      - 9527:5000
+    depends_on:
+      - mysql
+
+  mysql:
+    image: "mariadb:10.5.9-focal"
+    environment:
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=FastAPIVueBlog
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=123456
+    ports:
+      - 13306:3306
+    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']

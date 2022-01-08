@@ -77,6 +77,17 @@ git clone https://gitee.com/xuqihui/fastapi-vue-blog.git
 4: http://localhost:8080/admin  # 进入管理员页面
 ```
 
+## 部署与发布
+通过Docker和Dockerfile打包发布
+
+### 简单发布(可能不适合生产环境)
+```
+前提：安装好Docker和docker-compose
+1: cd fastapi-vue-blog
+2: docker-compose -f webappSimple-compose.yml up -d --build
+3: docker-compose -f webappSimple-compose.yml exec webapp python db/init_db.py  # 如果数据没有初始化
+```
+
 ## 图片预览
 
 ![avatar](./description/index.png)
