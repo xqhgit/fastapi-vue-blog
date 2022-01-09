@@ -39,15 +39,15 @@ export const constantRoutes = [
     hidden: true,
     children: [{
       path: 'index',
-      name: 'index',
+      name: 'BlogIndex',
       component: () => import('@/views/BlogViews/IndexPage/index')
     }, {
       path: 'post',
-      name: 'post',
+      name: 'BlogPost',
       component: () => import('@/views/BlogViews/PostPage/index')
     }, {
       path: 'about',
-      name: 'about',
+      name: 'BlogAbout',
       component: () => import('@/views/BlogViews/AboutPage/index')
     }]
   },

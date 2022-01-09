@@ -51,12 +51,14 @@ class PostDAL:
         await self.db_session.flush()
         await self.db_session.execute(delete(Post).where(Post.id == db_obj.id))
 
-    async def count(self, title=None, is_published=None):
+    async def count(self, title=None, is_published=None, category_id=None):
         stmt = select(func.count(Post.id).label('total'))
         if title is not None:
             stmt = stmt.where(Post.title.like(f'%{title}%'))
         if is_published is not None:
             stmt = stmt.where(Post.is_published == is_published)
+        if category_id is not None:
+            stmt = stmt.where(Post.categories.any(Category.id == category_id))
         q = await self.db_session.execute(stmt)
         return q.one()['total']
 
@@ -84,13 +86,15 @@ class PostDAL:
         else:
             return None
 
-    async def get_limit(self, title=None, *, page, limit, is_published=None) -> List[Post]:
+    async def get_limit(self, title=None, *, page, limit, is_published=None, category_id=None) -> List[Post]:
         offset = limit * (page - 1)
         stmt = select(Post).options(selectinload(Post.categories), selectinload(Post.comments))
         if title is not None:
             stmt = stmt.where(Post.title.like(f'%{title}%'))
         if is_published is not None:
             stmt = stmt.where(Post.is_published == is_published)
+        if category_id is not None:
+            stmt = stmt.where(Post.categories.any(Category.id == category_id))
         stmt = stmt.offset(offset).limit(limit)
         q = await self.db_session.execute(stmt)
         return q.scalars().all()

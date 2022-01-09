@@ -1,6 +1,6 @@
 <template>
   <b-navbar toggleable="lg" type="light" variant="faded" class="container-fluid">
-    <b-navbar-brand :to="{name: 'index'}">
+    <b-navbar-brand :to="{name: 'BlogIndex', query: {page: 1}}">
       <img src="https://placekitten.com/g/30/30" alt="Kitten">
       FastAPI Vue Blog
     </b-navbar-brand>
@@ -9,10 +9,10 @@
 
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav>
-        <b-nav-item :to="{name: 'index'}" active-class="active">
+        <b-nav-item :to="{name: 'BlogIndex', query: {page: 1}}" active-class="active">
           文章
         </b-nav-item>
-        <b-nav-item :to="{name: 'about'}" active-class="active">
+        <b-nav-item :to="{name: 'BlogAbout'}" active-class="active">
           关于网站
         </b-nav-item>
       </b-navbar-nav>

@@ -1,8 +1,12 @@
 <template>
   <div class="row">
     <div class="col-md-9">
-      <div id="main">
-        <!--        <b-alert show>默认通知</b-alert>-->
+      <div id="main" v-loading="loading">
+        <b-alert
+          :show="showAlert"
+          dismissible
+          @dismissed="resetCategory"
+        >当前分类：{{ currentCategoryName }}</b-alert>
         <div v-for="item in dataList" :key="item.id" class="post">
           <p class="date">{{ item.timestamp }}</p>
           <h1 class="post-title">
@@ -19,14 +23,14 @@
           </div>
           <br>
           <div style="padding-top: 10px;" class="d-flex justify-content-between">
-            <a href="#">{{ item.comments }} 个评论</a>
             <a :href="`/post?postId=${item.id}`">继续阅读...</a>
+            <a href="#">{{ item.comments }} 个评论</a>
           </div>
         </div>
         <div class="page">
           <ul class="pager">
-            <li class="previous disabled"><a href="#">← 上一页</a></li>
-            <li class="next"><a href="#">下一页 →</a></li>
+            <li class="previous" :class="{disabled: disablePrevious}" @click="handlePrevious"><a href="javascript:;">← 上一页</a></li>
+            <li class="next" :class="{disabled: disableNext}" @click="handleNext"><a href="javascript:;">下一页 →</a></li>
           </ul>
         </div>
       </div>
@@ -43,9 +47,6 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { getPostsPublished } from '@/api/post'
 import CategorySidebar from '@/components/CategorySidebar'
-// import PostCard from './components/PostCard'
-// import CategoryList from './components/CategoryList'
-// import Pagination from '@/components/Pagination'
 
 export default {
   name: 'IndexPage',
@@ -54,22 +55,90 @@ export default {
   },
   data() {
     return {
+      loading: false,
       total: 0,
       dataList: [],
-      query: {
-        page: 1,
-        limit: 10
-      }
+      showAlert: false,
+      currentCategoryName: ''
+    }
+  },
+  computed: {
+    disableNext() {
+      const query = this.$route.query
+      return query.page * 10 >= this.total
+    },
+    disablePrevious() {
+      const query = this.$route.query
+      return query.page <= 1
+    }
+  },
+  watch: {
+    $route(to, from) {
+      this.getData()
     }
   },
   created() {
+    this.$router.replace({
+      query: { page: 1 }
+    })
     this.getData()
   },
   methods: {
     getData() {
-      getPostsPublished(this.query).then(response => {
+      this.loading = true
+      getPostsPublished(this.$route.query).then(response => {
         this.total = response.data.total
         this.dataList = response.data.items
+        if (this.$route.query.category_name !== undefined) {
+          this.currentCategoryName = this.$route.query.category_name
+          this.showAlert = true
+        }
+      }).finally(() => {
+        this.loading = false
+      })
+    },
+    resetCategory() {
+      this.showAlert = false
+      this.$router.replace({
+        query: { page: 1 }
+      })
+    },
+    handleNext() {
+      const newQuery = {}
+      const oldQuery = this.$route.query
+      // 处理page
+      if (oldQuery.page === undefined || !/^[0-9]*$/.test(oldQuery.page)) {
+        newQuery.page = 1
+      } else {
+        newQuery.page = parseInt(oldQuery.page) + 1
+      }
+      // 处理类别
+      if (oldQuery.category_id !== undefined || oldQuery.category_name !== undefined) {
+        newQuery.category_id = oldQuery.category_id
+      } else {
+        newQuery.category_name = oldQuery.category_name
+      }
+      this.$router.push({
+        query: newQuery
+      })
+    },
+    handlePrevious() {
+      const newQuery = {}
+      const oldQuery = this.$route.query
+      // 处理page
+      if (oldQuery.page === undefined || !/^[0-9]*$/.test(oldQuery.page)) {
+        newQuery.page = 1
+      } else {
+        newQuery.page = parseInt(oldQuery.page) - 1
+      }
+      // 处理类别
+      if (oldQuery.category_id !== undefined || oldQuery.category_name !== undefined) {
+        newQuery.category_id = oldQuery.category_id
+      } else {
+        newQuery.category_name = oldQuery.category_name
+      }
+      this.$router.push({
+        query: newQuery
       })
     }
   }
@@ -180,6 +249,10 @@ export default {
     color: #777;
     cursor: not-allowed;
     background-color: #fff;
+
+    pointer-events: none;
+    /*cursor: default;*/
+    opacity: 0.6;
   }
 
   .category-sidebar-bg {

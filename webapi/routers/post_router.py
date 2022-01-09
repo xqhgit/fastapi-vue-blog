@@ -26,10 +26,10 @@ async def get_posts(
 @router.get("/published/", tags=['Post'], status_code=status.HTTP_200_OK, response_model=PostsListOut)
 async def get_posts_published(
         dal: PostDAL = Depends(DALGetter(PostDAL)),
-        page: int = 1, limit: int = 10, title: str = None
+        page: int = 1, title: str = None, category_id: int = None
 ):
-    total = await dal.count(title, is_published=True)
-    items = await dal.get_limit(title, page=page, limit=limit, is_published=True)
+    total = await dal.count(title, is_published=True, category_id=category_id)
+    items = await dal.get_limit(title, page=page, limit=10, is_published=True, category_id=category_id)
     result = {'total': total, 'items': items}
     return result
 
