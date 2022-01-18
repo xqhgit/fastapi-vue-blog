@@ -8,7 +8,7 @@
           @dismissed="resetCategory"
         >当前分类：{{ currentCategoryName }}</b-alert>
         <div v-for="item in dataList" :key="item.id" class="post">
-          <p class="date">{{ item.timestamp }}</p>
+          <p class="date">{{ item.timestamp | splitDate }}</p>
           <h1 class="post-title">
             <a :href="`/post?postId=${item.id}`">
               {{ item.title }}
@@ -19,7 +19,7 @@
             <b-badge v-for="category in item.categories" :key="category" style="margin-right: 10px;" variant="info">{{ category }}</b-badge>
           </div>
           <div class="post_body">
-            {{ item.description }}
+            <p style="white-space: pre-wrap; word-break: break-all;">{{ item.description }}</p>
           </div>
           <br>
           <div style="padding-top: 10px;" class="d-flex justify-content-between">
@@ -52,6 +52,11 @@ export default {
   name: 'IndexPage',
   components: {
     CategorySidebar
+  },
+  filters: {
+    splitDate: function(val) {
+      return val.split('T')[0]
+    }
   },
   data() {
     return {

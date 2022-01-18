@@ -15,7 +15,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="简介" prop="description">
-        <el-input v-model="form.description" type="textarea" />
+        <el-input v-model="form.description" type="textarea" :rows="5" />
       </el-form-item>
       <el-form-item label="主体" prop="body">
         <mavon-editor

@@ -3,7 +3,7 @@ from fastapi import status
 from fastapi.exceptions import HTTPException
 
 
-from sqlalchemy import update, func, delete, and_
+from sqlalchemy import update, func, delete, and_, desc
 from sqlalchemy.future import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload, joinedload
@@ -98,6 +98,6 @@ class PostDAL:
             stmt = stmt.where(Post.is_published == is_published)
         if category_id is not None:
             stmt = stmt.where(Post.categories.any(Category.id == category_id))
-        stmt = stmt.offset(offset).limit(limit)
+        stmt = stmt.order_by(desc(Post.timestamp)).offset(offset).limit(limit)
         q = await self.db_session.execute(stmt)
         return q.scalars().all()

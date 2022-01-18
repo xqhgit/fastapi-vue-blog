@@ -57,7 +57,7 @@
       <div class="col-md-9">
         <div id="main">
           <div class="post">
-            <p class="date">{{ postData.timestamp }}</p>
+            <p class="date">{{ postData.timestamp | splitDate }}</p>
             <h1 class="post-title">
               <a href="#">
                 {{ postData.title }}
@@ -68,7 +68,7 @@
               <b-badge v-for="category in postData.categories" :key="category.name" style="margin-right: 10px;" variant="info">{{ category.name }}</b-badge>
             </div>
             <div class="post_desc">
-              {{ postData.description }}
+              <p style="white-space: pre-wrap; word-break: break-all;">{{ postData.description }}</p>
             </div>
             <div class="post_body">
               <mavon-editor
@@ -164,6 +164,11 @@ import { createCommentAnonymous, createComment } from '@/api/comment'
 export default {
   name: 'PostPageIndex',
   components: { CategorySidebar },
+  filters: {
+    splitDate: function(val) {
+      return val.split('T')[0]
+    }
+  },
   data() {
     return {
       loading: false,
@@ -357,4 +362,8 @@ export default {
   }
 
   .v-note-wrapper{ z-index:1 !important; }
+
+  .post_desc {
+    margin-bottom: 10px;
+  }
 </style>

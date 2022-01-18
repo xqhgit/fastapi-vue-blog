@@ -33,8 +33,26 @@
       rref="table"
     >
       <el-table-column label="标题" prop="title" />
-      <el-table-column label="描述" prop="description" />
-      <el-table-column label="时间" prop="timestamp" />
+      <el-table-column label="描述" prop="description">
+        <template slot-scope="scope">
+          <div v-if="scope.row.description && (scope.row.description.length > 64)">
+            <el-popover title="详细" trigger="hover" placement="top" width="400">
+              <p style="white-space: pre-wrap; word-break: break-all;">{{ scope.row.description }}</p>
+              <div slot="reference">
+                <p>{{ scope.row.description | splitDescription }}</p>
+              </div>
+            </el-popover>
+          </div>
+          <div v-else>
+            <span>{{ scope.row.description }}</span>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="时间" prop="timestamp">
+        <template slot-scope="scope">
+          <span>{{ scope.row.timestamp.replace('T', ' ') }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="类别" prop="categories">
         <template slot-scope="scope">
           <el-tag v-for="n in scope.row.categories" :key="scope.row.id + n" style="margin-right: 5px;" type="success">{{ n }}</el-tag>
@@ -127,6 +145,17 @@ import { updatePost, deletePost } from '@/api/post'
 export default {
   name: 'Index',
   components: { SelectionTable, Pagination },
+  filters: {
+    splitDescription: function(value) {
+      if (!value) {
+        return
+      }
+      if (value.length > 64) {
+        return value.substr(0, 64) + '....'
+      }
+      return value
+    }
+  },
   data() {
     return {
       loading: false,
