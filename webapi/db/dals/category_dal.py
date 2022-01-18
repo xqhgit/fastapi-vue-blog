@@ -6,6 +6,7 @@ from fastapi.exceptions import HTTPException
 from sqlalchemy import update, insert, func, delete
 from sqlalchemy.future import select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import with_loader_criteria
 
 from webapi.db.models import Category, Post
 from webapi.db.schemas.category import CategoryCreate, CategoryUpdate
@@ -34,10 +35,14 @@ class CategoryDAL:
         await self.db_session.flush()
         return db_obj
 
-    async def count(self, name=None):
+    async def count(self, name=None, is_published=None):
         sql = select(func.count(Category.id).label('total'))
         if name is not None:
             sql = sql.where(Category.id == name)
+        if is_published is not None:
+            sql = sql.options(
+                with_loader_criteria(Post, Post.is_published == True)
+            )
         q = await self.db_session.execute(sql)
         return q.one()['total']
 
@@ -52,11 +57,15 @@ class CategoryDAL:
         q = await self.db_session.execute(sql)
         return q.scalars().one()
 
-    async def get_all(self, name=None) -> List[Category]:
+    async def get_all(self, name=None, is_published=None) -> List[Category]:
         sql = select(Category.id, Category.name, func.count(Post.id).label('posts')).outerjoin(Category.posts).group_by(
             Category.id)
         if name is not None:
             sql = sql.where(Category.name == name)
+        if is_published is not None:
+            sql = sql.options(
+                with_loader_criteria(Post, Post.is_published == True)
+            )
         q = await self.db_session.execute(sql)
         return q.all()
 

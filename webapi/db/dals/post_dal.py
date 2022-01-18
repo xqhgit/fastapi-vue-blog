@@ -38,8 +38,11 @@ class PostDAL:
 
     async def update(self, db_obj: Post, obj_in: PostInUpdate):
         update_data = obj_in.dict(exclude_none=True)
-        categories = await self.get_categories_by_ids(update_data.pop('categories', []))
-        update_data['categories'] = categories
+        category_ids = update_data.get('categories', None)
+        if category_ids is not None:
+            categories = await self.get_categories_by_ids(category_ids)
+            update_data['categories'] = categories
+
         for field in update_data:
             setattr(db_obj, field, update_data[field])
         self.db_session.add(db_obj)

@@ -37,3 +37,11 @@ export function getCategoriesSelection() {
     method: 'get'
   })
 }
+
+export function getCategoriesPublished(params) {
+  return request({
+    url: '/categories/published/',
+    method: 'get',
+    params: params
+  })
+}

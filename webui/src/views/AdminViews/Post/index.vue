@@ -181,7 +181,9 @@ export default {
     },
     changeCanComment(record) {
       this.loading = true
-      updatePost(record.id, { 'can_comment': !record.can_comment }).then(res => {
+      updatePost(record.id, {
+        can_comment: !record.can_comment
+      }).then(res => {
         this.$message({
           type: 'success',
           message: '修改成功'
@@ -191,7 +193,9 @@ export default {
     },
     changeIsPublished(record) {
       this.loading = true
-      updatePost(record.id, { 'is_published': !record.is_published }).then(res => {
+      updatePost(record.id, {
+        is_published: !record.is_published
+      }).then(res => {
         this.$message({
           type: 'success',
           message: '修改成功'

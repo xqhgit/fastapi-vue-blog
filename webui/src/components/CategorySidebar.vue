@@ -16,7 +16,7 @@
 <script>
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import { getAllCategories } from '@/api/category'
+import { getCategoriesPublished } from '@/api/category'
 
 export default {
   name: 'CategorySidebar',
@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     getData() {
-      getAllCategories({ params: { unlimit: true }}).then(res => {
+      getCategoriesPublished({ params: { unlimit: true }}).then(res => {
         this.dataList = res.data.items
       })
     }

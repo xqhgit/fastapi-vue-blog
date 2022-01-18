@@ -12,7 +12,8 @@ from webapi.db.schemas.category import CategoryCreate, CategoryOut, CategoryAllO
 router = APIRouter()
 
 
-@router.get("/", tags=['Category'], response_model=CategoryAllOut, status_code=status.HTTP_200_OK)
+@router.get("/", tags=['Category'], dependencies=[Depends(get_current_user), ],
+            response_model=CategoryAllOut, status_code=status.HTTP_200_OK)
 async def get_all_categories(
         dal: CategoryDAL = Depends(DALGetter(CategoryDAL)),
         unlimit: bool = True, page: int = 1, limit: int = 10, *, name: str = None
@@ -22,6 +23,17 @@ async def get_all_categories(
         result = await dal.get_all(name=name)
     else:
         result = await dal.get_limit(page=page, limit=limit, name=name)
+    return {'total': total, 'items': result}
+
+
+# 游客查看类别的文章数 只显示已发布的文章
+@router.get("/published/", tags=['Category'], response_model=CategoryAllOut, status_code=status.HTTP_200_OK)
+async def get_all_categories(
+        dal: CategoryDAL = Depends(DALGetter(CategoryDAL)),
+        *, name: str = None
+):
+    total = await dal.count(name=name, is_published=True)
+    result = await dal.get_all(name=name, is_published=True)
     return {'total': total, 'items': result}
 
 

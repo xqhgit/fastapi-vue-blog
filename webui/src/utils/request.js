@@ -83,7 +83,7 @@ service.interceptors.response.use(
     // return Promise.reject(error)
     if (error.response.status === 401) {
       store.dispatch('user/resetToken').then(() => {
-        location.reload()
+        // location.reload()
       })
     }
     Message({
