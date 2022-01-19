@@ -10,9 +10,9 @@
         <div v-for="item in dataList" :key="item.id" class="post">
           <p class="date">{{ item.timestamp | splitDate }}</p>
           <h1 class="post-title">
-            <a :href="`/post?postId=${item.id}`">
+            <router-link :to="{name: 'BlogPost', query: {postId: item.id}}">
               {{ item.title }}
-            </a>
+            </router-link>
           </h1>
           <div class="posted">
             <span>类别：</span>
@@ -23,8 +23,12 @@
           </div>
           <br>
           <div style="padding-top: 10px;" class="d-flex justify-content-between">
-            <a :href="`/post?postId=${item.id}`">继续阅读...</a>
-            <a href="#">{{ item.comments }} 个评论</a>
+            <router-link
+              :to="{name: 'BlogPost', query: {postId: item.id}}"
+            >
+              继续阅读...
+            </router-link>
+            <a href="javascript:;">{{ item.comments }} 个评论</a>
           </div>
         </div>
         <div class="page">

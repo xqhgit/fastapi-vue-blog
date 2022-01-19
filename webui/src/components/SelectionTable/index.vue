@@ -14,7 +14,7 @@
     @selection-change="handleSelectionChange"
   >
     <slot name="selection">
-      <el-table-column type="selection" min-width="5%" />
+      <el-table-column type="selection" width="50" />
     </slot>
     <slot />
   </el-table>

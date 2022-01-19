@@ -15,3 +15,19 @@ export function createCommentAnonymous(data) {
     data
   })
 }
+
+export function getComments(params) {
+  return request({
+    url: '/comments/',
+    method: 'get',
+    params: params
+  })
+}
+
+export function updateComment(recordId, data) {
+  return request({
+    url: `/comments/${recordId}/`,
+    method: 'put',
+    data
+  })
+}

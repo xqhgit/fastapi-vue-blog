@@ -58,7 +58,7 @@ async def get_post_published(
         dal: PostDAL = Depends(DALGetter(PostDAL)), *,
         post_id: int
 ):
-    obj = await dal.get_by_id(post_id, is_published=True)
+    obj = await dal.get_by_id(post_id, is_published=True, reviewed=True)
     return obj
 
 

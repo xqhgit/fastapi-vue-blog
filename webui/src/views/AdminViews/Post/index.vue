@@ -32,6 +32,7 @@
       :select-rows.sync="currentRows"
       rref="table"
     >
+      <el-table-column label="ID" prop="id" width="70" />
       <el-table-column label="标题" prop="title" />
       <el-table-column label="描述" prop="description">
         <template slot-scope="scope">
@@ -48,7 +49,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="时间" prop="timestamp">
+      <el-table-column label="时间" prop="timestamp" width="140">
         <template slot-scope="scope">
           <span>{{ scope.row.timestamp.replace('T', ' ') }}</span>
         </template>
@@ -71,7 +72,7 @@
           <el-tag v-else type="danger">未发布</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column label="操作" width="160">
         <template slot-scope="scope">
           <el-button
             v-preventReClick

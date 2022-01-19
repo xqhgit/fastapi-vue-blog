@@ -32,9 +32,10 @@
       :select-row.sync="currentRow"
       :select-rows.sync="currentRows"
     >
+      <el-table-column label="ID" prop="id" width="70" />
       <el-table-column label="名称" prop="name" />
       <el-table-column label="文章数" prop="posts" />
-      <el-table-column label="操作" prop="title">
+      <el-table-column label="操作" prop="title" width="160">
         <template slot-scope="scope">
           <el-button
             size="mini"

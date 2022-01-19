@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Optional, List, Type
 from pydantic import BaseModel, fields, EmailStr
 
@@ -21,3 +22,34 @@ class CommentCreate(BaseModel):
     from_admin: bool = False
     reviewed: bool = False
     replied_id: int = None
+
+
+class CommentsListOutItemPost(BaseModel):
+    id: int
+    title: str
+
+    class Config:
+        orm_mode = True
+
+
+class CommentsListOutItem(BaseModel):
+    id: int
+    author: str
+    timestamp: datetime
+    from_admin: bool
+    reviewed: bool
+    email: str
+    body: str
+    post: CommentsListOutItemPost
+
+    class Config:
+        orm_mode = True
+
+
+class CommentsListOut(BaseModel):
+    total: int
+    items: List[CommentsListOutItem]
+
+
+class CommentInUpdate(BaseModel):
+    reviewed: bool = None

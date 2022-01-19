@@ -14,31 +14,65 @@
           <el-form-item style="margin-bottom: 0">
             <el-button type="primary" icon="el-icon-search" size="small" plain @click="handleQuery">搜索</el-button>
             <el-button icon="el-icon-refresh" size="small" plain @click="resetQuery">重置</el-button>
-            <el-button
-              type="primary"
-              icon="el-icon-plus"
-              size="small"
-              plain
-              @click="handleCreate"
-            >新建</el-button>
           </el-form-item>
         </el-form>
       </el-col>
     </el-row>
     <selection-table
+      ref="table"
       :data="rowData"
       :loading="loading"
       :select-row.sync="currentRow"
       :select-rows.sync="currentRows"
-      rref="table"
     >
+      <el-table-column label="ID" prop="id" width="70" />
       <el-table-column label="作者" prop="author" />
       <el-table-column label="邮箱" prop="email" />
       <el-table-column label="内容" prop="body" />
-      <el-table-column label="文章" prop="post" />
-      <el-table-column label="日期" prop="post" />
-      <el-table-column label="审核通过" prop="reviewed" />
-      <el-table-column label="操作" prop="title" />
+      <el-table-column label="文章" prop="post">
+        <template slot-scope="scope">
+          <router-link
+            target="_blank"
+            :to="{name: 'BlogPost', query: {postId: scope.row.post.id}}"
+          >
+            {{ scope.row.post.title }}
+          </router-link>
+        </template>
+      </el-table-column>
+      <el-table-column label="日期" prop="timestamp" width="140">
+        <template slot-scope="scope">
+          <span>{{ scope.row.timestamp.replace('T', ' ') }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="审核通过" prop="reviewed">
+        <template slot-scope="scope">
+          <el-tag v-if="scope.row.reviewed" type="success">是</el-tag>
+          <el-tag v-else type="danger">否</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" width="160">
+        <template slot-scope="scope">
+          <el-button
+            v-preventReClick
+            size="mini"
+            type="text"
+            icon="el-icon-edit-outline"
+            @click="changeReviewed(scope.row)"
+          >切换审核</el-button>
+          <el-divider direction="vertical" />
+          <el-popconfirm
+            title="确定评论删除吗？"
+            @onConfirm="handleDelete(scope.row)"
+          >
+            <el-button
+              slot="reference"
+              size="mini"
+              type="text"
+              icon="el-icon-delete"
+            >删除</el-button>
+          </el-popconfirm>
+        </template>
+      </el-table-column>
     </selection-table>
     <pagination
       :total="total"
@@ -53,6 +87,7 @@
 <script>
 import SelectionTable from '@/components/SelectionTable'
 import Pagination from '@/components/Pagination'
+import { getComments, updateComment } from '@/api/comment'
 
 export default {
   name: 'Index',
@@ -71,11 +106,19 @@ export default {
       currentRows: []
     }
   },
+  mounted() {
+    this.getData()
+  },
   methods: {
     getData() {
-
+      this.loading = true
+      getComments(this.queryParams).then(res => {
+        this.total = res.data.total
+        this.rowData = res.data.items
+        this.loading = false
+      })
     },
-    handleCreate() {
+    handleDelete() {
 
     },
     handleQuery() {
@@ -83,6 +126,18 @@ export default {
     },
     resetQuery() {
 
+    },
+    changeReviewed(record) {
+      this.loading = true
+      updateComment(record.id, {
+        reviewed: !record.reviewed
+      }).then(res => {
+        this.$message({
+          type: 'success',
+          message: '修改成功'
+        })
+        this.getData()
+      })
     }
   }
 }

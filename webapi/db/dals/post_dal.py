@@ -6,7 +6,7 @@ from fastapi.exceptions import HTTPException
 from sqlalchemy import update, func, delete, and_, desc
 from sqlalchemy.future import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import selectinload, joinedload
+from sqlalchemy.orm import selectinload, joinedload, with_loader_criteria
 
 from webapi.db.models import Post, Category, Comment, post_category
 from webapi.db.schemas.post import PostIn, PostInUpdate
@@ -75,13 +75,17 @@ class PostDAL:
         q = await self.db_session.execute(stmt)
         return q.scalars().one()
 
-    async def get_by_id(self, record_id: int, is_published=None, can_comment=None):
+    async def get_by_id(self, record_id: int, is_published=None, can_comment=None, reviewed=None):
         stmt = select(Post).options(selectinload(Post.categories), selectinload(Post.comments)).where(
             Post.id == record_id)
         if is_published is not None:
             stmt = stmt.where(Post.is_published == is_published)
         if can_comment is not None:
             stmt = stmt.where(Post.can_comment == can_comment)
+        if reviewed is not None:
+            stmt = stmt.options(
+                with_loader_criteria(Comment, Comment.reviewed == reviewed)
+            )
         q = await self.db_session.execute(stmt)
         result = q.scalars().all()
         if result:
