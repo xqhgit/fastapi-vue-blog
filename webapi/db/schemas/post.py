@@ -67,11 +67,21 @@ class PostOutCategories(BaseModel):
         orm_mode = True
 
 
+class PostCommentsReplied(BaseModel):
+    __root__: str
+
+    @root_validator(pre=True)
+    def root_val(cls, values):
+        return {'__root__': values['__root__'].author}
+
+
 class PostOutComments(BaseModel):
     id: int
     author: str
     body: str
     timestamp: datetime
+    # 获得该评论回复谁
+    replied: PostCommentsReplied = None
 
     class Config:
         orm_mode = True

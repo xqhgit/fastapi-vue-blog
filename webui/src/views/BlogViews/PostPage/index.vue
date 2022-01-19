@@ -1,11 +1,11 @@
 <template>
   <div>
-    <b-modal v-if="curerntReplayComment" v-model="showReplyModal" title="回复" @close="handleReplyModalCancel">
+    <b-modal v-if="currentReplayComment" v-model="showReplyModal" title="回复" @close="handleReplyModalCancel">
       <template v-slot:modal-title>
-        回复：<span>{{ curerntReplayComment.author }}</span>
+        回复：<span>{{ currentReplayComment.author }}</span>
       </template>
-      <p v-if="curerntReplayComment.body.length > 50">{{ curerntReplayComment.body.slice(0, 60) }} ...</p>
-      <p v-else>{{ curerntReplayComment.body }}</p>
+      <p v-if="currentReplayComment.body.length > 50">{{ currentReplayComment.body.slice(0, 60) }} ...</p>
+      <p v-else>{{ currentReplayComment.body }}</p>
       <div class="d-block">
         <b-form @submit="handleReplyModalOk" @reset="handleReplyModalCancel">
           <div v-if="!isLogin">
@@ -93,10 +93,13 @@
                   <div style="padding-top: 10px;" class="d-flex flex-row">
                     <b-badge variant="secondary">#{{ index+1 }}</b-badge>
                     <b-badge variant="info" style="margin: 0 4px;">{{ item.author }}</b-badge>
-                    <span>{{ item.timestamp }}</span>
+                    <span>{{ item.timestamp.replace('T', ' ') }}</span>
                   </div>
                   <div style="overflow: auto;">
-                    <p>{{ item.body }}</p>
+                    <p>
+                      <span v-if="item.replied">@{{ item.replied }} </span>
+                      {{ item.body }}
+                    </p>
                   </div>
                   <div class="can-reply d-flex flex-row-reverse">
                     <button type="button" size="sm" variant="outline-secondary" @click="handleShowReply(item)">回复</button>
@@ -107,7 +110,7 @@
           </div>
 
           <h5 v-if="postData.can_comment">留下你的评论</h5>
-          <h5 v-else>文章禁止评论</h5>
+          <!--          <h5 v-else>文章禁止评论</h5>-->
           <b-form v-if="postData.can_comment" @submit="handleReplyOk">
             <div v-if="!isLogin">
               <b-form-group id="input-group-1" label="你的名字:" label-for="input-1">
@@ -181,7 +184,7 @@ export default {
         email: undefined,
         body: undefined
       },
-      curerntReplayComment: undefined
+      currentReplayComment: undefined
     }
   },
   computed: {
@@ -207,7 +210,7 @@ export default {
       })
     },
     handleShowReply(item) {
-      this.curerntReplayComment = item
+      this.currentReplayComment = item
       this.showReplyModal = true
     },
     handleReplyModalOk(evt) {
@@ -216,7 +219,7 @@ export default {
       const data = {
         post_id: this.postId,
         body: this.replyForm.body,
-        replied_id: this.curerntReplayComment.id
+        replied_id: this.currentReplayComment.id
       }
       this.submitData(data).then(res => {
         this.$message({
@@ -271,7 +274,7 @@ export default {
         email: undefined,
         body: undefined
       }
-      this.curerntReplayComment = undefined
+      this.currentReplayComment = undefined
       this.showReplyModal = false
     }
   }
