@@ -12,7 +12,7 @@
             />
           </el-form-item>
           <el-form-item style="margin-bottom: 0">
-            <el-button type="primary" icon="el-icon-search" size="small" plain @click="handleQuery">搜索</el-button>
+            <el-button type="primary" icon="el-icon-search" size="small" plain @click="handleQuery">查询</el-button>
             <el-button icon="el-icon-refresh" size="small" plain @click="resetQuery">重置</el-button>
           </el-form-item>
         </el-form>
@@ -58,7 +58,7 @@
             type="text"
             icon="el-icon-edit-outline"
             @click="changeReviewed(scope.row)"
-          >切换审核</el-button>
+          >通过审核</el-button>
           <el-divider direction="vertical" />
           <el-popconfirm
             title="确定评论删除吗？"
@@ -122,7 +122,7 @@ export default {
 
     },
     handleQuery() {
-
+      this.getData()
     },
     resetQuery() {
 
@@ -130,7 +130,7 @@ export default {
     changeReviewed(record) {
       this.loading = true
       updateComment(record.id, {
-        reviewed: !record.reviewed
+        reviewed: true
       }).then(res => {
         this.$message({
           type: 'success',

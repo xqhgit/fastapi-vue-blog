@@ -83,6 +83,7 @@ class PostDAL:
         if can_comment is not None:
             stmt = stmt.where(Post.can_comment == can_comment)
         if reviewed is not None:
+            # TODO: 如果父评论被切回未审核，序列化将会报错
             stmt = stmt.options(
                 with_loader_criteria(Comment, Comment.reviewed == reviewed)
             )

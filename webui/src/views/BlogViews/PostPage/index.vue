@@ -224,7 +224,7 @@ export default {
       this.submitData(data).then(res => {
         this.$message({
           type: 'success',
-          message: '评论成功'
+          message: '评论成功，等待管理员审核'
         })
         this.reset()
         this.getData()
@@ -262,7 +262,7 @@ export default {
       this.submitData(data).then(res => {
         this.$message({
           type: 'success',
-          message: '评论成功'
+          message: '评论成功，等待管理员审核'
         })
         this.reset()
         this.getData()

@@ -25,7 +25,7 @@ export function getPost(postId) {
 
 export function getPostPublished(postId) {
   return request({
-    url: `/posts/published/${postId}`,
+    url: `/posts/published/${postId}/`,
     method: 'get'
   })
 }

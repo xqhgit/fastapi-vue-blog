@@ -1,8 +1,5 @@
 # -*-coding:utf-8 -*-
-
-from typing import List, Optional
-
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, status, BackgroundTasks
 from fastapi.responses import JSONResponse
 
 from webapi.db.models.user import User

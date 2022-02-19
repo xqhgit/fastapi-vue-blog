@@ -9,7 +9,7 @@ import os
 class Settings(BaseSettings):
     BASEDIR = os.path.abspath(os.path.dirname(__file__))
     LOG_PATH = os.path.join(BASEDIR, 'logs')
-    BACKEND_CORS_ORIGINS: List = ['http://localhost:8080']
+    BACKEND_CORS_ORIGINS: List = ['*']
 
     # 默认管理员账号密码等信息
     ADMIN_USERNAME = 'admin'
