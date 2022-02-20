@@ -1,7 +1,7 @@
 # -*-coding:utf-8 -*-
 from typing import List, Optional
 
-from sqlalchemy import func, desc
+from sqlalchemy import func, desc, delete
 from sqlalchemy.future import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload, joinedload
@@ -20,6 +20,9 @@ class CommentDAL:
         self.db_session.add(db_obj)
         await self.db_session.flush()
         return db_obj
+
+    async def delete(self, *, db_obj: Comment):
+        await self.db_session.execute(delete(Comment).where(Comment.id == db_obj.id))
 
     async def update(self, db_obj: Comment, obj_in: CommentInUpdate):
         update_data = obj_in.dict(exclude_none=True)

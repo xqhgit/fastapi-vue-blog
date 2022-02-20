@@ -80,5 +80,12 @@ async def update_comment(
 
 @router.delete('/{comment_id}/', tags=['Comment'], dependencies=[Depends(get_current_user), ],
                status_code=status.HTTP_200_OK)
-async def delete_comment():
-    pass
+async def delete_comment(
+        dal: CommentDAL = Depends(DALGetter(CommentDAL)), *,
+        comment_id: int
+):
+    obj = await dal.get_by_id(comment_id)
+    if not obj:
+        return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'detail': '评论不存在'})
+    await dal.delete(db_obj=obj)
+    return JSONResponse(status_code=status.HTTP_200_OK, content={'detail': 'OK'})

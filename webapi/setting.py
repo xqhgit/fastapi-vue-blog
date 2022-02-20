@@ -18,12 +18,12 @@ class Settings(BaseSettings):
     ADMIN_EMAIL = '1104440778@qq.com'
 
     # 数据库账号密码
-    # DB_HOST = '127.0.0.1'
-    DB_HOST = 'mysql'
+    DB_HOST = '127.0.0.1'
+    # DB_HOST = 'mysql'
     DB_PORT = 3306
     DB_USER = 'root'
-    DB_PASSWORD = '123456'
-    # DB_PASSWORD = ''
+    # DB_PASSWORD = '123456'
+    DB_PASSWORD = ''
 
     DATABASE_URI = f'mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}'
     SQLALCHEMY_DATABASE_URI: str = f'mysql+aiomysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/FastAPIVueBlog'

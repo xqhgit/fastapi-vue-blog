@@ -87,7 +87,7 @@
 <script>
 import SelectionTable from '@/components/SelectionTable'
 import Pagination from '@/components/Pagination'
-import { getComments, updateComment } from '@/api/comment'
+import { getComments, updateComment, deleteComment } from '@/api/comment'
 
 export default {
   name: 'Index',
@@ -118,8 +118,15 @@ export default {
         this.loading = false
       })
     },
-    handleDelete() {
-
+    handleDelete(record) {
+      this.loading = true
+      deleteComment(record.id).then(res => {
+        this.$message({
+          type: 'success',
+          message: '删除成功'
+        })
+        this.getData()
+      })
     },
     handleQuery() {
       this.getData()

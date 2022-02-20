@@ -31,3 +31,10 @@ export function updateComment(recordId, data) {
     data
   })
 }
+
+export function deleteComment(recordId) {
+  return request({
+    url: `/comments/${recordId}/`,
+    method: 'delete'
+  })
+}
