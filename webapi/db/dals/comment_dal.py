@@ -22,6 +22,7 @@ class CommentDAL:
         return db_obj
 
     async def delete(self, *, db_obj: Comment):
+        # TODO: 无法删除父评论
         await self.db_session.execute(delete(Comment).where(Comment.id == db_obj.id))
 
     async def update(self, db_obj: Comment, obj_in: CommentInUpdate):
