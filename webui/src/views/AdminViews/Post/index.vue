@@ -20,7 +20,8 @@
               size="small"
               plain
               @click="handleCreate"
-            >新建</el-button>
+            >新建
+            </el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -56,20 +57,27 @@
       </el-table-column>
       <el-table-column label="类别" prop="categories">
         <template slot-scope="scope">
-          <el-tag v-for="n in scope.row.categories" :key="scope.row.id + n" style="margin-right: 5px;" type="success">{{ n }}</el-tag>
+          <el-tag
+            v-for="n in scope.row.categories"
+            :key="scope.row.id + n"
+            style="margin-right: 5px;"
+            type="success"
+            disable-transitions
+          >{{ n }}
+          </el-tag>
         </template>
       </el-table-column>
       <el-table-column label="评论数" prop="comments" />
       <el-table-column label="可以评论" prop="can_comment">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.can_comment" type="success">是</el-tag>
-          <el-tag v-else type="danger">否</el-tag>
+          <el-tag v-if="scope.row.can_comment" type="success" disable-transitions>是</el-tag>
+          <el-tag v-else type="danger" disable-transitions>否</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="发布状态" prop="is_published">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.is_published" type="success">已发布</el-tag>
-          <el-tag v-else type="danger">未发布</el-tag>
+          <el-tag v-if="scope.row.is_published" type="success" disable-transitions>已发布</el-tag>
+          <el-tag v-else type="danger" disable-transitions>未发布</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="操作" width="160">
@@ -80,7 +88,8 @@
             type="text"
             icon="el-icon-edit"
             @click="handleEdit(scope.row)"
-          >编辑</el-button>
+          >编辑
+          </el-button>
           <el-divider direction="vertical" />
           <el-dropdown>
             <span class="el-dropdown-link" style="font-size: 12px;">
@@ -95,7 +104,8 @@
                   type="text"
                   icon="el-icon-edit-outline"
                   @click="changeCanComment(scope.row)"
-                >切换评论</el-button>
+                >切换评论
+                </el-button>
               </el-dropdown-item>
               <el-dropdown-item>
                 <el-button
@@ -104,7 +114,8 @@
                   type="text"
                   icon="el-icon-edit-outline"
                   @click="changeIsPublished(scope.row)"
-                >切换发布</el-button>
+                >切换发布
+                </el-button>
               </el-dropdown-item>
               <el-dropdown-item>
                 <el-popconfirm
@@ -116,7 +127,8 @@
                     size="mini"
                     type="text"
                     icon="el-icon-delete"
-                  >删除</el-button>
+                  >删除
+                  </el-button>
                 </el-popconfirm>
               </el-dropdown-item>
             </el-dropdown-menu>
@@ -239,10 +251,11 @@ export default {
 
 <style scoped>
 .el-dropdown-link {
-    cursor: pointer;
-    color: #409EFF;
-  }
-  .el-icon-arrow-down {
-    font-size: 12px;
-  }
+  cursor: pointer;
+  color: #409EFF;
+}
+
+.el-icon-arrow-down {
+  font-size: 12px;
+}
 </style>

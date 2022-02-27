@@ -10,6 +10,7 @@ from sqlalchemy.orm import selectinload, joinedload, with_loader_criteria
 
 from webapi.db.models import Post, Category, Comment, post_category
 from webapi.db.schemas.post import PostIn, PostInUpdate
+from webapi.utils.elastic import es
 
 
 class PostDAL:
@@ -106,3 +107,9 @@ class PostDAL:
         stmt = stmt.order_by(desc(Post.timestamp)).offset(offset).limit(limit)
         q = await self.db_session.execute(stmt)
         return q.scalars().all()
+
+    async def update_elastic_doc(self):
+        pass
+
+    async def delete_elastic_doc(self):
+        pass

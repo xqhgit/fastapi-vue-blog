@@ -24,10 +24,15 @@ class Settings(BaseSettings):
     DB_USER = 'root'
     # DB_PASSWORD = '123456'
     DB_PASSWORD = ''
+    DB_NAME = 'FastAPIVueBlog'
 
     DATABASE_URI = f'mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}'
-    SQLALCHEMY_DATABASE_URI: str = f'mysql+aiomysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/FastAPIVueBlog'
+    SQLALCHEMY_DATABASE_URI: str = f'mysql+aiomysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
     SECRET_KEY: str = secrets.token_urlsafe(32)
+
+    # Elasticsearch
+    ELASTIC_HOST = 'localhost'
+    ELASTIC_PORT = 9200
 
     # 12 hours
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 12

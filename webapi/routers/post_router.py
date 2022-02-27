@@ -7,6 +7,7 @@ from fastapi.responses import JSONResponse
 from webapi.db.dals.post_dal import Post, PostDAL
 from webapi.utils.dependencies import DALGetter, get_current_user
 from webapi.db.schemas.post import PostsListOut, PostOut, PostIn, PostOutCreate, PostInUpdate, PostOutUpdate
+from webapi.utils.elastic import es_search
 
 router = APIRouter()
 
@@ -23,6 +24,15 @@ async def get_posts(
     return result
 
 
+@router.post('/', tags=['Post'], dependencies=[Depends(get_current_user), ],
+             response_model=PostOutCreate, status_code=status.HTTP_201_CREATED)
+async def create_post(
+        dal: PostDAL = Depends(DALGetter(PostDAL)), *,
+        obj_in: PostIn
+):
+    return await dal.create(obj_in)
+
+
 @router.get("/published/", tags=['Post'], status_code=status.HTTP_200_OK, response_model=PostsListOut)
 async def get_posts_published(
         dal: PostDAL = Depends(DALGetter(PostDAL)),
@@ -34,13 +44,22 @@ async def get_posts_published(
     return result
 
 
-@router.post('/', tags=['Post'], dependencies=[Depends(get_current_user), ],
-             response_model=PostOutCreate, status_code=status.HTTP_201_CREATED)
-async def create_post(
-        dal: PostDAL = Depends(DALGetter(PostDAL)), *,
-        obj_in: PostIn
+@router.get('/published/search/', tags=['Post'], status_code=status.HTTP_200_OK, response_model=PostsListOut)
+async def search_posts_published(
+        keyword: str,
+        page: int = 1
 ):
-    return await dal.create(obj_in)
+    data = await es_search(keyword, page)
+    return data
+
+
+@router.get('/published/{post_id}/', tags=['Post'], status_code=status.HTTP_200_OK, response_model=PostOut)
+async def get_post_published(
+        dal: PostDAL = Depends(DALGetter(PostDAL)), *,
+        post_id: int
+):
+    obj = await dal.get_by_id(post_id, is_published=True, reviewed=True)
+    return obj
 
 
 @router.get('/{post_id}/', tags=['Post'], dependencies=[Depends(get_current_user), ],
@@ -50,15 +69,6 @@ async def get_post(
         post_id: int
 ):
     obj = await dal.get_by_id(post_id)
-    return obj
-
-
-@router.get('/published/{post_id}/', tags=['Post'], status_code=status.HTTP_200_OK, response_model=PostOut)
-async def get_post_published(
-        dal: PostDAL = Depends(DALGetter(PostDAL)), *,
-        post_id: int
-):
-    obj = await dal.get_by_id(post_id, is_published=True, reviewed=True)
     return obj
 
 
