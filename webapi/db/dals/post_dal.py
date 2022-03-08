@@ -10,7 +10,7 @@ from sqlalchemy.orm import selectinload, joinedload, with_loader_criteria
 
 from webapi.db.models import Post, Category, Comment, post_category
 from webapi.db.schemas.post import PostIn, PostInUpdate
-from webapi.utils.elastic import es
+from webapi.utils.elastic import es_update_doc, es_delete_doc, es_create_doc
 
 
 class PostDAL:
@@ -35,6 +35,13 @@ class PostDAL:
         db_obj.categories.extend(categories)
         self.db_session.add(db_obj)
         await self.db_session.flush()
+        await es_create_doc({
+            'id': db_obj.id,
+            'title': db_obj.title,
+            'description': db_obj.description,
+            'body': db_obj.body,
+            'timestamp': db_obj.timestamp,
+        })
         return db_obj
 
     async def update(self, db_obj: Post, obj_in: PostInUpdate):
@@ -48,12 +55,24 @@ class PostDAL:
             setattr(db_obj, field, update_data[field])
         self.db_session.add(db_obj)
         await self.db_session.flush()
+        # 如果不发布，则删除查询文本
+        if db_obj.is_published:
+            await es_update_doc({
+                'id': db_obj.id,
+                'title': db_obj.title,
+                'description': db_obj.description,
+                'body': db_obj.body,
+                'timestamp': db_obj.timestamp,
+            })
+        else:
+            await es_delete_doc(db_obj.id)
         return db_obj
 
     async def delete(self, *, db_obj: Post):
         db_obj.categories = []
         await self.db_session.flush()
         await self.db_session.execute(delete(Post).where(Post.id == db_obj.id))
+        await es_delete_doc(db_obj.id)
 
     async def count(self, title=None, is_published=None, category_id=None):
         stmt = select(func.count(Post.id).label('total'))

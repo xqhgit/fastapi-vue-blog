@@ -59,6 +59,18 @@ class PostsListOut(BaseModel):
     items: List[PostsListOutItem]
 
 
+class PostsSearchListOutItem(BaseModel):
+    id: int
+    title: str
+    description: str
+    timestamp: datetime
+
+
+class PostsSearchListOut(BaseModel):
+    total: int
+    items: List[PostsSearchListOutItem]
+
+
 class PostOutCategories(BaseModel):
     id: int
     name: str

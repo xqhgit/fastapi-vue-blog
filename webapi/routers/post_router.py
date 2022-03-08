@@ -6,7 +6,7 @@ from fastapi.responses import JSONResponse
 
 from webapi.db.dals.post_dal import Post, PostDAL
 from webapi.utils.dependencies import DALGetter, get_current_user
-from webapi.db.schemas.post import PostsListOut, PostOut, PostIn, PostOutCreate, PostInUpdate, PostOutUpdate
+from webapi.db.schemas.post import PostsListOut, PostOut, PostIn, PostOutCreate, PostInUpdate, PostOutUpdate, PostsSearchListOut
 from webapi.utils.elastic import es_search
 
 router = APIRouter()
@@ -44,7 +44,7 @@ async def get_posts_published(
     return result
 
 
-@router.get('/published/search/', tags=['Post'], status_code=status.HTTP_200_OK, response_model=PostsListOut)
+@router.get('/published/search/', tags=['Post'], status_code=status.HTTP_200_OK, response_model=PostsSearchListOut)
 async def search_posts_published(
         keyword: str,
         page: int = 1

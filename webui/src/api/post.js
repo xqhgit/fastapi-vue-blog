@@ -52,3 +52,11 @@ export function deletePost(recordId) {
     method: 'delete'
   })
 }
+
+export function searchPostsPublished(params) {
+  return request({
+    url: '/posts/published/search/',
+    method: 'get',
+    params: params
+  })
+}

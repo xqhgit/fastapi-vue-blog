@@ -51,13 +51,14 @@ def register_static(app):
 
 
 async def register_elasticsearch():
-    from webapi.utils.elastic import es
+    from webapi.utils.elastic import es, INDEX
     import aiomysql
 
     async def create_index():
+        # 清除索引
+        await es.indices.delete(index=INDEX, ignore=[400, 404])
         # 创建索引
-        await es.indices.delete(index='posts', ignore=[400, 404])
-        await es.indices.create(index='posts', ignore=400)
+        await es.indices.create(index=INDEX, ignore=400)
         mapping = {
             'properties': {
                 'title': {
@@ -77,7 +78,7 @@ async def register_elasticsearch():
                 }
             }
         }
-        await es.indices.put_mapping(index='posts', body=mapping)
+        await es.indices.put_mapping(index=INDEX, body=mapping)
         await inject_data_to_es()
 
     async def inject_data_to_es():
@@ -89,12 +90,12 @@ async def register_elasticsearch():
             loop=loop
         )
         cur = await conn.cursor(aiomysql.DictCursor)
-        await cur.execute("SELECT p.id, p.title, p.description, p.body FROM post p WHERE p.is_published=true")
+        await cur.execute("SELECT p.id, p.title, p.description, p.body, p.timestamp FROM Post p WHERE p.is_published=true")
         data = await cur.fetchall()
         await cur.close()
         conn.close()
         for d in data:
-            await es.index(index='posts', document=d, id=d['id'])
+            await es.index(index=INDEX, document=d, id=d['id'], ignore=[400, 404])
 
     await create_index()
 

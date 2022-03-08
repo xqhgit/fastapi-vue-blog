@@ -20,8 +20,8 @@
       <!-- Right aligned nav items -->
       <b-navbar-nav>
         <b-nav-form>
-          <b-form-input size="sm" class="mr-sm-2" placeholder="标题关键字" />
-          <b-button size="sm" class="my-2 my-sm-0" type="submit">搜索文章</b-button>
+          <b-form-input v-model="keyword" size="sm" class="mr-sm-2" placeholder="关键字" />
+          <b-button size="sm" class="my-2 my-sm-0" @click="handleSearch">搜索文章</b-button>
         </b-nav-form>
       </b-navbar-nav>
     </b-collapse>
@@ -35,7 +35,8 @@ export default {
   name: 'Navbar',
   data() {
     return {
-      username: undefined
+      username: undefined,
+      keyword: undefined
     }
   },
   computed: {
@@ -50,6 +51,14 @@ export default {
       }).catch(() => {
 
       })
+    },
+    handleSearch() {
+      if (this.keyword) {
+        this.$router.push({
+          path: '/search',
+          query: { page: 1, keyword: this.keyword }
+        })
+      }
     }
   }
 }

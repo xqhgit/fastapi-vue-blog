@@ -1,14 +1,22 @@
 # FastAPI Vue Blog博客
-PS: 项目正在开发
 
-##介绍
+[![](https://img.shields.io/badge/Python-3.7-red.svg)](https://www.python.org/downloads)
+[![](https://img.shields.io/badge/FastAPI-0.67-yellowgreen.svg)](https://fastapi.tiangolo.com/)
+[![](https://img.shields.io/badge/Vue-2.x-green.svg)](https://cn.vuejs.org/index.html)
+[![](https://img.shields.io/badge/ElementUI-2.13.2-blue.svg)](https://element.eleme.io/#/zh-CN)
+[![](https://img.shields.io/badge/BootstrapVue-2.21.2-blueviolet.svg)](https://code.z01.com/bootstrap-vue/)
+
+
+PS: 日常维护中
+
+## 介绍
 fastapi-vue-blog Python异步后端实现博客系统
 
 *后端*
 * Python Web 框架：FastAPI
 * 数据库：MySQL
 * ORM：SQLAlchemy
-* 搜索：Elasticsearch (未集成)
+* 搜索：Elasticsearch
 
 *前端*
 * 框架：Vue
@@ -29,7 +37,7 @@ fastapi-vue-blog Python异步后端实现博客系统
 >2. 可以看到所有类别
 >3. 可以根据分类筛选文章列表
 >4. 在文章中可以看到评论
->5. 全文高亮搜索
+>5. 全文搜索
 
 *管理员*
 
@@ -41,6 +49,8 @@ fastapi-vue-blog Python异步后端实现博客系统
 ## 源码下载
 ```shell
 git clone https://gitee.com/xuqihui/fastapi-vue-blog.git
+# 或
+git clone https://gitee.com/xuqihui/fastapi-vue-blog
 ```
 
 ### 安装
