@@ -1,4 +1,6 @@
 # -*- coding: UTF-8 -*-
+import time
+import traceback
 import asyncio
 import os
 from starlette.middleware.cors import CORSMiddleware
@@ -11,6 +13,8 @@ from webapi.setting import settings
 
 
 def create_application() -> FastAPI:
+    # 等待数据库和搜索引擎启动完成
+    time.sleep(3)
     application = FastAPI()
     application.include_router(api_router, prefix='/api')
     register_middleware(application)
@@ -103,7 +107,10 @@ async def register_elasticsearch():
 def register_event(app):
     @app.on_event("startup")
     async def startup_event():
-        await register_elasticsearch()
+        try:
+            await register_elasticsearch()
+        except Exception as e:
+            traceback.print_exc()
 
     @app.on_event("shutdown")
     async def shutdown_event():

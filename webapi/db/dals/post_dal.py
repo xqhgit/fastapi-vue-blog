@@ -35,13 +35,14 @@ class PostDAL:
         db_obj.categories.extend(categories)
         self.db_session.add(db_obj)
         await self.db_session.flush()
-        await es_create_doc({
-            'id': db_obj.id,
-            'title': db_obj.title,
-            'description': db_obj.description,
-            'body': db_obj.body,
-            'timestamp': db_obj.timestamp,
-        })
+        if db_obj.is_published:
+            await es_create_doc({
+                'id': db_obj.id,
+                'title': db_obj.title,
+                'description': db_obj.description,
+                'body': db_obj.body,
+                'timestamp': db_obj.timestamp,
+            })
         return db_obj
 
     async def update(self, db_obj: Post, obj_in: PostInUpdate):

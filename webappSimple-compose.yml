@@ -8,35 +8,27 @@ services:
       - 9527:5000
     depends_on:
       - mysql
-    networks:
-      - fastapivueblog
+      - elasticsearch
 
   mysql:
     image: "mariadb:10.5.9-focal"
     environment:
       - MYSQL_ROOT_HOST=%
-      - MYSQL_ROOT_PASSWORD=blog@fastapi
+      - MYSQL_ROOT_PASSWORD=fastapivueblog12306
       - MYSQL_DATABASE=FastAPIVueBlog
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=blog@fastapi
+#      - MYSQL_USER=root
+      - MYSQL_PASSWORD=fastapivueblog12306
     ports:
       - 13306:3306
-    networks:
-      - fastapivueblog
     command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
 
   elasticsearch:
-    image: "elasticsearch:7.17.0"
+    build:
+      context: .
+      dockerfile: elasticsearch.dockerfile
     environment:
       - discovery.type=single-node
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     ports:
     - 19200:9200
     - 19300:9300
-    networks:
-      - fastapivueblog
-
-
-networks:
-  fastapivueblog:
-    driver: bridge

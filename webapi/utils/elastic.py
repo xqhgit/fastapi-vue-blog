@@ -65,14 +65,7 @@ def parse_data(data):
 
 
 async def es_update_doc(data):
-    if await es.exists(index=INDEX, id=data['id']):
-        await es.update(
-            index=INDEX,
-            id=data['id'],
-            body=data,
-        )
-    else:
-        await es_create_doc(data)
+    await es_create_doc(data)
 
 
 async def es_delete_doc(_id):
@@ -84,6 +77,7 @@ async def es_delete_doc(_id):
 
 
 async def es_create_doc(data):
+    await es_delete_doc(data['id'])
     await es.create(
         index=INDEX,
         id=data['id'],

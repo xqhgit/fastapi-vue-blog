@@ -18,10 +18,10 @@ class Settings(BaseSettings):
     ADMIN_EMAIL = '1104440778@qq.com'
 
     # 数据库账号密码
-    DB_HOST = 'fastapivueblog'
+    DB_HOST = 'mysql'
     DB_PORT = 3306
     DB_USER = 'root'
-    DB_PASSWORD = 'blog@fastapi'
+    DB_PASSWORD = 'fastapivueblog12306'
     DB_NAME = 'FastAPIVueBlog'
 
     DATABASE_URI = f'mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}'
@@ -29,7 +29,7 @@ class Settings(BaseSettings):
     SECRET_KEY: str = secrets.token_urlsafe(32)
 
     # Elasticsearch
-    ELASTIC_HOST = 'fastapivueblog'
+    ELASTIC_HOST = 'elasticsearch'
     ELASTIC_PORT = 9200
 
     # 12 hours

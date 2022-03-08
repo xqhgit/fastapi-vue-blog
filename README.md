@@ -5,6 +5,7 @@
 [![](https://img.shields.io/badge/Vue-2.x-green.svg)](https://cn.vuejs.org/index.html)
 [![](https://img.shields.io/badge/ElementUI-2.13.2-blue.svg)](https://element.eleme.io/#/zh-CN)
 [![](https://img.shields.io/badge/BootstrapVue-2.21.2-blueviolet.svg)](https://code.z01.com/bootstrap-vue/)
+[![](https://img.shields.io/badge/Elasticsearch-7.17.0-ff69b4.svg)](https://www.elastic.co/cn/elasticsearch/)
 
 
 PS: 日常维护中
@@ -93,9 +94,25 @@ git clone https://gitee.com/xuqihui/fastapi-vue-blog
 ### 简单发布(可能不适合生产环境)
 ```
 前提：安装好Docker和docker-compose
-1: cd fastapi-vue-blog
-2: docker-compose -f webappSimple-compose.yml up -d --build
-3: docker-compose -f webappSimple-compose.yml exec webapp python db/init_db.py  # 如果数据没有初始化
+# 工作目录
+cd fastapi-vue-blog
+
+# 构建容器和启动服务
+bash launcher.sh
+
+# 构建镜像和启动服务
+docker-compose -f webappSimple-compose.yml up -d --build
+
+docker-compose -f webappSimple-compose.yml exec webapp python db/init_db.py  # 如果数据没有初始化
+
+# 查看服务情况
+docker-compose -f webappSimple-compose.yml ps
+
+# 停止服务
+docker-compose -f webappSimple-compose.yml stop
+
+# 关闭服务并移除容器
+docker-compose -f webappSimple-compose.yml down
 ```
 
 ## 图片预览
