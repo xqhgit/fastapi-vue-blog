@@ -10,6 +10,14 @@
 
 PS: 日常维护中
 
+```
+# gitee
+https://gitee.com/xuqihui/fastapi-vue-blog
+
+# github
+https://github.com/xqhgit/fastapi-vue-blog
+```
+
 ## 介绍
 fastapi-vue-blog Python异步后端实现博客系统
 
