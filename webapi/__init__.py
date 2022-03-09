@@ -13,7 +13,7 @@ from webapi.setting import settings
 
 
 def create_application() -> FastAPI:
-    # 等待数据库和搜索引擎启动完成
+    # 等待其他组件启动完成
     time.sleep(3)
     application = FastAPI()
     application.include_router(api_router, prefix='/api')

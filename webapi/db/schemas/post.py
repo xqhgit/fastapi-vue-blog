@@ -128,8 +128,8 @@ class PostIn(BaseModel):
     description: str
     body: str
     body_html: str
-    can_comment: bool
-    is_published: bool
+    can_comment: bool = False
+    is_published: bool = False
     categories: List[int]
 
 
