@@ -1,3 +1,5 @@
+import traceback
+
 from typing import List, Optional
 from fastapi import status
 from fastapi.exceptions import HTTPException
@@ -57,16 +59,19 @@ class PostDAL:
         self.db_session.add(db_obj)
         await self.db_session.flush()
         # 如果不发布，则删除查询文本
-        if db_obj.is_published:
-            await es_update_doc({
-                'id': db_obj.id,
-                'title': db_obj.title,
-                'description': db_obj.description,
-                'body': db_obj.body,
-                'timestamp': db_obj.timestamp,
-            })
-        else:
-            await es_delete_doc(db_obj.id)
+        try:
+            if db_obj.is_published:
+                await es_update_doc({
+                    'id': db_obj.id,
+                    'title': db_obj.title,
+                    'description': db_obj.description,
+                    'body': db_obj.body,
+                    'timestamp': db_obj.timestamp,
+                })
+            else:
+                await es_delete_doc(db_obj.id)
+        except Exception as e:
+            traceback.print_exc()
         return db_obj
 
     async def delete(self, *, db_obj: Post):

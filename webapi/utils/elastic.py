@@ -1,4 +1,6 @@
 # -*- coding: UTF-8 -*-
+import traceback
+
 from elasticsearch7 import AsyncElasticsearch
 
 from webapi.setting import settings
@@ -69,18 +71,24 @@ async def es_update_doc(data):
 
 
 async def es_delete_doc(_id):
-    await es.delete(
-        index=INDEX,
-        id=_id,
-        ignore=[400, 404]
-    )
+    try:
+        await es.delete(
+            index=INDEX,
+            id=_id,
+            ignore=[400, 404]
+        )
+    except Exception as e:
+        traceback.print_exc()
 
 
 async def es_create_doc(data):
-    await es_delete_doc(data['id'])
-    await es.create(
-        index=INDEX,
-        id=data['id'],
-        document=data,
-        ignore=[400, 404]
-    )
+    try:
+        await es_delete_doc(data['id'])
+        await es.create(
+            index=INDEX,
+            id=data['id'],
+            document=data,
+            ignore=[400, 404]
+        )
+    except Exception as e:
+        traceback.print_exc()

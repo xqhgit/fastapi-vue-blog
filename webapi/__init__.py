@@ -114,5 +114,8 @@ def register_event(app):
 
     @app.on_event("shutdown")
     async def shutdown_event():
-        from webapi.utils.elastic import es
-        await es.close()
+        try:
+            from webapi.utils.elastic import es
+            await es.close()
+        except Exception as e:
+            traceback.print_exc()
