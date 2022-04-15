@@ -97,37 +97,39 @@ git clone https://gitee.com/xuqihui/fastapi-vue-blog
 ```
 
 ## 部署与发布
-通过Docker和Dockerfile打包发布
+* 前提：安装好Docker和docker-compose
 
 ### 简单发布(可能不适合生产环境)
+
 #### 构建和启动
 ```
-前提：安装好Docker和docker-compose
 # 工作目录
 cd fastapi-vue-blog
 
-# 首次构建和启动服务
-bash launcher.sh
-
-# 查看服务情况
-docker-compose -f webappSimple-compose.yml ps
-
-# 重启服务
-docker-compose -f webappSimple-compose.yml restart
-
-# 停止服务
-docker-compose -f webappSimple-compose.yml stop
-
-# 关闭服务并移除容器
-docker-compose -f webappSimple-compose.yml down
-```
-#### 其他
-```
-# 构建镜像
+# 1.构建镜像
 docker-compose -f webappSimple-compose.yml up -d --build
 
-# 初始化数据
+# 2.初始化数据
 docker-compose -f webappSimple-compose.yml exec webapp python db/init_db.py
+docker-compose -f webappSimple-compose.yml restart
+
+# 3.查看服务情况
+docker-compose -f webappSimple-compose.yml ps
+```
+
+#### 其他命令
+```
+# 1.重启服务
+docker-compose -f webappSimple-compose.yml restart
+
+# 2.启动服务
+docker-compose -f webappSimple-compose.yml start <服务名称>
+
+# 3.停止服务
+docker-compose -f webappSimple-compose.yml stop <服务名称>
+
+# 4.关闭服务并移除容器
+docker-compose -f webappSimple-compose.yml down
 ```
 
 ## 图片预览
