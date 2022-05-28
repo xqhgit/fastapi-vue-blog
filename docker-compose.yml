@@ -3,7 +3,7 @@ services:
   webapp:
     build:
       context: .
-      dockerfile: webappSimple.dockerfile
+      dockerfile: webapp.dockerfile
     ports:
       - 9527:5000
     depends_on:

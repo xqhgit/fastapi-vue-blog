@@ -106,30 +106,30 @@ git clone https://gitee.com/xuqihui/fastapi-vue-blog
 # 工作目录
 cd fastapi-vue-blog
 
-# 1.构建镜像
-docker-compose -f webappSimple-compose.yml up -d --build
+# 1.构建镜像并启动服务
+docker-compose up -d --build
 
 # 2.初始化数据
-docker-compose -f webappSimple-compose.yml exec webapp python db/init_db.py
-docker-compose -f webappSimple-compose.yml restart
+docker-compose exec webapp python db/init_db.py
+docker-compose restart
 
 # 3.查看服务情况
-docker-compose -f webappSimple-compose.yml ps
+docker-compose ps
 ```
 
 #### 其他命令
 ```
 # 1.重启服务
-docker-compose -f webappSimple-compose.yml restart
+docker-compose restart
 
 # 2.启动服务
-docker-compose -f webappSimple-compose.yml start <服务名称>
+docker-compose start <服务名称>
 
 # 3.停止服务
-docker-compose -f webappSimple-compose.yml stop <服务名称>
+docker-compose stop <服务名称>
 
 # 4.关闭服务并移除容器
-docker-compose -f webappSimple-compose.yml down
+docker-compose down
 ```
 
 ## 图片预览
