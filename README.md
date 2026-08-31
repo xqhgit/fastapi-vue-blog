@@ -1,3 +1,5 @@
+
+
 # FastAPI Vue Blog博客
 
 [![](https://img.shields.io/badge/Python-3.7-red.svg)](https://www.python.org/downloads)
@@ -93,7 +95,7 @@ git clone https://gitee.com/xuqihui/fastapi-vue-blog
 2: npm install
 3: npm run dev
 4: http://localhost:8080        # 进入前端页面
-4: http://localhost:8080/admin  # 进入管理员页面
+5: http://localhost:8080/admin  # 进入管理员页面
 ```
 
 ## 部署与发布
